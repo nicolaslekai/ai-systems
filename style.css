@@ -295,12 +295,12 @@
   display: grid; gap: 18px; text-align: center;
 }
 .os-card {
-  border: 1px solid var(--red); background: var(--paper-2);
-  padding: 38px 32px; text-align: center;
+  background: var(--red); border: none;
+  padding: 46px 36px; text-align: center;
 }
-.os-card .mono { color: var(--red); display: block; margin-bottom: 18px; }
-.os-card h3 { font-size: clamp(20px, 2.4vw, 27px); font-weight: 700; letter-spacing: -0.02em; text-transform: lowercase; }
-.os-card p { color: var(--ink-soft); font-size: 15px; margin-top: 12px; }
+.os-card .mono { color: #1a1a1c; font-weight: 700; display: block; margin-bottom: 16px; }
+.os-card h3 { color: #fff; font-size: clamp(20px, 2.4vw, 27px); font-weight: 700; letter-spacing: -0.02em; text-transform: lowercase; }
+.os-card p { color: rgba(255,255,255,.9); font-size: 15px; margin-top: 12px; }
 @media (max-width: 860px) {
   .flow { grid-template-columns: 1fr; gap: 6px; }
   .flow-arrow { height: auto; padding: 10px 0; }
