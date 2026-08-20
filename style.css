@@ -454,3 +454,24 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   text-transform: lowercase;
 }
 .big-h em { font-style: normal; color: var(--red); }
+
+/* the phone rings — click answers it (mailto) */
+.phone-ring { display: block; position: relative; cursor: pointer; }
+.phone-ring img { animation: phone-ring 7s ease-in-out infinite; transform-origin: 50% 72%; }
+@keyframes phone-ring {
+  0%, 82%, 100% { transform: none; }
+  84% { transform: rotate(1.1deg); }
+  86% { transform: rotate(-1.1deg); }
+  88% { transform: rotate(0.9deg); }
+  90% { transform: rotate(-0.7deg); }
+  92% { transform: rotate(0.4deg); }
+  94% { transform: none; }
+}
+.ring-hint {
+  position: absolute; left: 16px; bottom: 14px;
+  background: rgba(26,26,28,.88); color: var(--ink);
+  padding: 10px 16px; opacity: 0; transition: opacity .3s;
+}
+.phone-ring:hover .ring-hint, .phone-ring:focus-visible .ring-hint { opacity: 1; }
+@media (hover: none) { .ring-hint { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .phone-ring img { animation: none; } }
