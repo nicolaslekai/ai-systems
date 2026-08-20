@@ -444,3 +444,13 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
 
 .toolwall-label { display: block; color: var(--ink-soft); margin-top: 30px; }
 .toolwall-label + .toolwall { margin-top: 10px; }
+
+/* big section head — same look as the hero headline */
+.sec-head-big { margin-bottom: 40px; }
+.sec-head-big .kicker { color: var(--red); display: block; margin-bottom: 26px; }
+.big-h {
+  font-size: clamp(44px, 7.2vw, 104px);
+  font-weight: 700; letter-spacing: -0.04em; line-height: 0.94;
+  text-transform: lowercase;
+}
+.big-h em { font-style: normal; color: var(--red); }
