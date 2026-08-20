@@ -393,3 +393,51 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   letter-spacing: -0.02em; line-height: 1.3; max-width: 34em;
 }
 .sys-lede em { font-style: normal; color: var(--red); }
+
+/* app mockup — what the OS looks like */
+.app-mock {
+  margin-top: 34px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--paper-2); overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,.45);
+}
+.am-titlebar {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 16px; border-bottom: 1px solid var(--line);
+}
+.am-dots { display: inline-flex; gap: 6px; }
+.am-dots i { width: 10px; height: 10px; border-radius: 50%; background: #47474d; }
+.am-dots .am-dot-red { background: var(--red); }
+.am-title { color: var(--ink-soft); }
+.am-user { margin-left: auto; color: var(--red); }
+.am-body { display: grid; grid-template-columns: 168px 1fr; }
+.am-side {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 16px 0; border-right: 1px solid var(--line);
+}
+.am-side span { padding: 9px 18px; color: var(--ink-soft); }
+.am-side .am-active { color: var(--ink); border-left: 2px solid var(--red); background: rgba(240,65,63,.06); }
+.am-main { padding: 18px; display: grid; gap: 14px; }
+.am-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.am-stat { border: 1px solid var(--line); padding: 12px 14px; }
+.am-stat span { color: var(--ink-soft); display: block; }
+.am-stat b { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; display: block; margin: 6px 0 8px; }
+.am-stat i { display: block; height: 2px; background: var(--red); width: var(--w, 50%); }
+.am-stat i.am-orange { background: #f4933b; }
+.am-panel { border: 1px solid var(--line); padding: 14px; }
+.am-panel-label { color: var(--ink-soft); display: block; margin-bottom: 10px; }
+.am-budget { position: relative; height: 8px; background: var(--paper); border: 1px solid var(--line); }
+.am-budget i { position: absolute; inset: 0 auto 0 0; background: #f4933b; }
+.am-budget em { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--red); }
+.am-budget-meta { display: flex; justify-content: space-between; margin-top: 8px; color: var(--ink-soft); }
+.am-rows { display: grid; }
+.am-rows div { display: flex; gap: 14px; padding: 9px 2px; border-top: 1px solid var(--line); color: var(--ink-soft); }
+.am-rows b { color: var(--red); font-weight: 400; flex: 0 0 auto; }
+.am-rows span { text-transform: none; letter-spacing: 0.04em; }
+@media (max-width: 700px) {
+  .am-body { grid-template-columns: 1fr; }
+  .am-side { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 0; }
+  .am-side span { padding: 12px 12px; white-space: nowrap; }
+  .am-side .am-active { border-left: 0; border-bottom: 2px solid var(--red); }
+  .am-stats { grid-template-columns: 1fr; }
+  .am-rows span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
