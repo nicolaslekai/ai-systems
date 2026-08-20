@@ -475,3 +475,27 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
 .phone-ring:hover .ring-hint, .phone-ring:focus-visible .ring-hint { opacity: 1; }
 @media (hover: none) { .ring-hint { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .phone-ring img { animation: none; } }
+
+/* service strips: image fading in from the right */
+.svc-row { position: relative; }
+@media (min-width: 861px) {
+  .svc-row { grid-template-columns: 120px 1fr 1.1fr minmax(200px, 24%); }
+  .svc-img {
+    align-self: stretch; min-height: 130px;
+    background-size: cover; background-position: center;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 62%);
+    mask-image: linear-gradient(90deg, transparent, #000 62%);
+  }
+}
+@media (max-width: 860px) {
+  .svc-row { overflow: hidden; }
+  .svc-img {
+    position: absolute; inset: 0; z-index: 0; opacity: .28; pointer-events: none;
+    background-size: cover; background-position: center right;
+    -webkit-mask-image: linear-gradient(90deg, transparent 20%, #000 75%);
+    mask-image: linear-gradient(90deg, transparent 20%, #000 75%);
+  }
+  .svc-row > *:not(.svc-img) { position: relative; z-index: 1; }
+}
+
+.brain-facts { margin-top: 34px; max-width: 640px; }
