@@ -302,8 +302,10 @@
 .os-card h3 { font-size: clamp(20px, 2.4vw, 27px); font-weight: 700; letter-spacing: -0.02em; text-transform: lowercase; }
 .os-card p { color: var(--ink-soft); font-size: 15px; margin-top: 12px; }
 @media (max-width: 860px) {
-  .flow { grid-template-columns: 1fr; }
-  .flow-arrow { grid-auto-flow: column; justify-content: center; transform: rotate(90deg); height: 40px; }
+  .flow { grid-template-columns: 1fr; gap: 6px; }
+  .flow-arrow { height: auto; padding: 10px 0; }
+  .flow-arrow span { transform: rotate(90deg); display: inline-block; }
+  .flow-arrow span:nth-child(n+2) { display: none; }
 }
 
 /* mobile: imagery first — the phone plate moves directly under the headline */
