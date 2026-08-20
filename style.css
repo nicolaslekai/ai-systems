@@ -281,3 +281,29 @@
     .wordmark:hover { animation: none; }
     .pair .to { animation: none; }
   }
+
+/* the convergence diagram (system section) */
+.flow { display: grid; grid-template-columns: 1fr auto 1fr; gap: 28px; align-items: center; margin-top: 44px; }
+.chips { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.chip {
+  border: 1px solid var(--line); background: var(--paper-2);
+  padding: 12px 14px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.chip em { font-style: normal; color: var(--ink); display: block; font-size: 12px; margin-bottom: 3px; }
+.flow-arrow {
+  font-family: var(--mono); color: var(--red); font-size: 22px;
+  display: grid; gap: 18px; text-align: center;
+}
+.os-card {
+  border: 1px solid var(--red); background: var(--paper-2);
+  padding: 38px 32px; text-align: center;
+}
+.os-card .mono { color: var(--red); display: block; margin-bottom: 18px; }
+.os-card h3 { font-size: clamp(24px, 3vw, 34px); font-weight: 700; letter-spacing: -0.02em; text-transform: lowercase; }
+.os-card p { color: var(--ink-soft); font-size: 15px; margin-top: 12px; }
+@media (max-width: 860px) {
+  .flow { grid-template-columns: 1fr; }
+  .flow-arrow { grid-auto-flow: column; justify-content: center; transform: rotate(90deg); height: 40px; }
+}
