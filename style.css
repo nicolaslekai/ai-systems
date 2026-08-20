@@ -204,7 +204,7 @@
   @media (max-width: 860px) { .why-grid { grid-template-columns: 1fr; gap: 40px; } }
 
   /* team */
-  .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  .team-grid { display: grid; grid-template-columns: 1fr; gap: 28px; }
   .member { border: 1px solid var(--line); padding: 28px 26px 32px; background: var(--paper-2); }
   .member .mono { color: var(--ink-soft); display: block; margin-bottom: 30px; }
   .member h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
