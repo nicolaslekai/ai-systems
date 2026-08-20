@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The System — Nicolas Lekai</title>
+<meta name="description" content="Many professional products, combined into one custom-built operating system for your company. How Nicolas Lekai wires best-in-class tools into a single bespoke OS.">
+<link rel="stylesheet" href="../style.css">
+<style>
+  /* page-local: the convergence diagram */
+  .flow { display: grid; grid-template-columns: 1fr auto 1fr; gap: 28px; align-items: center; }
+  .chips { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .chip {
+    border: 1px solid var(--line); background: var(--paper-2);
+    padding: 12px 14px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .chip em { font-style: normal; color: var(--ink); display: block; font-size: 12px; margin-bottom: 3px; }
+  .flow-arrow {
+    font-family: var(--mono); color: var(--red); font-size: 22px;
+    display: grid; gap: 18px; text-align: center;
+  }
+  .os-card {
+    border: 1px solid var(--red); background: var(--paper-2);
+    padding: 38px 32px; text-align: center;
+  }
+  .os-card .mono { color: var(--red); display: block; margin-bottom: 18px; }
+  .os-card h3 { font-size: clamp(24px, 3vw, 34px); font-weight: 700; letter-spacing: -0.02em; text-transform: lowercase; }
+  .os-card p { color: var(--ink-soft); font-size: 15px; margin-top: 12px; }
+  @media (max-width: 860px) {
+    .flow { grid-template-columns: 1fr; }
+    .flow-arrow { grid-auto-flow: column; justify-content: center; transform: rotate(90deg); height: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="wordmark" href="../"><img class="mark" src="../assets/logo-mark-red.png" alt="" width="512" height="384" />NICOLAS<em>_</em>LEKAI</a>
+    <nav class="links" aria-label="Sections">
+      <a href="../">Overview</a>
+      <a href="#parts">The parts</a>
+      <a href="#means">What it means</a>
+    </nav>
+    <a class="nav-cta" href="mailto:nicolaslekai@gmail.com?subject=System%20enquiry">Start a brief</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <span class="mono kicker">Briefing 002 — The custom operating system</span>
+      <h1>many tools.<br>one system.</h1>
+      <div class="hero-foot">
+        <p><strong>Your company already pays for a dozen excellent products.</strong> They just don't talk to each other. I wire the best professional tools — AI models, production software, the office stack — into one custom-built operating system that runs the way your company runs.</p>
+        <div class="hero-meta mono">
+          <div>Built on tools you already trust</div>
+          <div>One interface, one login</div>
+          <div>Your data stays yours</div>
+        </div>
+      </div>
+      <figure class="plate hero-plate reveal">
+        <img src="../assets/system_plate.jpg" alt="Professional tools arranged in a ring, red cables running from each into a single black device at the center" width="1600" height="900" loading="eager">
+        <figcaption><span><em>Fig. 04</em> — Many products, one system</span><span>Ref. NRM-2604</span></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <section id="parts">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>the parts become a whole</h2>
+        <span class="mono">Assembly / diagram</span>
+      </div>
+      <div class="flow reveal">
+        <div class="chips">
+          <div class="chip"><em>AI models</em>Claude · GPT · Gemini</div>
+          <div class="chip"><em>Image &amp; video</em>ComfyUI · gen pipelines</div>
+          <div class="chip"><em>Post-production</em>Resolve · edit · grade</div>
+          <div class="chip"><em>Voice &amp; audio</em>TTS · transcription</div>
+          <div class="chip"><em>Office</em>Mail · docs · sheets</div>
+          <div class="chip"><em>Comms</em>WhatsApp · Slack · phone</div>
+          <div class="chip"><em>Storage</em>Dropbox · Drive · archive</div>
+          <div class="chip"><em>Business</em>CRM · invoicing · calendar</div>
+        </div>
+        <div class="flow-arrow" aria-hidden="true"><span>→</span><span>→</span><span>→</span></div>
+        <div class="os-card">
+          <span class="mono">Custom build / v1.0</span>
+          <h3>your operating system</h3>
+          <p>One bespoke piece of software that knows your projects, your people and your data — and drives every tool on the left so your team doesn't have to.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="means">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>what that means day to day</h2>
+        <span class="mono">In practice</span>
+      </div>
+      <div class="why-grid reveal">
+        <p class="lede">The team opens one window. Behind it, agents run the other twelve — <em>the products keep doing what they're best at, the system does the juggling.</em></p>
+        <div class="why-facts">
+          <div><strong>One place to work</strong>Briefs, status, files, approvals and comms in a single control centre, shaped around your actual workflow — not a vendor's idea of it.</div>
+          <div><strong>Agents do the boring part</strong>Reports write themselves, files land where they belong, the inbox gets triaged, reminders fire. People do the judgement calls.</div>
+          <div><strong>No platform prison</strong>Every underlying product stays swappable. When a better model or tool ships, it slots in — the system survives the churn.</div>
+          <div><strong>Grows with you</strong>v1 ships in weeks and earns its keep; every month it learns another workflow. It's software with a roadmap, not a one-off script.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="mono kicker">Open channel</span>
+    <h2>want one?</h2>
+    <a class="mail" href="mailto:nicolaslekai@gmail.com?subject=System%20enquiry">nicolaslekai@gmail.com</a>
+    <div class="foot-bottom">
+      <span>Nicolas Lekai — AI Systems Architect</span>
+      <span>Munich · Melbourne</span>
+      <span><a href="https://nicolaslekai.com" style="text-decoration:none;">nicolaslekai.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
