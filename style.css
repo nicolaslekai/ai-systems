@@ -442,8 +442,14 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   .am-rows span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }
 
-.toolwall-label { display: block; color: var(--ink-soft); margin-top: 30px; }
-.toolwall-label + .toolwall { margin-top: 10px; }
+.toolwall-label {
+  display: block; margin: 54px 0 0;
+  font-size: clamp(34px, 5.4vw, 76px);
+  font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  text-transform: lowercase; color: var(--ink);
+}
+.toolwall-label em { font-style: normal; color: var(--red); }
+.toolwall-label + .toolwall { margin-top: 18px; }
 
 /* big section head — same look as the hero headline */
 .sec-head-big { margin-bottom: 40px; }
