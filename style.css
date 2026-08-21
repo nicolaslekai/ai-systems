@@ -479,7 +479,7 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   92% { transform: rotate(0.4deg); }
   94% { transform: none; }
 }
-.phone-ring:hover .ring-hint, .phone-ring:focus-visible @media (hover: none) { @media (prefers-reduced-motion: reduce) { .phone-ring img { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .phone-ring img { animation: none; } }
 
 /* service strips: image fading in from the right */
 .svc-row { position: relative; }
