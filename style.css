@@ -464,6 +464,8 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
 /* the phone rings — click answers it (mailto) */
 .phone-ring { display: block; position: relative; cursor: pointer; }
 .phone-ring img { animation: phone-ring 7s ease-in-out infinite; transform-origin: 50% 72%; }
+.hero-video { display: block; width: 100%; height: auto; }
+.phone-ring:has(.hero-video) img { animation: none; }
 @keyframes phone-ring {
   0%, 82%, 100% { transform: none; }
   84% { transform: rotate(1.1deg); }
