@@ -515,8 +515,25 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   mask-image: linear-gradient(180deg, #000 45%, transparent);
 }
 
-/* brain plate: the leader lines and labels are rendered into the image itself */
+/* brain plate: the leader lines and labels are rendered into the image itself.
+   Below 860px the plate crops to 4:3 and that baked type would be a few pixels
+   tall, so the phone gets the clean plate plus this list — in normal flow, so
+   nothing can drift. */
 .brain-plate { position: relative; }
+.brain-list { display: none; }
+@media (max-width: 860px) {
+  .brain-list {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 9px 18px;
+    list-style: none; margin: 0; padding: 18px 6vw 20px;
+    border-top: 1px solid var(--line);
+    font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(232, 228, 240, 0.66);
+  }
+  .brain-list li { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .brain-list li::before {
+    content: ""; flex: none; width: 14px; height: 1px; background: var(--red);
+  }
+}
 
 /* short bio at the very bottom */
 .bio-note { margin-top: 56px; max-width: 62ch; }
