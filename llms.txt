@@ -9,7 +9,7 @@ Most companies already pay for a dozen good AI and production products that do n
 ## Services
 
 - Custom systems — bespoke operating systems and control centres, plus internal tooling a team will actually keep using
-- Production pipelines — AI image and video pipelines wired into real post-production, built by a working filmmaker rather than a slide-deck theorist
+- Production pipelines — AI image and video pipelines wired into real post-production, built by a filmmaker and CGI artist with over 25 years of experience
 - Strategy and training — audits, roadmaps and build-vs-buy calls with real numbers; hands-on training role by role
 
 ## Cost control
