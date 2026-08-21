@@ -521,3 +521,27 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent);
   mask-image: linear-gradient(180deg, #000 45%, transparent);
 }
+
+/* brain plate: thin red leader lines with labels pointing into the cloud */
+.brain-plate { position: relative; }
+.brain-tags { list-style: none; margin: 0; padding: 0; }
+.brain-tags li {
+  position: absolute; top: var(--y);
+  display: flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: #1a1a1c; white-space: nowrap;
+}
+.brain-tags li::after {
+  content: ""; display: block; height: 1px; width: clamp(28px, 5vw, 74px);
+  background: var(--red);
+}
+.brain-tags li[style*="--dir:1"]  { left: var(--x); }
+.brain-tags li[style*="--dir:-1"] { right: var(--x); flex-direction: row-reverse; }
+@media (max-width: 860px) {
+  .brain-tags li { font-size: 9px; letter-spacing: 0.1em; gap: 6px; }
+  .brain-tags li::after { width: 18px; }
+}
+@media (max-width: 560px) {
+  .brain-tags li:nth-child(4), .brain-tags li:nth-child(8) { display: none; }
+  .brain-tags li { font-size: 8px; }
+}
