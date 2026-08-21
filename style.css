@@ -479,14 +479,7 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   92% { transform: rotate(0.4deg); }
   94% { transform: none; }
 }
-.ring-hint {
-  position: absolute; left: 16px; bottom: 14px;
-  background: rgba(26,26,28,.88); color: var(--ink);
-  padding: 10px 16px; opacity: 0; transition: opacity .3s;
-}
-.phone-ring:hover .ring-hint, .phone-ring:focus-visible .ring-hint { opacity: 1; }
-@media (hover: none) { .ring-hint { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .phone-ring img { animation: none; } }
+.phone-ring:hover .ring-hint, .phone-ring:focus-visible @media (hover: none) { @media (prefers-reduced-motion: reduce) { .phone-ring img { animation: none; } }
 
 /* service strips: image fading in from the right */
 .svc-row { position: relative; }
