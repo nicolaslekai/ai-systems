@@ -545,3 +545,9 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   .brain-tags li:nth-child(4), .brain-tags li:nth-child(8) { display: none; }
   .brain-tags li { font-size: 8px; }
 }
+
+/* short bio at the very bottom */
+.bio-note { margin-top: 56px; max-width: 62ch; }
+.bio-note .mono { color: var(--red); display: block; margin-bottom: 14px; }
+.bio-note p { color: rgba(232,228,240,0.66); font-size: 15px; line-height: 1.6; }
+.bio-note strong { color: rgba(232,228,240,0.92); font-weight: 600; }
