@@ -99,7 +99,10 @@
   }
   h1 .flip-slot {
     color: var(--red);
-    display: inline-block;
+    /* Always its own line. As an inline word it made the headline one line for
+       "sicher." and two for "gunstiger.", so the H1 changed height every 2.6s
+       and shoved the whole page up and down -- the periodic scroll judder. */
+    display: block;
     min-width: 5.4ch;
   }
   .hero-foot {
