@@ -596,6 +596,22 @@
     window.__onbRefresh = refresh;
   })();
 
+  // Perpetual animations are the expensive kind on a phone: they keep the
+  // compositor busy even when they are eight screens away. These only run while
+  // they are actually on screen.
+  const runOnScreen = [
+    [".toolwall", "tw-on"],
+    [".phone-ring", "pr-on"],
+  ];
+  runOnScreen.forEach(([sel, cls]) => {
+    const els = document.querySelectorAll(sel);
+    if (!els.length) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => e.target.classList.toggle(cls, e.isIntersecting));
+    }, { rootMargin: "100px 0px" });
+    els.forEach((el) => obs.observe(el));
+  });
+
   // scroll reveals
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });

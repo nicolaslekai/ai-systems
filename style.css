@@ -42,6 +42,7 @@
     position: sticky; top: 0; z-index: 20;
     background: color-mix(in srgb, var(--paper) 88%, transparent);
     backdrop-filter: blur(8px);
+    will-change: transform;
     border-bottom: 1px solid var(--line);
   }
   .nav {
@@ -360,7 +361,14 @@
   font-family: var(--mono); font-size: 12px; letter-spacing: 0.24em;
   color: var(--ink-soft); padding: 14px 0;
   animation: tw-scroll 60s linear infinite;
+  /* own layer, so the loop runs on the compositor instead of repainting */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
+/* paused unless the wall is actually on screen -- these ran forever otherwise,
+   compositing behind eight screens of page */
+.toolwall:not(.tw-on) .tr-inner { animation-play-state: paused; }
 .toolrow.reverse .tr-inner { animation-direction: reverse; animation-duration: 75s; }
 @keyframes tw-scroll { to { transform: translateX(-100%); } }
 .toolwall:hover .tr-inner { animation-play-state: paused; }
@@ -653,3 +661,18 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
 .lang-btn:focus-visible { outline: 1px solid #f0413f; outline-offset: 3px; }
 .lang-sep { color: #4a4a50; font-size: .68rem; }
 
+
+
+/* ---------- scroll cost on phones ----------
+   backdrop-filter re-rasterises the sticky header on every scroll frame, which
+   is cheap on a desktop GPU and not on a phone. Below 700px the header goes
+   opaque instead -- visually near-identical over this palette. */
+@media (max-width: 700px) {
+  header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--paper);
+  }
+  /* the ring animation is decoration; it does not need to run for eight screens */
+  .phone-ring:not(.pr-on) img { animation-play-state: paused; }
+}
