@@ -165,30 +165,92 @@
           <p data-de="Eine Software, die jedes KI-Werkzeug bedient, für das Sie zahlen. Ihr Team lernt ein Fenster und bekommt alle.">One piece of software that runs every AI tool you pay for. Your team learns one window and gets all of them.</p>
         </div>
       </div>
-      <div class="app-mock reveal" aria-hidden="true">
+      <div class="app-mock reveal" role="region" aria-label="NL/OS control centre — a mock of the operating system, four tabs">
         <div class="am-titlebar">
           <span class="am-dots"><i></i><i></i><i class="am-dot-red"></i></span>
           <span class="am-title mono" data-de="NL/OS — Leitstand">NL/OS — control centre</span>
           <span class="am-user mono">CB/01</span>
         </div>
         <div class="am-body">
-          <div class="am-side mono">
-            <span class="am-active" data-de="Übersicht">Overview</span>
-            <span data-de="Projekte">Projects</span>
-            <span data-de="Kosten">Costs</span>
-            <span data-de="Team">Team</span>
+          <div class="am-side mono" role="tablist" aria-label="Screens">
+            <button type="button" class="am-tab am-active" role="tab" data-view="overview" aria-selected="true" aria-controls="am-v-overview" data-de="Übersicht">Overview</button>
+            <button type="button" class="am-tab" role="tab" data-view="projects" aria-selected="false" aria-controls="am-v-projects" tabindex="-1" data-de="Projekte">Projects</button>
+            <button type="button" class="am-tab" role="tab" data-view="costs" aria-selected="false" aria-controls="am-v-costs" tabindex="-1" data-de="Kosten">Costs</button>
+            <button type="button" class="am-tab" role="tab" data-view="team" aria-selected="false" aria-controls="am-v-team" tabindex="-1" data-de="Team">Team</button>
           </div>
           <div class="am-main">
-            <div class="am-stats">
-              <div class="am-stat"><span class="mono" data-de="Renders in Warteschlange">Renders queued</span><b>4</b><i style="--w:40%"></i></div>
-              <div class="am-stat"><span class="mono" data-de="Tokens heute">Tokens today</span><b>1.2M</b><i style="--w:72%"></i></div>
-              <div class="am-stat"><span class="mono" data-de="Ausgaben heute">Spend today</span><b>€118</b><i class="am-orange" style="--w:38%"></i></div>
+
+            <div class="am-view" role="tabpanel" id="am-v-overview" data-view="overview">
+              <div class="am-stats">
+                <div class="am-stat"><span class="mono" data-de="Renders in Warteschlange">Renders queued</span><b>4</b><i style="--w:40%"></i></div>
+                <div class="am-stat"><span class="mono" data-de="Tokens heute">Tokens today</span><b>1.2M</b><i style="--w:72%"></i></div>
+                <div class="am-stat"><span class="mono" data-de="Ausgaben heute">Spend today</span><b>€118</b><i class="am-orange" style="--w:38%"></i></div>
+              </div>
+              <div class="am-panel">
+                <span class="mono am-panel-label" id="am-month" data-de="Bildbudget · August">Image budget · August</span>
+                <div class="am-budget"><i style="width:64%"></i><em style="left:85%"></em></div>
+                <div class="am-budget-meta mono"><span data-de="€128 verbraucht">€128 used</span><span data-de="Limit €200">cap €200</span></div>
+              </div>
+              <div class="am-panel">
+                <span class="mono am-panel-label" data-de="Aktivität · heute">Activity · today</span>
+                <div class="am-rows mono">
+                  <div><b>14:02</b><span data-de="P-013 · Shot 07 gerendert, 1080p">P-013 · shot 07 rendered, 1080p</span><em>Kling</em></div>
+                  <div><b>11:48</b><span data-de="P-014 · 14 Bilder zur Prüfung">P-014 · 14 images out for review</span><em>Gemini</em></div>
+                  <div><b>09:15</b><span data-de="Gedächtnis · 3 Entscheidungen gespeichert">Memory · 3 decisions saved</span><em>Claude</em></div>
+                </div>
+              </div>
             </div>
-            <div class="am-panel">
-              <span class="mono am-panel-label" data-de="Bildbudget · August">Image budget · August</span>
-              <div class="am-budget"><i style="width:64%"></i><em style="left:85%"></em></div>
-              <div class="am-budget-meta mono"><span data-de="€128 verbraucht">€128 used</span><span data-de="Limit €200">cap €200</span></div>
+
+            <div class="am-view" role="tabpanel" id="am-v-projects" data-view="projects" hidden>
+              <div class="am-stats am-stats-2">
+                <div class="am-stat"><span class="mono" data-de="Aktive Projekte">Active projects</span><b>4</b><i style="--w:50%"></i></div>
+                <div class="am-stat"><span class="mono" data-de="Ausgaben diesen Monat">Spend this month</span><b>€1,340</b><i class="am-orange" style="--w:56%"></i></div>
+              </div>
+              <div class="am-panel">
+                <span class="mono am-panel-label" data-de="Projekte · nach Aktivität">Projects · by activity</span>
+                <div class="am-rows mono">
+                  <div><b>P-014</b><span data-de="Herbstkampagne · 14 Renders">Autumn campaign · 14 renders</span><em data-de="in Prüfung">in review</em></div>
+                  <div><b>P-013</b><span data-de="Produktfilm v2 · 3 Shots in der Schlange">Product film v2 · 3 shots queued</span><em class="am-live" data-de="rendert">rendering</em></div>
+                  <div><b>P-011</b><span data-de="Onboarding-Deck · 22 Seiten">Onboarding deck · 22 pages</span><em data-de="fertig">done</em></div>
+                  <div><b>P-009</b><span data-de="Markensprache · heute aktualisiert">Brand voice memory · updated today</span><em class="am-live">live</em></div>
+                </div>
+              </div>
             </div>
+
+            <div class="am-view" role="tabpanel" id="am-v-costs" data-view="costs" hidden>
+              <div class="am-panel">
+                <span class="mono am-panel-label" data-de="Ausgaben heute · nach Dienst">Spend today · by service</span>
+                <div class="am-bars mono">
+                  <div><span>Claude</span><i style="--w:35%"></i><b>€41</b></div>
+                  <div><span>Kling</span><i style="--w:28%"></i><b>€33</b></div>
+                  <div><span data-de="Gemini Bild">Gemini image</span><i style="--w:24%"></i><b>€28</b></div>
+                  <div><span>ElevenLabs</span><i style="--w:8%"></i><b>€9</b></div>
+                  <div><span data-de="Speicher">Storage</span><i style="--w:6%"></i><b>€7</b></div>
+                </div>
+                <div class="am-budget-meta mono"><span data-de="Gesamt €118">total €118</span><span data-de="Tageslimit €150">day cap €150</span></div>
+                <div class="am-rows am-rows-caps mono">
+                  <div><b>CAP</b><span data-de="Pro Werkzeug · pro Projekt · pro Monat">Per tool · per project · per month</span><em data-de="3 aktiv">3 active</em></div>
+                  <div><b>ALERT</b><span data-de="Bei 80 % geht eine Nachricht an CB/01">At 80 % a note goes to CB/01</span><em data-de="an">on</em></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="am-view" role="tabpanel" id="am-v-team" data-view="team" hidden>
+              <div class="am-stats am-stats-2">
+                <div class="am-stat"><span class="mono" data-de="Plätze">Seats</span><b>6 / 8</b><i style="--w:75%"></i></div>
+                <div class="am-stat"><span class="mono" data-de="Heute aktiv">Active today</span><b>4</b><i style="--w:50%"></i></div>
+              </div>
+              <div class="am-panel">
+                <span class="mono am-panel-label" data-de="Monatsbudget pro Person">Monthly budget per person</span>
+                <div class="am-rows mono">
+                  <div><b>CB/01</b><span data-de="Produktion · Admin">Production · admin</span><em>€48 / €80</em></div>
+                  <div><b>MK/02</b><span data-de="Schnitt">Edit</span><em>€31 / €60</em></div>
+                  <div><b>JS/03</b><span>Design</span><em>€24 / €40</em></div>
+                  <div><b>TR/04</b><span data-de="Text · Stimme">Copy · voice</span><em>€15 / €40</em></div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -505,6 +567,48 @@
       if (window.__lang === 'de') apply('de');
       else apply('en');
     });
+  })();
+</script>
+<script>
+  // the mockup's tabs switch screens; arrow keys move between them
+  (function () {
+    var mock = document.querySelector('.app-mock');
+    if (!mock) return;
+    var tabs = [].slice.call(mock.querySelectorAll('.am-tab'));
+    var views = [].slice.call(mock.querySelectorAll('.am-view'));
+    function show(name, focus) {
+      tabs.forEach(function (t) {
+        var on = t.dataset.view === name;
+        t.classList.toggle('am-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      views.forEach(function (v) { v.hidden = v.dataset.view !== name; });
+    }
+    mock.addEventListener('click', function (e) {
+      var t = e.target.closest('.am-tab');
+      if (t) show(t.dataset.view);
+    });
+    mock.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var t = e.target.closest('.am-tab');
+      if (!t) return;
+      var i = tabs.indexOf(t);
+      var n = (i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+      show(tabs[n].dataset.view, true);
+      e.preventDefault();
+    });
+  })();
+  // the mockup's budget panel names the current month, so it never reads stale
+  (function () {
+    var el = document.getElementById('am-month');
+    if (!el) return;
+    var now = new Date();
+    try {
+      el.textContent = 'Image budget \u00b7 ' + now.toLocaleDateString('en-GB', { month: 'long' });
+      el.dataset.de = 'Bildbudget \u00b7 ' + now.toLocaleDateString('de-DE', { month: 'long' });
+    } catch (e) {}
   })();
 </script>
 <script>
