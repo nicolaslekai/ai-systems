@@ -3,13 +3,14 @@
 Leader lines stop at the brain's real silhouette, measured off the source pixels,
 so a label never floats in empty space or lands on top of the cloud.
 """
-import sys
+import os, sys
 from PIL import Image, ImageDraw, ImageFont
 
-SRC = "/Users/nicolaslekai/Documents/Claude/Projects/NORMAL AI CONSULTANTS/assets/brain_cloud.jpg"
+DARK = os.environ.get("DARK") == "1"   # dark plate: light cloud on charcoal
+SRC = os.environ.get("SRC") or "/Users/nicolaslekai/Documents/Claude/Projects/NORMAL AI CONSULTANTS/assets/" + ("brain_cloud_dark.jpg" if DARK else "brain_cloud.jpg")
 MONO = "/System/Library/Fonts/SFNSMono.ttf"
 RED = (240, 65, 63)
-INK = (26, 26, 28)
+INK = (240, 239, 236) if DARK else (26, 26, 28)
 
 W = int(sys.argv[1]) if len(sys.argv) > 1 else 2200
 FS = float(sys.argv[2]) if len(sys.argv) > 2 else 24.0   # px on the W-wide canvas
@@ -31,7 +32,8 @@ ROWS_R = [0.25, 0.40, 0.56, 0.70]
 src = Image.open(SRC).convert("RGB")
 sw, sh = src.size
 spx = src.load()
-LUM_MAX = 195          # below this a pixel belongs to the cloud
+LUM_MAX = 195          # below this a pixel belongs to the cloud (light plate)
+LUM_MIN = 100          # above this a pixel belongs to the cloud (dark plate)
 CLUSTER_GAP = sw * 0.03
 
 
@@ -41,7 +43,8 @@ def silhouette(fy):
     xs = []
     for x in range(sw):
         r, g, b = spx[x, y]
-        if 0.299 * r + 0.587 * g + 0.114 * b < LUM_MAX:
+        lum = 0.299 * r + 0.587 * g + 0.114 * b
+        if (lum > LUM_MIN) if DARK else (lum < LUM_MAX):
             xs.append(x)
     if not xs:
         return 0.42, 0.58
