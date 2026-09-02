@@ -679,3 +679,90 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   /* the ring animation is decoration; it does not need to run for eight screens */
   .phone-ring:not(.pr-on) img { animation-play-state: paused; }
 }
+
+/* ============ TYPOGRAPHIC PASS (2026-09-02) ============
+   Images untouched. Every section now opens the same way — hairline, kicker,
+   running index — so the page reads as one numbered briefing instead of five
+   differently dressed blocks. Body grey lifted a step for legibility. */
+:root { --ink-soft: #b1b1b9; }
+body { line-height: 1.6; }
+
+/* section rhythm: one hairline above every section, none doubled */
+.hero { border-bottom: 0; }
+main > section { border-top: 1px solid var(--line); }
+section { padding: 76px 0 84px; }
+
+/* section head — kicker left, running index right */
+.sec-index {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  margin-bottom: 28px;
+}
+.sec-index .kicker { color: var(--red); }
+.sec-head .sec-index .idx-r, .sec-head-big .sec-index .idx-r { color: var(--ink-soft); }
+.sec-head-big .kicker { margin-bottom: 0; }
+.sec-head { display: block; margin-bottom: 44px; }
+.sec-head h2 { font-size: clamp(30px, 4vw, 52px); letter-spacing: -0.035em; line-height: 1; }
+
+/* hero: the value line carries weight; the meta is a small spec table */
+.hero-foot { gap: 56px; margin-top: 44px; }
+.hero-foot p {
+  font-size: clamp(18px, 2vw, 22px); line-height: 1.42; letter-spacing: -0.012em;
+  color: var(--ink-soft); max-width: 26em;
+}
+.hero-foot p strong { font-weight: 600; }
+.hero-meta { text-align: left; margin: 0; }
+.hero-meta div {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 24px;
+  padding: 9px 0;
+}
+.hero-meta dt { color: var(--ink-soft); }
+.hero-meta dd { color: var(--ink); margin: 0; text-align: right; }
+.hero-meta dd a { text-decoration: none; }
+.hero-meta dd a:hover { color: var(--red); }
+
+/* fact lists: label column + text, the way a brief lays out its terms */
+.why-facts div {
+  display: grid; grid-template-columns: 150px 1fr; gap: 6px 24px; align-items: baseline;
+  padding: 16px 0; font-size: 15.5px; line-height: 1.5;
+}
+.why-facts strong {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--red); font-weight: 400; margin: 0; display: block; padding-top: 3px;
+}
+.brain-facts { max-width: 720px; }
+
+/* "under the hood" is a sub-head of the system, not a second headline */
+.toolwall-label {
+  font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.03em; margin: 60px 0 0;
+}
+.toolwall-label + .toolwall { margin-top: 20px; }
+
+/* services & process copy */
+.svc-row ul { font-size: 15.5px; }
+.svc-row li { padding: 4px 0 4px 22px; }
+.svc-row li::before {
+  content: ""; width: 12px; height: 1px; background: var(--red); top: 15px; font-size: 0;
+}
+.svc-row li a { color: var(--ink); text-decoration-color: var(--red); text-underline-offset: 3px; }
+.svc-row li a:hover { color: var(--red); }
+.step p { font-size: 15px; line-height: 1.55; }
+.step h3 { font-size: 22px; }
+
+/* footer: bio above the legal line, legal line last */
+.bio-note { margin-top: 64px; }
+.foot-bottom { margin-top: 56px; }
+.bio-note p { font-size: 15.5px; }
+
+@media (max-width: 860px) {
+  section { padding: 60px 0 68px; }
+  .sec-index { margin-bottom: 22px; }
+  .hero-foot { gap: 32px; }
+  .why-facts div { grid-template-columns: 1fr; gap: 4px; }
+  .hero-meta div { flex-wrap: wrap; gap: 4px 16px; }
+  .hero-meta dd { text-align: left; }
+}
+.why-facts div { grid-template-columns: 172px 1fr; }
+.why-facts strong { white-space: nowrap; }
+.chart-legend { flex-wrap: wrap; gap: 10px 22px; }
+.chart-legend span { white-space: nowrap; }
+@media (max-width: 860px) { .why-facts div { grid-template-columns: 1fr; } }
