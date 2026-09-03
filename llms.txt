@@ -22,7 +22,7 @@ The system keeps a long-term memory of the company: projects, decisions and pref
 
 ## How the work runs
 
-- Phase 01, audit (about 2 weeks) — mapping the real workflows with the teams, ending in a written brief with the hours and the costs in it
+- Phase 01, audit (about 5 days) — mapping the real workflows with the teams, ending in a written brief with the hours and the costs in it
 - Phase 02, build (about 4 to 8 weeks) — the highest-value systems built in the company's own stack, shipped in weekly increments the client can veto
 - Phase 03, embed (ongoing) — training the people, documenting everything, then stepping back; optional retainer as models change
 
