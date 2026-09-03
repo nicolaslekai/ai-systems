@@ -280,7 +280,6 @@
     .plate img { aspect-ratio: 1 / 1; }
     /* keep each subject in frame under the tighter crop */
     .hero-plate img { object-position: 78% center; }
-    #costs .plate img { object-position: 70% center; }
   }
 
   /* reveal on scroll */
