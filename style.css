@@ -1,12 +1,12 @@
   :root {
-    --paper: #1a1a1c;
-    --paper-2: #222225;
+    --paper: #343436;
+    --paper-2: #3c3c3f;
     --ink: #f0efec;
     --ink-soft: #a3a3ab;
     --red: #f0413f;
     --cyan: #1ab6d1;
-    --line: #36363b;
-    --dark: #060608;
+    --line: #505055;
+    --dark: #202022;
     --mono: "SF Mono", "IBM Plex Mono", "Menlo", "Courier New", monospace;
     --grot: "Helvetica Neue", "Inter", "Arial Narrow", Helvetica, Arial, sans-serif;
   }
