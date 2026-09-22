@@ -542,7 +542,7 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
    Below 860px the plate crops to 4:3 and that baked type would be a few pixels
    tall, so the phone gets the clean plate plus this list — in normal flow, so
    nothing can drift. */
-.brain-plate { position: relative; }
+.brain-plate { position: relative; margin-top: 36px; }
 .brain-list { display: none; }
 @media (max-width: 860px) {
   .brain-list {
