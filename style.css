@@ -226,11 +226,18 @@
 
   /* ============ CONTACT / FOOTER (dark, faint scanlines) ============ */
   footer {
-    background:
-      repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 4px),
-      var(--dark);
+    background: var(--dark);
     color: #e8e4f0;
     padding: 100px 0 40px;
+  }
+  /* the scanline texture only reads as texture on high-density screens; on 1x
+     monitors (Windows at 100-150 % scaling) the 1px lines become hard stripes */
+  @media (min-resolution: 2dppx) {
+    footer {
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 4px),
+        var(--dark);
+    }
   }
   footer .kicker { color: var(--cyan); display: block; margin-bottom: 26px; }
   footer h2 { color: #fff; font-size: clamp(34px, 5.4vw, 72px); }
