@@ -40,7 +40,7 @@
     }
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=3b">
+<link rel="stylesheet" href="style.css?v=3c">
 
 <script type="application/ld+json">
 {
@@ -586,10 +586,16 @@
       var r = box.getBoundingClientRect(), run = r.height - stage.offsetHeight, top = (document.querySelector("header") || { offsetHeight: 0 }).offsetHeight;
       return run > 0 ? Math.min(1, Math.max(0, (top - r.top) / run)) : 1;
     }
-    function fit() {   // the tree fills what the stage leaves under the headline (world box 1280 x 916), never wider than the column
-      var avail = stage.clientHeight - head.offsetHeight - lead.offsetHeight - 72, colw = window.innerWidth <= 860 ? window.innerWidth : sec.querySelector(".tree-stage-in").clientWidth;
-      var w = Math.min(colw, avail * 1280 / 916);
+    // the ground line runs from -560 to 560 in the 1280 wide world box: it starts 6.25 % into the canvas, and the canvas is
+    // pulled left by that much, so the tree's base starts on the page's text edge (left bound, as every other picture)
+    var INSET = 80 / 1280;
+    function fit() {   // the tree fills what the stage leaves under the headline (world box 1280 x 916)
+      var inner = sec.querySelector(".tree-stage-in"), cs = getComputedStyle(inner);
+      var colw = inner.clientWidth - parseFloat(cs.paddingLeft) - (window.innerWidth <= 860 ? 0 : parseFloat(cs.paddingRight));   // phones: up to the screen edge
+      var avail = stage.clientHeight - head.offsetHeight - lead.offsetHeight - 72;
+      var w = Math.min(colw / (1 - INSET), avail * 1280 / 916);
       canvas.style.width = Math.floor(w) + "px"; canvas.style.height = Math.floor(w * 916 / 1280) + "px";
+      canvas.style.marginLeft = -Math.round(w * INSET) + "px";
       tree.resize(); drawn = -2;
     }
     function frame() {

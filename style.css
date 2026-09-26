@@ -57,7 +57,7 @@ nav.links a { font-size: 13px; text-decoration: none; color: var(--soft-d); tran
 nav.links a:hover { color: var(--ink-d); }
 
 /* ============ TILES ============ */
-.tile { padding: var(--pad) 0; }   /* left bound (Nicky, 26.09: "let's not center the text blocks") */
+.tile { padding: var(--pad) 0; overflow-x: clip; }   /* left bound (Nicky, 26.09: "let's not center the text blocks") */
 .tile.dark { background: var(--dark); color: var(--ink-d); }
 .tile.light { background: var(--light); color: var(--ink-l); }
 .tile-next { padding-top: 0; }   /* a second tile in the same colour: the space above is the previous tile's */
@@ -80,7 +80,7 @@ h3 { font-size: 21px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02e
    text's edge; --in = the content's left inset as a share of the clip width */
 .clip { --w: 100%; --in: 0; width: var(--w); margin: clamp(40px, 5vw, 64px) 0 0 calc(var(--w) * var(--in) * -1); }
 .clip video { width: 100%; height: auto; background: transparent; }
-.clip-ui { --w: min(920px, 100%); --in: 0.038; }        /* window edge 45 of 1184 */
+.clip-ui { --w: min(920px, 100%); --in: 0.041; }        /* window edge 48 of 1184 */
 .clip-auto { --w: min(1120px, 100%); --in: 0.0224; }    /* tile edge 39 of 1744 */
 .clip-secure { --w: min(1000px, 100%); --in: 0.0278; }  /* laptop box 40 of 1440 */
 .clip-phone { --w: min(360px, 76vw); --in: 0.0875; }    /* phone edge 56 of 640 */
@@ -110,6 +110,7 @@ h3 { font-size: 21px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02e
   font-size: 15px; color: var(--soft-d); transition: background 0.2s, color 0.2s;
 }
 .lang-btn:hover { color: var(--ink-d); }
+@media (pointer: coarse) { .lang-btn { min-height: 44px; } }   /* touch: Apple's 44 px minimum target */
 .lang-btn.is-on { background: var(--red); color: #fff; }
 .lang-btn:active, .onb-go:active, .onb-chip:active, .film-play:active .film-dot { transform: scale(0.95); }
 .hero-plate { margin: 28px 0 0; }
@@ -145,7 +146,7 @@ h3 { font-size: 21px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02e
 .tree-scroll { position: relative; height: 220vh; }   /* the tree starts grown (T 2.0), so the run is shorter */
 .tree-stage { position: sticky; top: var(--navh, 53px); height: calc(100vh - var(--navh, 53px)); height: calc(100svh - var(--navh, 53px)); overflow: hidden; }
 .tree-stage-in { display: flex; flex-direction: column; height: 100%; padding-top: clamp(28px, 5vh, 56px); }
-.tree-canvas-box { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: flex-start; margin-top: 12px; }
+.tree-canvas-box { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: flex-start; margin-top: 12px; }   /* JS pulls the canvas left so the ground line starts on the text edge */
 .tree-canvas {
   height: auto; max-width: 100%; background: transparent;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 4%, #000 96%, transparent 100%);
@@ -166,10 +167,12 @@ h3 { font-size: 21px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02e
 
 /* ============ CONTACT ============ */
 .contact { padding-bottom: 48px; }
-.contact-row { display: flex; align-items: center; justify-content: space-between; gap: clamp(32px, 6vw, 88px); max-width: 1080px; }
+/* on the page's column grid: the copy spans two columns, the robot starts where the third column of services and phases starts */
+.contact-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; align-items: center; max-width: 1080px; }
+.contact-copy { grid-column: span 2; }
 .mail { display: inline-block; margin-top: 14px; font-size: clamp(19px, 1.65vw, 23px); color: var(--red); text-decoration: none; }
 .mail:hover { text-decoration: underline; text-underline-offset: 4px; }
-.contact-robot { width: clamp(220px, 24vw, 320px); text-decoration: none; }
+.contact-robot { width: 100%; max-width: 320px; text-decoration: none; }
 .contact-robot video { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 18px; }
 .robot-hint { display: block; margin-top: 10px; font-size: 14px; color: var(--soft-d); transition: color 0.2s; }
 .contact-robot:hover .robot-hint { color: var(--ink-d); }
@@ -244,15 +247,18 @@ h3 { font-size: 21px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02e
 @media (max-width: 860px) {
   nav.links { display: none; }
   .wrap { padding: 0 20px; }
-  .clip-ui, .clip-auto, .clip-secure { --w: calc(100% + 40px); margin-left: -20px; }   /* full bleed */
+  /* to the right edge of the screen, the picture still starting on the text edge */
+  .clip-ui, .clip-auto, .clip-secure { --w: calc((100% + 20px) / (1 - var(--in))); }
   .clip-phases { display: none; }   /* the dots are too small to read at phone width; the columns carry the phases */
   .cols { grid-template-columns: 1fr; gap: 28px; max-width: 420px; }
   .cols-phases { gap: 28px; }
   .cols-phases { margin-top: clamp(40px, 5vw, 64px); }
   .tree-scroll { height: 190vh; }
-  .tree-canvas-box { flex: none; justify-content: center; margin: auto -20px 0; }   /* tree and sentence sit together, centred under the headline */
+  .tree-canvas-box { flex: none; margin: auto 0 0; }   /* tree and sentence sit together, centred in the height under the headline */
   .tree-lead { margin-bottom: auto; padding-bottom: 24px; }
-  .contact-row { flex-direction: column; align-items: flex-start; gap: 32px; }
+  .contact-row { grid-template-columns: 1fr; gap: 32px; }
+  .contact-copy { grid-column: auto; }
+  .contact-robot { max-width: 320px; }
   .onb { padding: 24px 20px; }
   .onb-fields { grid-template-columns: 1fr; }
   .hero-film-wrap { border-radius: 12px; }
