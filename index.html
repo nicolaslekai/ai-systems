@@ -41,6 +41,43 @@
   })();
 </script>
 <link rel="stylesheet" href="style.css?v=3g">
+<script>
+  // diagnostics, only with ?debug in the address (26.09: "at the first scroll on the phone the page jumps back to the top"):
+  // shows on the phone whether the page was reloaded by the browser, every big scroll jump, resize, error and load time
+  (function () {
+    if (!/[?&]debug/.test(location.search)) return;
+    var t0 = Date.now(), lines = [], box, n = 0;
+    try { n = +(sessionStorage.getItem('nl-dbg-n') || 0) + 1; sessionStorage.setItem('nl-dbg-n', n); } catch (e) {}
+    var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0] || {}).type || '?';
+    function L(m) { lines.push(((Date.now() - t0) / 1000).toFixed(1) + 's ' + m); if (lines.length > 14) lines.shift(); if (box) box.textContent = lines.join('\n'); }
+    L('load #' + n + ' in this tab, nav=' + nav + ', ' + innerWidth + 'x' + innerHeight + ', ua ' + (navigator.userAgent.match(/(OS [\d_]+|Version\/[\d.]+|CriOS|FxiOS|WhatsApp|Instagram)/g) || []).join(' '));
+    document.addEventListener('DOMContentLoaded', function () {
+      box = document.createElement('pre');
+      box.style.cssText = 'position:fixed;left:6px;right:6px;bottom:6px;z-index:9999;margin:0;padding:8px;font:11px/1.35 ui-monospace,Menlo,monospace;color:#0f0;background:rgba(0,0,0,.85);border-radius:8px;white-space:pre-wrap;pointer-events:none';
+      document.body.appendChild(box); L('DOMContentLoaded');
+    });
+    addEventListener('load', function () { L('load'); });
+    addEventListener('resize', function () { L('resize ' + innerWidth + 'x' + innerHeight); });
+    addEventListener('pageshow', function (e) { L('pageshow persisted=' + e.persisted); });
+    addEventListener('pagehide', function () { L('pagehide'); });
+    document.addEventListener('visibilitychange', function () { L('visibility ' + document.visibilityState); });
+    addEventListener('error', function (e) { L('ERROR ' + (e.message || (e.target && (e.target.currentSrc || e.target.src)) || '?')); }, true);
+    addEventListener('unhandledrejection', function (e) { L('REJECT ' + (e.reason && e.reason.message)); });
+    // upward travel of more than 200 px without a finger on the glass (also catches smooth scrolls: html has scroll-behavior: smooth)
+    var touching = false, lastTouchEnd = 0, peak = 0, last = 0, reported = false;
+    addEventListener('touchstart', function () { touching = true; }, { passive: true, capture: true });
+    addEventListener('touchend', function () { touching = false; lastTouchEnd = Date.now(); }, { passive: true, capture: true });
+    addEventListener('touchcancel', function () { touching = false; lastTouchEnd = Date.now(); }, { passive: true, capture: true });
+    addEventListener('hashchange', function () { L('hashchange ' + location.hash); });
+    document.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('a,button'); if (a) L('click ' + (a.getAttribute('href') || a.className || a.tagName)); }, true);
+    (function tick() {
+      var y = Math.round(scrollY);
+      if (y >= last) { if (y > peak || reported) { peak = y; reported = false; } }
+      if (!reported && peak - y > 200) { reported = true; L('UP ' + peak + ' -> ' + y + (touching ? ' (finger down)' : lastTouchEnd ? ' (no finger, lifted ' + ((Date.now() - lastTouchEnd) / 1000).toFixed(1) + 's ago)' : ' (never touched)')); }
+      last = y; requestAnimationFrame(tick);
+    })();
+  })();
+</script>
 
 <script type="application/ld+json">
 {
