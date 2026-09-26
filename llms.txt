@@ -8,7 +8,11 @@ Every day a company creates knowledge: in briefs and meetings, research, edits a
 
 ## The sidecar
 
-Everyone else gets a sidecar: a small app shaped to their role. People write or speak in plain words and the AI does the rest, for example cutting today's interview to a 60-second 9:16 clip with subtitles, ready for review. It saves time every week on editing, design, motion graphics, transcripts, social media and planning on one timeline, while the creativity and the decisions stay with the people.
+Everyone else gets a sidecar: a small app into the operating system, shaped to their role. People write or speak in plain words and the system does the rest, for example cutting today's interview to a 60-second 9:16 clip with subtitles, ready for review.
+
+## What the operating system automates
+
+The operating system takes over the routine: editing, design, copywriting, code, finances and planning on one timeline, and many more. The creativity and the decisions stay with the people.
 
 ## Services
 
