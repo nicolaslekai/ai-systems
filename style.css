@@ -509,13 +509,13 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
 .hero-plate.film-on .hero-film-wrap { display: block; }
 .hero-plate.film-on .phone-ring { display: none; }
 .hero-film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #1c1c1e; }
-/* the whole frame is the button; the pill sits beside the poster's headline, in the empty top right above the six tiles */
+/* the whole frame is the button; the pill sits in the middle of the poster (Nicky, 26.09: "put the play icon in the middle") */
 .film-play {
   position: absolute; inset: 0; display: block;
   border: 0; padding: 0; background: transparent; cursor: pointer;
 }
 .film-pill {
-  position: absolute; right: 6.7%; top: 21%; transform: translateY(-50%);
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
   display: inline-flex; align-items: center; gap: 14px;
   padding: 8px 20px 8px 8px; border-radius: 999px;
   background: #fff; border: 1px solid rgba(0,0,0,0.08);
@@ -528,7 +528,7 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent #fff;
 }
 .film-label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #1d1d1f; white-space: nowrap; }
-.film-play:hover .film-pill { transform: translateY(-50%) scale(1.04); box-shadow: 0 16px 40px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.06); }
+.film-play:hover .film-pill { transform: translate(-50%, -50%) scale(1.04); box-shadow: 0 16px 40px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.06); }
 .film-play:focus-visible { outline: none; }
 .film-play:focus-visible .film-pill { outline: 2px solid var(--red); outline-offset: 4px; }
 .hero-film-wrap.playing .film-play { display: none; }
@@ -544,7 +544,7 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   .film-dot { box-shadow: 0 8px 22px rgba(0,0,0,0.22); }
   .film-label { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { .film-pill { transition: none; } .film-play:hover .film-pill { transform: translateY(-50%); } }
+@media (prefers-reduced-motion: reduce) { .film-pill { transition: none; } .film-play:hover .film-pill { transform: translate(-50%, -50%); } }
 
 /* the film's language switch, above the film (Nicky: "make it visible so that we really know you can change the language").
    Same .lang-btn as the header switch, dressed as two pills. */
