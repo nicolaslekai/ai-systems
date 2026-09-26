@@ -42,7 +42,7 @@
     }
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=v2g">
+<link rel="stylesheet" href="style.css?v=v2h">
 
 <script type="application/ld+json">
 {
@@ -124,7 +124,6 @@
       <h1><span data-de="ki wird">make ai</span> <span class="flip-slot" id="flip-hero">work.</span></h1>
       <!-- the page's only language switch (the header one is gone): it sets the film and the whole site -->
       <div class="film-lang reveal" role="group" aria-label="Sprache / Language">
-        <span class="film-lang-label mono">Sprache · Language</span>
         <span class="film-lang-btns">
           <button type="button" class="lang-btn film-lang-btn is-on" data-lang="de" aria-pressed="true">Deutsch</button>
           <button type="button" class="lang-btn film-lang-btn" data-lang="en" aria-pressed="false">English</button>
@@ -857,14 +856,26 @@
     v.addEventListener("seeking", function () { seeking = true; });
     v.addEventListener("seeked", function () { seeking = false; tick(); });
     v.addEventListener("loadeddata", function () { tick(); });
+    v.addEventListener("timeupdate", tick);
+    v.addEventListener("ended", function () { v.pause(); });
+    // v3 (Nicky: "still not smooth enough"): forward, the video PLAYS towards the scroll position instead of seeking to it
+    // (playback decodes frame after frame at a true 25 fps; seeking on iOS lands late and steps). The speed follows the
+    // distance: fast flicks play up to 4x, a slow scroll plays slowly, and it stops where the finger stops. Scrolling back
+    // seeks (gated: never while a seek is still resolving).
+    var rate = 1;
     function draw() {
       ticking = false;
       var d = v.duration; if (!d || !isFinite(d) || still) return;
-      var target = progress() * (d - 0.04);
-      pos = pos < 0 ? target : pos + (target - pos) * 0.2;
-      if (Math.abs(target - pos) < 0.01) pos = target;
-      if (!seeking && Math.abs(v.currentTime - pos) > 0.02) { try { v.currentTime = pos; } catch (e) {} }
-      if (pos !== target || Math.abs(v.currentTime - pos) > 0.02) tick();
+      var target = progress() * (d - 0.04), ct = v.currentTime, diff = target - ct;
+      if (diff > 0.05) {
+        var r = Math.min(4, Math.max(0.5, diff * 2.2));
+        if (Math.abs(r - rate) > 0.08) { rate = r; try { v.playbackRate = r; } catch (e) {} }
+        if (v.paused) { var pp = v.play(); if (pp && pp.catch) pp.catch(function () {}); }
+      } else if (diff < -0.12) {
+        if (!v.paused) v.pause();
+        if (!seeking) { try { v.currentTime = Math.max(0, ct + diff * 0.35); } catch (e) {} }   // glide back in steps
+      } else if (!v.paused) v.pause();
+      if (Math.abs(diff) > 0.05 || !v.paused) tick();
     }
     function tick() { if (!ticking) { ticking = true; requestAnimationFrame(draw); } }
     function fit() {   // the video fills what the stage leaves under the headline, never wider than the column
