@@ -28,7 +28,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=film1">
 
 <script type="application/ld+json">
 {
@@ -125,7 +125,31 @@
             <img src="assets/robot_still.jpg" alt="A small red robot standing next to a red rotary telephone on a gray desk" width="1600" height="893">
           </video>
         </a>
+        <!-- the explainer film replaces the robot per language: a language shows the film once its data-src-* is filled -->
+        <div class="hero-film-wrap"
+             data-src-de="assets/nlos_film_de_v030.mp4" data-poster-de="assets/nlos_film_poster_de_v030.jpg"
+             data-src-en="" data-poster-en="">
+          <video class="hero-film" playsinline preload="none" width="1920" height="1080"
+                 poster="assets/nlos_film_poster_de_v030.jpg" aria-label="Der NL/OS-Erklärfilm"></video>
+          <button type="button" class="film-play" aria-label="Film abspielen">
+            <span class="film-pill">
+              <span class="film-dot" aria-hidden="true"></span>
+              <span class="film-label mono" data-de="Film ansehen · 2:15">Watch the film · 2:06</span>
+            </span>
+          </button>
+        </div>
       </figure>
+      <script>
+        // pick robot or film before the first paint, so a returning German reader never sees the robot flash
+        (function () {
+          var fig = document.currentScript.previousElementSibling, l = 'en';
+          try { if (localStorage.getItem('nl-lang') === 'de') l = 'de'; } catch (e) {}
+          if (fig.querySelector('.hero-film-wrap').getAttribute('data-src-' + l)) {
+            fig.classList.add('film-on');
+            var r = fig.querySelector('.hero-video'); r.autoplay = false; r.pause();
+          }
+        })();
+      </script>
       <div class="hero-foot">
         <p data-de="&lt;strong&gt;Ein System, Ihre Daten, Ihr Budget, Ihre Regeln:&lt;/strong&gt; maßgeschneiderte Systeme, Produktions-Pipelines, Zahlen, die Sie nachrechnen können."><strong>One system, your data, your budget, your rules:</strong> custom systems, production pipelines, numbers you can check.</p>
         <dl class="hero-meta mono">
@@ -543,6 +567,8 @@
 
       // the hero flip word belongs to the other script block
       if (window.__flipApply) window.__flipApply();
+      // the hero shows the film in languages that have one, the robot otherwise
+      if (window.__filmApply) window.__filmApply();
       // the onboarding buttons are written by JS, not markup
       if (window.__onbRefresh) window.__onbRefresh();
 
@@ -567,6 +593,45 @@
       if (window.__lang === 'de') apply('de');
       else apply('en');
     });
+  })();
+</script>
+<script>
+  // the hero film: poster + play button, loads nothing until clicked, then plays with sound and native controls
+  (function () {
+    var fig = document.querySelector('.hero-plate');
+    var wrap = fig && fig.querySelector('.hero-film-wrap');
+    if (!wrap) return;
+    var film = wrap.querySelector('.hero-film'), btn = wrap.querySelector('.film-play'), robot = fig.querySelector('.hero-video');
+    var ARIA = { en: ['The NL/OS explainer film', 'Play the film'], de: ['Der NL/OS-Erklärfilm', 'Film abspielen'] };
+    function srcFor(l) { return wrap.getAttribute('data-src-' + l) || ''; }
+    function idle() { film.pause(); film.controls = false; wrap.classList.remove('playing'); }
+
+    window.__filmApply = function () {
+      var l = window.__lang || 'en', src = srcFor(l), on = !!src;
+      fig.classList.toggle('film-on', on);
+      idle();
+      // a language switch always starts over from the poster
+      if (film.getAttribute('src')) { film.removeAttribute('src'); film.load(); }
+      if (on) film.poster = wrap.getAttribute('data-poster-' + l) || film.poster;
+      film.setAttribute('aria-label', ARIA[l][0]);
+      btn.setAttribute('aria-label', ARIA[l][1]);
+      if (robot) {
+        if (on) robot.pause();
+        else { robot.autoplay = true; var p = robot.play(); if (p) p.catch(function () {}); }
+      }
+    };
+
+    btn.addEventListener('click', function () {
+      var src = srcFor(window.__lang || 'en');
+      if (!src) return;
+      if (film.getAttribute('src') !== src) film.src = src;
+      film.controls = true;
+      wrap.classList.add('playing');
+      var p = film.play();
+      if (p) p.catch(idle);
+    });
+    // at the end the poster and the play button come back
+    film.addEventListener('ended', function () { idle(); film.load(); });
   })();
 </script>
 <script>

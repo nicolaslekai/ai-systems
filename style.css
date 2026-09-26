@@ -504,6 +504,48 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
 }
 @media (prefers-reduced-motion: reduce) { .phone-ring img { animation: none; } }
 
+/* the explainer film takes the robot's place in languages that have one (.film-on, set by JS) */
+.hero-film-wrap { display: none; position: relative; background: #f6f5f8; }
+.hero-plate.film-on .hero-film-wrap { display: block; }
+.hero-plate.film-on .phone-ring { display: none; }
+.hero-film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #f6f5f8; }
+/* the whole frame is the button; the pill sits under the poster's headline, in its empty lower left */
+.film-play {
+  position: absolute; inset: 0; display: block;
+  border: 0; padding: 0; background: transparent; cursor: pointer;
+}
+.film-pill {
+  position: absolute; left: 6.7%; top: 61%;
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 8px 20px 8px 8px; border-radius: 999px;
+  background: #fff; border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 12px 34px rgba(0,0,0,0.16), 0 2px 6px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.film-dot { position: relative; width: 52px; height: 52px; border-radius: 50%; background: var(--red); flex: none; }
+.film-dot::after {
+  content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-36%, -50%);
+  border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent #fff;
+}
+.film-label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #1d1d1f; white-space: nowrap; }
+.film-play:hover .film-pill { transform: scale(1.04); box-shadow: 0 16px 40px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.06); }
+.film-play:focus-visible { outline: none; }
+.film-play:focus-visible .film-pill { outline: 2px solid var(--red); outline-offset: 4px; }
+.hero-film-wrap.playing .film-play { display: none; }
+@media (max-width: 860px) {
+  .film-pill { gap: 10px; padding: 6px 14px 6px 6px; }
+  .film-dot { width: 40px; height: 40px; }
+  .film-dot::after { border-width: 8px 0 8px 12px; }
+  .film-label { font-size: 10px; letter-spacing: 0.14em; }
+}
+/* phones: the film is 220px tall, so only the red dot stays (the button's aria-label names it) */
+@media (max-width: 520px) {
+  .film-pill { padding: 0; background: none; border: 0; box-shadow: none; }
+  .film-dot { box-shadow: 0 8px 22px rgba(0,0,0,0.22); }
+  .film-label { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .film-pill { transition: none; } .film-play:hover .film-pill { transform: none; } }
+
 /* service strips: image fading in from the right */
 .svc-row { position: relative; }
 @media (min-width: 861px) {
