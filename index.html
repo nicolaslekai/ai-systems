@@ -40,7 +40,7 @@
     }
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=3a">
+<link rel="stylesheet" href="style.css?v=3b">
 
 <script type="application/ld+json">
 {
@@ -236,9 +236,10 @@
   <section class="tile light tile-next" id="process" aria-labelledby="process-h">
     <div class="wrap">
       <h2 class="h2 reveal" id="process-h" data-de="wie wir&lt;br&gt;&lt;em&gt;arbeiten.&lt;/em&gt;">how we<br><em>work.</em></h2>
+      <div class="phase-box">
       <figure class="clip clip-phases reveal" aria-hidden="true">
-        <video class="play-in-view only-de" muted playsinline preload="none" width="1920" height="120" poster="assets/film_phases_de_end.jpg"><source src="assets/film_phases_de.mp4" type="video/mp4"></video>
-        <video class="play-in-view only-en" muted playsinline preload="none" width="1920" height="120" poster="assets/film_phases_en_end.jpg"><source src="assets/film_phases_en.mp4" type="video/mp4"></video>
+        <video class="play-in-view only-de" muted playsinline preload="none" width="1352" height="120" poster="assets/film_phases_de_end.jpg"><source src="assets/film_phases_de.mp4" type="video/mp4"></video>
+        <video class="play-in-view only-en" muted playsinline preload="none" width="1352" height="120" poster="assets/film_phases_en_end.jpg"><source src="assets/film_phases_en.mp4" type="video/mp4"></video>
       </figure>
       <div class="cols cols-phases reveal">
         <div>
@@ -256,6 +257,7 @@
           <span class="dur" data-de="laufend">ongoing</span>
           <p data-de="Leicht gelernt, gern genutzt. Dann treten wir zurück.">Easy to learn, fun to use. Then we step back.</p>
         </div>
+      </div>
       </div>
     </div>
   </section>
@@ -569,6 +571,9 @@
     var box = sec.querySelector(".tree-scroll"), stage = sec.querySelector(".tree-stage"), head = sec.querySelector(".tree-head"), lead = sec.querySelector(".tree-lead");
     var canvas = sec.querySelector(".tree-live"), ticking = false, cur = -1, drawn = -2;
     var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Nicky: "the tree should be there already when we scroll to it, not in its full final state": the scroll starts at
+    // T 2.0 (trunk, four branches with their words, MODELL 2026) and grows it through 2027, 2028, the blossoms and the files
+    var T0 = 2.0;
     var TEXTS = {
       en: { branches: ["BRAND", "MATERIAL", "PEOPLE", "DECISIONS"], files: ["BRIEF.PDF", "INTERVIEW.MP4", "LOGO.AI", "NOTES.TXT", "BUDGET.XLSX", "CAMPAIGN.PSD"], model: "MODEL", years: ["2026", "2027", "2028"],
             aria: "A white tree grows from a seed into full red blossom as you scroll; files like brief.pdf, interview.mp4 and budget.xlsx land on the crown and link up" },
@@ -589,7 +594,7 @@
     }
     function frame() {
       ticking = false;
-      var target = progress() * tree.END;
+      var target = T0 + progress() * (tree.END - T0);
       cur = cur < 0 ? target : cur + (target - cur) * 0.14;
       if (Math.abs(target - cur) < 0.003) cur = target;
       var key = Math.round(cur * 400);

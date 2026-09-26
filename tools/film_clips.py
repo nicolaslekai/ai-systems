@@ -20,7 +20,7 @@ TILES = "/private/tmp/claude-501/-Users-nicolaslekai-Documents-Claude-Projects-W
 CLIPS = {
     "os":     {"de": (40.85, 46.10), "en": (43.90, 49.90), "crop": "1184:800:680:36", "stage": "light"},   # models, then tools
     "costs":  {"de": (46.15, 49.85), "en": (51.10, 53.85), "crop": "1184:800:680:36", "stage": "light"},   # spend counts up
-    "phases": {"de": (92.20, 96.10), "en": (96.70, 100.75), "crop": "1920:120:0:440", "stage": "light"},  # the three dots
+    "phases": {"de": (92.20, 96.10), "en": (96.70, 100.75), "crop": "1352:120:284:440", "stage": "light"},  # dot 1 left edge to dot 3 right edge (dots 89 px, 630 apart)
     "secure": {"de": (123.75, 128.35), "en": (131.00, 135.55), "crop": "1440:580:243:400", "stage": "dark"},
     "auto":   {"stage": "dark"},
 }
