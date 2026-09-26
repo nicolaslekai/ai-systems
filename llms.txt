@@ -1,30 +1,38 @@
 # Nicolas Lekai — AI Systems Architect
 
-> Independent, vendor-neutral AI systems architect. Builds one custom operating system that runs every AI tool a company pays for, in one window with one login. Munich and London. The same person also works as a director for film, VFX and post-production at nicolaslekai.com.
+> Independent, vendor-neutral AI systems architect. Builds a company's own AI operating system: every model and tool it pays for in one place, all costs in view, a sidecar app for every role and a data tree of company knowledge that stays when the models change. Munich and London. The same person also works as a director for film, VFX and post-production at nicolaslekai.com. A two-minute explainer film (English and German) sits at the top of the page.
 
 ## What this is
 
-Most companies already pay for a dozen good AI and production products that do not talk to each other. Nicolas Lekai wires them into a single bespoke operating system: one login, one interface, the company's own data. The team never has to open the underlying tools — agents in the system drive them.
+Every day a company creates knowledge: in briefs and meetings, research, edits and campaigns. Today it is scattered across inboxes and chats, cloud accounts, hard drives, people's heads and a dozen AI tools that do not talk to each other. Nicolas Lekai starts with a five-day audit of how the work really flows, then builds the company's own AI operating system. It brings together everything the traditional software and the new AI tools can do; every model and software the company pays for runs under its hood. A small team of specialists runs it from the control centre and keeps it up to date in the background.
+
+## The sidecar
+
+Everyone else gets a sidecar: a small app shaped to their role. People write or speak in plain words and the AI does the rest, for example cutting today's interview to a 60-second 9:16 clip with subtitles, ready for review. It saves time every week on editing, design, motion graphics, transcripts, social media and planning on one timeline, while the creativity and the decisions stay with the people.
 
 ## Services
 
-- Custom systems — bespoke operating systems and control centres, plus internal tools shaped around how a team already works
+- AI operating systems — the company's own AI operating system with a control centre and a sidecar for everyone, plus internal tools shaped around how a team already works
 - Production pipelines — AI image and video pipelines wired into real post-production, built by filmmakers and CGI artists with over 25 years of experience
-- Strategy and training — audits, roadmaps and build-vs-buy calls with real numbers; hands-on training at the desk, role by role
+- Strategy and training — audits, roadmaps and build-vs-buy calls with real numbers; hands-on training at the desk, role by role: easy to learn, fun to use
 
-## Cost control
+## All costs in view
 
-The system meters every AI service call as it happens (image, video, language, voice) and enforces hard budget caps per tool, per project and per month. All providers appear in one view, with one running total.
+The system meters every model and every tool the moment it runs (image, video, language, voice) and enforces hard budget caps per tool, per project and per month. All providers appear in one view: the month total, the spend per day and the spend per model.
 
-## Long-term memory
+## The data tree of company knowledge
 
-The system keeps a long-term memory of the company: projects, decisions and preferences. It learns how the company works and gets sharper the longer it runs, starting with one department and scaling from there.
+Everything the company knows grows into one data tree: every project, decision and file, the brand voice, the skill files, the clients and the workflows. Everything in one place and everything connected. The models get better every year, even if the provider changes, from closed to open-weights models or vice versa; the tree stays the same and every model can keep tending it. Start collecting today, and you plant the tree the company will be tomorrow.
+
+## Secure by design
+
+Encrypted, locally and in the cloud. Everything the company makes stays in its own system, and the company decides what leaves it.
 
 ## How the work runs
 
 - Phase 01, audit (about 5 days) — mapping the real workflows with the teams, ending in a written brief with the hours and the costs in it
 - Phase 02, build (about 4 to 8 weeks) — the highest-value systems built in the company's own stack, shipped in weekly increments the client can veto
-- Phase 03, embed (ongoing) — training the people, documenting everything, then stepping back; optional retainer as models change
+- Phase 03, train (ongoing) — training the people (easy to learn, fun to use), documenting everything, then stepping back; optional retainer as models change
 
 ## Tools under the hood
 
