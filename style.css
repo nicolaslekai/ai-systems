@@ -1,12 +1,12 @@
   :root {
-    --paper: #343436;
-    --paper-2: #3c3c3f;
+    --paper: #1a1a1c;
+    --paper-2: #222225;
     --ink: #f0efec;
     --ink-soft: #a3a3ab;
     --red: #f0413f;
     --cyan: #1ab6d1;
-    --line: #505055;
-    --dark: #202022;
+    --line: #36363b;
+    --dark: #060608;
     --mono: "SF Mono", "IBM Plex Mono", "Menlo", "Courier New", monospace;
     --grot: "Helvetica Neue", "Inter", "Arial Narrow", Helvetica, Arial, sans-serif;
   }
@@ -509,42 +509,58 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
 .hero-plate.film-on .hero-film-wrap { display: block; }
 .hero-plate.film-on .phone-ring { display: none; }
 .hero-film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #1c1c1e; }
-/* the whole frame is the button; the pill sits in the middle of the poster (Nicky, 26.09: "put the play icon in the middle") */
+/* the whole frame is the button. It must read as a video at a glance (Nicky, 26.09: "we need to know that this is a
+   video that you can play"): a big red play button with a slow halo in the middle, a label under it, a player's
+   progress bar with its knob along the bottom edge and a duration badge, all laid over the poster, not baked in */
 .film-play {
   position: absolute; inset: 0; display: block;
   border: 0; padding: 0; background: transparent; cursor: pointer;
 }
-.film-pill {
+.film-cta {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  display: inline-flex; align-items: center; gap: 14px;
-  padding: 8px 20px 8px 8px; border-radius: 999px;
-  background: #fff; border: 1px solid rgba(0,0,0,0.08);
-  box-shadow: 0 12px 34px rgba(0,0,0,0.16), 0 2px 6px rgba(0,0,0,0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  transition: transform 0.2s ease;
 }
-.film-dot { position: relative; width: 52px; height: 52px; border-radius: 50%; background: var(--red); flex: none; }
+.film-dot {
+  position: relative; width: 84px; height: 84px; border-radius: 50%; background: var(--red); flex: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35); animation: film-halo 2.6s ease-out infinite;
+}
 .film-dot::after {
   content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-36%, -50%);
-  border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent #fff;
+  border-style: solid; border-width: 14px 0 14px 22px; border-color: transparent transparent transparent #fff;
 }
-.film-label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #1d1d1f; white-space: nowrap; }
-.film-play:hover .film-pill { transform: translate(-50%, -50%) scale(1.04); box-shadow: 0 16px 40px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.06); }
+@keyframes film-halo {
+  0% { box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 0 0 rgba(240,65,63,0.5); }
+  70% { box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 0 22px rgba(240,65,63,0); }
+  100% { box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 0 0 rgba(240,65,63,0); }
+}
+.film-label {
+  font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap;
+  color: #fff; background: rgba(12,12,14,0.8); padding: 9px 16px; border-radius: 999px;
+}
+.film-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: rgba(128,128,136,0.55); }
+.film-bar::after {
+  content: ""; position: absolute; left: 14px; top: 50%; width: 13px; height: 13px; border-radius: 50%;
+  background: var(--red); transform: translate(-50%, -50%); box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+.film-time {
+  position: absolute; right: 14px; bottom: 18px; font-size: 12px; letter-spacing: 0.08em;
+  color: #fff; background: rgba(12,12,14,0.8); padding: 5px 8px; border-radius: 4px;
+}
+.film-play:hover .film-cta { transform: translate(-50%, -50%) scale(1.05); }
 .film-play:focus-visible { outline: none; }
-.film-play:focus-visible .film-pill { outline: 2px solid var(--red); outline-offset: 4px; }
+.film-play:focus-visible .film-dot { outline: 2px solid #fff; outline-offset: 4px; }
 .hero-film-wrap.playing .film-play { display: none; }
-@media (max-width: 860px) {
-  .film-pill { gap: 10px; padding: 6px 14px 6px 6px; }
-  .film-dot { width: 40px; height: 40px; }
-  .film-dot::after { border-width: 8px 0 8px 12px; }
-  .film-label { font-size: 10px; letter-spacing: 0.14em; }
-}
-/* phones: the film is 220px tall, so only the red dot stays (the button's aria-label names it) */
 @media (max-width: 520px) {
-  .film-pill { padding: 0; background: none; border: 0; box-shadow: none; }
-  .film-dot { box-shadow: 0 8px 22px rgba(0,0,0,0.22); }
-  .film-label { display: none; }
+  .film-cta { gap: 10px; }
+  .film-dot { width: 60px; height: 60px; }
+  .film-dot::after { border-width: 11px 0 11px 17px; }
+  .film-label { font-size: 10px; letter-spacing: 0.16em; padding: 7px 12px; }
+  .film-bar { height: 4px; }
+  .film-bar::after { width: 11px; height: 11px; left: 12px; }
+  .film-time { font-size: 10px; right: 10px; bottom: 13px; padding: 4px 6px; }
 }
-@media (prefers-reduced-motion: reduce) { .film-pill { transition: none; } .film-play:hover .film-pill { transform: translate(-50%, -50%); } }
+@media (prefers-reduced-motion: reduce) { .film-dot { animation: none; } .film-cta { transition: none; } }
 
 /* the film's language switch, above the film (Nicky: "make it visible so that we really know you can change the language").
    Same .lang-btn as the header switch, dressed as two pills. */
