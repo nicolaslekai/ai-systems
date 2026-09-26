@@ -17,6 +17,8 @@ The operating system takes over the routine: editing, design, copywriting, code,
 ## Services
 
 - AI operating systems — the company's own AI operating system with a control centre and a sidecar for everyone, plus internal tools shaped around how a team already works
+- Office and admin — invoices, receipts, tax paperwork and filing: the operating system prepares, people sign off
+- Web and social media — website, social media and newsletters in the company's brand voice, planned on one timeline
 - Production pipelines — AI image and video pipelines wired into real post-production, built by filmmakers and CGI artists with over 25 years of experience
 - Strategy and training — audits, roadmaps and build-vs-buy calls with real numbers; hands-on training at the desk, role by role: easy to learn, fun to use
 
