@@ -34,7 +34,7 @@
   // (which fires even if a later script fails), not on a timer: on a slow line a timer ran out before the page arrived.
   (function () {
     var l = 'de', h = document.documentElement;
-    try { if (localStorage.getItem('nl-lang') === 'en') l = 'en'; } catch (e) {}
+    try { if (localStorage.getItem('nl-lang-v2') === 'en') l = 'en'; } catch (e) {}
     h.lang = l;
     if (l === 'de') {
       h.classList.add('i18n-wait');
@@ -42,7 +42,7 @@
     }
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=v2e">
+<link rel="stylesheet" href="style.css?v=v2f">
 
 <script type="application/ld+json">
 {
@@ -116,13 +116,6 @@
     <a class="nav-cta" href="mailto:nicolaslekai@gmail.com?subject=Consulting%20enquiry" data-de="Briefing starten">Start a brief</a>
   </div>
   <!-- the switch sits under the nav's hairline, so it never crowds the CTA -->
-  <div class="wrap lang-bar">
-    <div class="lang" role="group" aria-label="Language / Sprache">
-      <button type="button" class="lang-btn is-on" data-lang="en" aria-pressed="true">EN</button>
-      <span class="lang-sep" aria-hidden="true">/</span>
-      <button type="button" class="lang-btn" data-lang="de" aria-pressed="false">DE</button>
-    </div>
-  </div>
 </header>
 
 <main id="top">
@@ -130,12 +123,12 @@
     <div class="wrap">
       <span class="mono kicker">AI Systems Architect</span>
       <h1><span data-de="ki wird">make ai</span> <span class="flip-slot" id="flip-hero">work.</span></h1>
-      <!-- the film's language switch: the same switch as top right (.lang-btn), so site and film always agree -->
-      <div class="film-lang reveal" role="group" aria-label="Film language / Filmsprache">
-        <span class="film-lang-label mono" data-de="Film · Sprache">Film · Language</span>
+      <!-- the page's only language switch (the header one is gone): it sets the film and the whole site -->
+      <div class="film-lang reveal" role="group" aria-label="Sprache / Language">
+        <span class="film-lang-label mono">Sprache · Language</span>
         <span class="film-lang-btns">
-          <button type="button" class="lang-btn film-lang-btn" data-lang="de" aria-pressed="false">Deutsch</button>
-          <button type="button" class="lang-btn film-lang-btn is-on" data-lang="en" aria-pressed="true">English</button>
+          <button type="button" class="lang-btn film-lang-btn is-on" data-lang="de" aria-pressed="true">Deutsch</button>
+          <button type="button" class="lang-btn film-lang-btn" data-lang="en" aria-pressed="false">English</button>
         </span>
       </div>
       <figure class="plate hero-plate reveal">
@@ -159,7 +152,7 @@
         // pick robot or film before the first paint, so a returning German reader never sees the robot flash
         (function () {
           var fig = document.currentScript.previousElementSibling, l = 'de';
-          try { if (localStorage.getItem('nl-lang') === 'en') l = 'en'; } catch (e) {}
+          try { if (localStorage.getItem('nl-lang-v2') === 'en') l = 'en'; } catch (e) {}
           if (fig.querySelector('.hero-film-wrap').getAttribute('data-src-' + l)) {
             fig.classList.add('film-on');
             var r = fig.querySelector('.hero-video'); if (r) { r.autoplay = false; r.pause(); }
@@ -567,7 +560,7 @@
       }
     };
 
-    var STORE = 'nl-lang';
+    var STORE = 'nl-lang-v2';   // v2 (26.09): German for everyone once, then the visitor's own choice
     var lang = 'de';   // German is the default since 26.09.2026; English only when chosen
     try { if (localStorage.getItem(STORE) === 'en') lang = 'en'; } catch (e) {}
 
