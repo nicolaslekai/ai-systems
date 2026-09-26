@@ -28,7 +28,21 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css?v=film1">
+<script>
+  // German is the default; English only when the reader chose it. Until the German text is swapped in (end of body),
+  // the swappable text stays invisible, so a German reader never sees English flash. The wait ends on DOMContentLoaded
+  // (which fires even if a later script fails), not on a timer: on a slow line a timer ran out before the page arrived.
+  (function () {
+    var l = 'de', h = document.documentElement;
+    try { if (localStorage.getItem('nl-lang') === 'en') l = 'en'; } catch (e) {}
+    h.lang = l;
+    if (l === 'de') {
+      h.classList.add('i18n-wait');
+      document.addEventListener('DOMContentLoaded', function () { setTimeout(function () { h.classList.remove('i18n-wait'); }, 0); });
+    }
+  })();
+</script>
+<link rel="stylesheet" href="style.css?v=film2">
 
 <script type="application/ld+json">
 {
@@ -115,6 +129,14 @@
     <div class="wrap">
       <span class="mono kicker">AI Systems Architect</span>
       <h1><span data-de="ki wird">make ai</span> <span class="flip-slot" id="flip-hero">work.</span></h1>
+      <!-- the film's language switch: the same switch as top right (.lang-btn), so site and film always agree -->
+      <div class="film-lang reveal" role="group" aria-label="Film language / Filmsprache">
+        <span class="film-lang-label mono" data-de="Film · Sprache">Film · Language</span>
+        <span class="film-lang-btns">
+          <button type="button" class="lang-btn film-lang-btn" data-lang="de" aria-pressed="false">Deutsch</button>
+          <button type="button" class="lang-btn film-lang-btn is-on" data-lang="en" aria-pressed="true">English</button>
+        </span>
+      </div>
       <figure class="plate hero-plate reveal">
         <a class="phone-ring" href="mailto:nicolaslekai@gmail.com?subject=Consulting%20enquiry" aria-label="Start a brief">
           <video class="hero-video" autoplay muted loop playsinline preload="metadata"
@@ -127,14 +149,16 @@
         </a>
         <!-- the explainer film replaces the robot per language: a language shows the film once its data-src-* is filled -->
         <div class="hero-film-wrap"
-             data-src-de="assets/nlos_film_de_v030.mp4" data-poster-de="assets/nlos_film_poster_de_v030.jpg"
+             data-src-de="assets/nlos_film_de_v030.mp4" data-poster-de="assets/nlos_film_poster_de_v030b.jpg"
              data-src-en="" data-poster-en="">
+          <!-- EN: fill data-src-en (assets/nlos_film_en_v031.mp4) + data-poster-en (assets/nlos_film_poster_en_v031.jpg)
+               and set the duration in the English label below -->
           <video class="hero-film" playsinline preload="none" width="1920" height="1080"
-                 poster="assets/nlos_film_poster_de_v030.jpg" aria-label="Der NL/OS-Erklärfilm"></video>
+                 poster="assets/nlos_film_poster_de_v030b.jpg" aria-label="Der NL/OS-Erklärfilm"></video>
           <button type="button" class="film-play" aria-label="Film abspielen">
             <span class="film-pill">
               <span class="film-dot" aria-hidden="true"></span>
-              <span class="film-label mono" data-de="Film ansehen · 2:15">Watch the film · 2:06</span>
+              <span class="film-label mono" data-de="Film ansehen · 2:15">Watch the film · 2:xx</span>
             </span>
           </button>
         </div>
@@ -142,8 +166,8 @@
       <script>
         // pick robot or film before the first paint, so a returning German reader never sees the robot flash
         (function () {
-          var fig = document.currentScript.previousElementSibling, l = 'en';
-          try { if (localStorage.getItem('nl-lang') === 'de') l = 'de'; } catch (e) {}
+          var fig = document.currentScript.previousElementSibling, l = 'de';
+          try { if (localStorage.getItem('nl-lang') === 'en') l = 'en'; } catch (e) {}
           if (fig.querySelector('.hero-film-wrap').getAttribute('data-src-' + l)) {
             fig.classList.add('film-on');
             var r = fig.querySelector('.hero-video'); r.autoplay = false; r.pause();
@@ -540,8 +564,8 @@
     };
 
     var STORE = 'nl-lang';
-    var lang = 'en';
-    try { if (localStorage.getItem(STORE) === 'de') lang = 'de'; } catch (e) {}
+    var lang = 'de';   // German is the default since 26.09.2026; English only when chosen
+    try { if (localStorage.getItem(STORE) === 'en') lang = 'en'; } catch (e) {}
 
     window.__lang = lang;
     window.__t = function (key) {
@@ -588,11 +612,10 @@
       if (btn) apply(btn.dataset.lang);
     });
 
-    // only touch the DOM once it exists; English needs no swap on a first visit
-    document.addEventListener('DOMContentLoaded', function () {
-      if (window.__lang === 'de') apply('de');
-      else apply('en');
-    });
+    // all translatable markup sits above this script, so the text is swapped before the first paint; the film, the
+    // flip word and the onboarding hook in from later script blocks, so apply runs once more when the DOM is done
+    apply(lang);
+    document.addEventListener('DOMContentLoaded', function () { apply(window.__lang); });
   })();
 </script>
 <script>

@@ -505,17 +505,17 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
 @media (prefers-reduced-motion: reduce) { .phone-ring img { animation: none; } }
 
 /* the explainer film takes the robot's place in languages that have one (.film-on, set by JS) */
-.hero-film-wrap { display: none; position: relative; background: #f6f5f8; }
+.hero-film-wrap { display: none; position: relative; background: #1c1c1e; }
 .hero-plate.film-on .hero-film-wrap { display: block; }
 .hero-plate.film-on .phone-ring { display: none; }
-.hero-film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #f6f5f8; }
-/* the whole frame is the button; the pill sits under the poster's headline, in its empty lower left */
+.hero-film { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #1c1c1e; }
+/* the whole frame is the button; the pill sits beside the poster's headline, in the empty top right above the six tiles */
 .film-play {
   position: absolute; inset: 0; display: block;
   border: 0; padding: 0; background: transparent; cursor: pointer;
 }
 .film-pill {
-  position: absolute; left: 6.7%; top: 61%;
+  position: absolute; right: 6.7%; top: 21%; transform: translateY(-50%);
   display: inline-flex; align-items: center; gap: 14px;
   padding: 8px 20px 8px 8px; border-radius: 999px;
   background: #fff; border: 1px solid rgba(0,0,0,0.08);
@@ -528,7 +528,7 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent #fff;
 }
 .film-label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #1d1d1f; white-space: nowrap; }
-.film-play:hover .film-pill { transform: scale(1.04); box-shadow: 0 16px 40px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.06); }
+.film-play:hover .film-pill { transform: translateY(-50%) scale(1.04); box-shadow: 0 16px 40px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.06); }
 .film-play:focus-visible { outline: none; }
 .film-play:focus-visible .film-pill { outline: 2px solid var(--red); outline-offset: 4px; }
 .hero-film-wrap.playing .film-play { display: none; }
@@ -544,7 +544,27 @@ footer .cross-card.cross-last { margin-top: 60px; border-color: rgba(227,174,67,
   .film-dot { box-shadow: 0 8px 22px rgba(0,0,0,0.22); }
   .film-label { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { .film-pill { transition: none; } .film-play:hover .film-pill { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .film-pill { transition: none; } .film-play:hover .film-pill { transform: translateY(-50%); } }
+
+/* the film's language switch, above the film (Nicky: "make it visible so that we really know you can change the language").
+   Same .lang-btn as the header switch, dressed as two pills. */
+.film-lang { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; margin-top: 44px; }
+.film-lang-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); }
+.film-lang-btns { display: inline-flex; gap: 8px; }
+.film-lang .lang-btn {
+  min-height: 40px; padding: 0 20px; border-radius: 999px;
+  border: 1px solid var(--line); background: transparent;
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink); transition: background .2s, border-color .2s, color .2s;
+}
+.film-lang .lang-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+.film-lang .lang-btn.is-on { background: var(--red); border-color: var(--red); color: #fff; }
+.film-lang .lang-btn:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+.hero .film-lang + .hero-plate { margin-top: 14px; }
+@media (max-width: 860px) { .film-lang { margin-top: 34px; } .hero .film-lang + .hero-plate { margin-top: 14px; } }
+
+/* German by default: until the German text is in, the swappable text and the switch states stay invisible (no English flash) */
+html.i18n-wait [data-de], html.i18n-wait .lang-btn, html.i18n-wait #flip-hero { visibility: hidden; }
 
 /* service strips: image fading in from the right */
 .svc-row { position: relative; }
