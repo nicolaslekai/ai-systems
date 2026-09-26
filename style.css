@@ -125,6 +125,7 @@ h3 { font-size: 21px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02e
 .film-dot {
   position: relative; width: 84px; height: 84px; border-radius: 50%; background: var(--red);
   animation: film-halo 2.6s ease-out infinite;
+  --halo: 22px;
 }
 .film-dot::after {
   content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-36%, -50%);
@@ -132,7 +133,7 @@ h3 { font-size: 21px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02e
 }
 @keyframes film-halo {
   0% { box-shadow: 0 0 0 0 rgba(240, 65, 63, 0.5); }
-  70% { box-shadow: 0 0 0 22px rgba(240, 65, 63, 0); }
+  70% { box-shadow: 0 0 0 var(--halo) rgba(240, 65, 63, 0); }
   100% { box-shadow: 0 0 0 0 rgba(240, 65, 63, 0); }
 }
 .film-label { font-size: 15px; color: #fff; background: rgba(29, 29, 31, 0.86); padding: 8px 16px; border-radius: 999px; white-space: nowrap; }
@@ -140,6 +141,9 @@ h3 { font-size: 21px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02e
 .film-play:focus-visible { outline: none; }
 .film-play:focus-visible .film-dot { outline: 2px solid #fff; outline-offset: 4px; }
 .hero-film-wrap.playing .film-play { display: none; }
+/* the poster's headline fills its top quarter: on narrower screens the play button sits lower, so neither the button nor
+   its pulse ever touches the text (Nicky, 26.09: "move the play button down so it doesn't overlap the text") */
+@media (max-width: 860px) { .film-cta { top: 62%; } }
 
 /* ============ DATA TREE: sticky stage, the tree grows with the scroll ============ */
 #tree { padding-top: 0; }
@@ -264,12 +268,18 @@ h3 { font-size: 21px; font-weight: 700; line-height: 1.2; letter-spacing: -0.02e
   .hero-film-wrap { border-radius: 12px; }
 }
 @media (max-width: 520px) {
-  .film-cta { gap: 10px; }
-  .film-dot { width: 64px; height: 64px; }
+  .film-cta { gap: 10px; top: 64%; }
+  .film-dot { width: 64px; height: 64px; --halo: 14px; }
   .film-dot::after { border-width: 11px 0 11px 17px; }
   .film-label { font-size: 13px; padding: 6px 13px; }
   .cross-card { flex-wrap: wrap; }
   .cross-cta { width: 100%; padding-left: 58px; }
+}
+@media (max-width: 400px) {
+  .film-cta { gap: 8px; }
+  .film-dot { width: 52px; height: 52px; --halo: 12px; }
+  .film-dot::after { border-width: 9px 0 9px 14px; }
+  .film-label { font-size: 12px; padding: 5px 11px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
