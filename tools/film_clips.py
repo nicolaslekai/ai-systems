@@ -20,11 +20,15 @@ TILES = "/private/tmp/claude-501/-Users-nicolaslekai-Documents-Claude-Projects-W
 CLIPS = {
     "os":     {"de": (40.85, 46.10), "en": (43.90, 49.90), "crop": "1184:800:680:36", "stage": "light"},   # models, then tools
     "costs":  {"de": (46.15, 49.85), "en": (51.10, 53.85), "crop": "1184:800:680:36", "stage": "light"},   # spend counts up
-    "phases": {"de": (92.20, 96.10), "en": (96.70, 100.75), "crop": "1352:120:284:440", "stage": "light"},  # dot 1 left edge to dot 3 right edge (dots 89 px, 630 apart)
-    "secure": {"de": (123.75, 128.35), "en": (131.00, 135.55), "crop": "1440:580:243:400", "stage": "dark"},
+    "phases": {"de": (92.60, 96.10), "en": (97.10, 100.75), "crop": "1352:120:284:440", "stage": "light"},  # dot 1 left edge to dot 3 right edge (dots 89 px, 630 apart)
+    "secure": {"de": (124.20, 128.35), "en": (131.30, 135.55), "crop": "1440:580:243:400", "stage": "dark"},
     "auto":   {"stage": "dark"},
 }
 PAD = 24   # auto: stage margin around the tile grid
+# Nicky (26.09): "have it be on the second box when we scroll to it for the first time so we can see something is happening":
+# the clip starts on the frame where the second tile has landed (still manual), never on the empty grid.
+# The same idea for secure (circle, laptop and cloud already there) and phases (first dot, line running): no clip starts empty.
+AUTO_START = {"de": 34, "en": 40}
 STAGE = {"light": (245, 245, 247), "dark": (28, 28, 30)}
 # measured in Chrome: plain BT.709 clips decode ~2 levels light; dark -2/-2/-1 lands at (29,28,31) on (28,28,30)
 LUT = {"dark": (2, 2, 1), "light": (2, 2, 2)}   # light: plain decode measured (247,247,249) on (245,245,247)
@@ -50,7 +54,7 @@ def cut(name, l):
     out = f"{A}/film_{name}_{l}.mp4"
     vf_tail = f"format=rgb24,{lut(c['stage'])},scale=out_color_matrix=bt709:out_range=tv,format=yuv420p"
     if name == "auto":
-        frames = sorted(glob.glob(os.path.join(TILES.format(l), "t_*.png")))
+        frames = sorted(glob.glob(os.path.join(TILES.format(l), "t_*.png")))[AUTO_START[l]:]
         if not frames:
             sys.exit(f"no tile frames for {l}: run site_clip.js {l} {TILES.format(l)} first")
         tmp = tempfile.mkdtemp(dir=os.path.dirname(TILES))

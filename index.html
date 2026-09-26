@@ -40,7 +40,7 @@
     }
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=3c">
+<link rel="stylesheet" href="style.css?v=3d">
 
 <script type="application/ld+json">
 {
@@ -548,10 +548,11 @@
         var v = e.target;
         if (e.isIntersecting && v.offsetParent !== null) {
           if (v.ended) v.currentTime = 0;
-          var p = v.play(); if (p) p.catch(function () {});
+          // blocked autoplay (iOS Low Power Mode, data saver): show the finished frame instead of waiting on the first
+          var p = v.play(); if (p) p.catch(function () { v.poster = v.poster.replace("_start.jpg", "_end.jpg"); });
         } else if (!e.isIntersecting) v.pause();
       });
-    }, { threshold: 0.35 });
+    }, { threshold: 0.25 });
     // with motion a clip waits on its first frame, so it visibly plays out; the markup's poster is the finished state
     clips.forEach(function (v) { v.poster = v.poster.replace("_end.jpg", "_start.jpg"); obs.observe(v); });
     window.__clipsApply = function () { clips.forEach(function (v) { if (v.offsetParent !== null && v.preload !== "auto") { v.preload = "auto"; v.load(); } }); };
