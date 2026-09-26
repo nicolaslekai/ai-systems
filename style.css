@@ -1003,7 +1003,7 @@ footer { padding: 72px 0 34px; }
 footer h2 { font-size: clamp(28px, 4vw, 54px); }
 .mail { font-size: clamp(14px, 1.8vw, 18px); margin-top: 24px; }
 .foot-bottom { margin-top: 64px; }
-.side-grid { grid-template-columns: 1fr minmax(240px, 300px); gap: 52px; }
+@media (min-width: 861px) { .side-grid { grid-template-columns: 1fr minmax(240px, 300px); gap: 52px; } }   /* desktop only: on phones the sidecar stacks (hotfix 26.09) */
 .tree-shot { max-width: 680px; }
 .secure-shot { max-width: 920px; margin-left: auto; margin-right: auto; }
 @media (max-width: 860px) {
