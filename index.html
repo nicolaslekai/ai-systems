@@ -40,6 +40,27 @@
     }
   })();
 </script>
+<script>
+  // Safari restores the scroll position of a reload or a back visit only when `load` fires, which on this page comes ~3 s
+  // in (WebKit holds it while the film clips load), and pulls a reader who has already scrolled back to where they were
+  // (26.09, phone diagnostics: "load" and "UP 588 -> 3, no finger" at the same moment, nav=reload). So the page restores
+  // the position itself, at DOMContentLoaded, before anyone can scroll, and never later.
+  (function () {
+    if (!('scrollRestoration' in history)) return;
+    history.scrollRestoration = 'manual';
+    var KEY = 'nl-scroll:' + location.pathname;
+    addEventListener('pagehide', function () { try { sessionStorage.setItem(KEY, String(Math.round(scrollY))); } catch (e) {} });
+    var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0] || {}).type;
+    if (nav !== 'reload' && nav !== 'back_forward') return;
+    var y = 0; try { y = +sessionStorage.getItem(KEY) || 0; } catch (e) {}
+    if (!y || location.hash) return;
+    document.addEventListener('DOMContentLoaded', function () {
+      if (scrollY > 10) return;   // the reader is already scrolling: leave them be
+      var s = document.documentElement.style, b = s.scrollBehavior;
+      s.scrollBehavior = 'auto'; window.scrollTo(0, y); s.scrollBehavior = b;   // instant, not the page's smooth scroll
+    });
+  })();
+</script>
 <link rel="stylesheet" href="style.css?v=3g">
 <script>
   // diagnostics, only with ?debug in the address (26.09: "at the first scroll on the phone the page jumps back to the top"):
