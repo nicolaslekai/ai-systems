@@ -1115,3 +1115,6 @@ section { padding: 46px 0 52px; }
 /* 01: the film's big-type moment, "nice and big and fat" (Nicky) */
 .big-h.os-big { font-size: clamp(46px, 10.4vw, 156px); line-height: 0.9; letter-spacing: -0.05em; hyphens: manual; -webkit-hyphens: manual; }
 #system .sec-head-big { margin-bottom: 40px; }
+
+/* phones: the live tree runs full width (its edges fade anyway), so the crown is as large as the screen allows */
+@media (max-width: 860px) { .tree-canvas-box { margin: 0 calc(50% - 50vw); } }

@@ -42,7 +42,7 @@
     }
   })();
 </script>
-<link rel="stylesheet" href="style.css?v=v2h">
+<link rel="stylesheet" href="style.css?v=v2j">
 
 <script type="application/ld+json">
 {
@@ -336,7 +336,7 @@
             <div class="sec-index mono"><span class="kicker" data-de="Briefing 04 — Ihr OS: der Datenbaum">Briefing 04 — your OS: the data tree</span><span class="idx-r">04 / 07</span></div>
             <h2 class="big-h" id="tree-h" data-de="der datenbaum&lt;br&gt;&lt;em&gt;ihres unternehmens.&lt;/em&gt;">the data tree<br><em>of your company.</em></h2>
           </div>
-          <div class="tree-canvas-box"><video class="tree-video" muted playsinline preload="none" width="720" height="642" poster="assets/film_tree_de_end.jpg" aria-label="Ein weißer Baum wächst beim Scrollen aus einem Samen zu voller roter Blüte; Dateien wie briefing.pdf, interview.mp4 und budget.xlsx hängen an den Zweigen und verknüpfen sich"></video></div>
+          <div class="tree-canvas-box"><canvas class="tree-canvas tree-live" role="img" aria-label="Ein weißer Baum wächst beim Scrollen aus einem Samen zu voller roter Blüte; Dateien wie briefing.pdf, interview.mp4 und budget.xlsx landen auf der Krone und verknüpfen sich"></canvas></div>
         </div>
       </div>
     </div>
@@ -529,6 +529,7 @@
 </footer>
 
 
+<script src="assets/tree.js?v=1"></script>
 <script>
   /* DE/EN switch. English is the default and lives in the markup; German rides
      along in data-de attributes and is swapped in here. The choice is kept per
@@ -829,69 +830,47 @@
     new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { var p = r.play(); if (p) p.catch(function () {}); } else r.pause(); }); }, { rootMargin: "100px 0px" }).observe(r);
   })();
 
-  // the data tree grows with the scroll (cinematic scroll, like the film site). v2 (Nicky: "bischen rucklig … more frames?"):
-  // a video instead of a WebP sequence: every film frame (25 fps), a keyframe every 4 frames, ~2.2 MB per language. Phones
-  // choke on hundreds of decoded stills (they get evicted and re-decoded while scrolling); a video decodes one frame per
-  // seek. As on the film site: only seek when no seek is pending, and the playhead glides after the scroll position.
+  // the data tree grows with the scroll. v3 (Nicky: "still not smooth enough … can we make it even nicer"): no video,
+  // no frames: assets/tree.js draws the film's own tree (same generator, same seed) live on a canvas from a virtual time
+  // that the scroll drives; the time glides after the scroll position, so every scroll step is a fresh sharp drawing.
   (function () {
-    var sec = document.getElementById("tree"); if (!sec) return;
+    var sec = document.getElementById("tree"); if (!sec || !window.NLTree) return;
     var box = sec.querySelector(".tree-scroll"), stage = sec.querySelector(".tree-stage"), head = sec.querySelector(".tree-head");
-    var v = sec.querySelector(".tree-video"), lang = null, near = false, ticking = false, seeking = false, pos = -1;
+    var canvas = sec.querySelector(".tree-live"), ticking = false, cur = -1, drawn = -2;
     var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var ARIA = { en: "A white tree grows from a seed into full red blossom as you scroll; files like brief.pdf, interview.mp4 and budget.xlsx hang on its branches and link up",
-                 de: "Ein weißer Baum wächst beim Scrollen aus einem Samen zu voller roter Blüte; Dateien wie briefing.pdf, interview.mp4 und budget.xlsx hängen an den Zweigen und verknüpfen sich" };
+    var TEXTS = {
+      en: { branches: ["BRAND", "MATERIAL", "PEOPLE", "DECISIONS"], files: ["BRIEF.PDF", "INTERVIEW.MP4", "LOGO.AI", "NOTES.TXT", "BUDGET.XLSX", "CAMPAIGN.PSD"], model: "MODEL", years: ["2026", "2027", "2028"],
+            aria: "A white tree grows from a seed into full red blossom as you scroll; files like brief.pdf, interview.mp4 and budget.xlsx land on the crown and link up" },
+      de: { branches: ["MARKE", "MATERIAL", "MENSCHEN", "ENTSCHEIDUNGEN"], files: ["BRIEFING.PDF", "INTERVIEW.MP4", "LOGO.AI", "PROTOKOLL.TXT", "BUDGET.XLSX", "KAMPAGNE.PSD"], model: "MODELL", years: ["2026", "2027", "2028"],
+            aria: "Ein weißer Baum wächst beim Scrollen aus einem Samen zu voller roter Blüte; Dateien wie briefing.pdf, interview.mp4 und budget.xlsx landen auf der Krone und verknüpfen sich" } };
+    var tree = NLTree.create(canvas, TEXTS[window.__lang || "de"]);
     function navh() { var h = (document.querySelector("header") || { offsetHeight: 0 }).offsetHeight; document.documentElement.style.setProperty("--navh", h + "px"); }
-    navh(); window.addEventListener("resize", navh);
     function progress() {
+      if (still) return 1;
       var r = box.getBoundingClientRect(), run = r.height - stage.offsetHeight, top = (document.querySelector("header") || { offsetHeight: 0 }).offsetHeight;
       return run > 0 ? Math.min(1, Math.max(0, (top - r.top) / run)) : 1;
     }
-    function load() {
-      if (still) { v.poster = "assets/film_tree_" + lang + "_end.jpg"; return; }   // reduced motion: the finished tree, nothing to load
-      v.poster = "assets/film_tree_" + lang + "_start.jpg";
-      v.src = "assets/film_tree_scrub_" + lang + ".mp4"; v.preload = "auto"; v.load(); pos = -1;
-      // iOS paints a paused video only after it has played once: a silent play/pause unlocks the frames
-      var pp = v.play(); if (pp && pp.then) pp.then(function () { v.pause(); tick(); }).catch(function () {});
+    function fit() {   // the tree fills what the stage leaves under the headline (world box 1280 x 916), never wider than the column
+      var avail = stage.clientHeight - head.offsetHeight - 20, colw = window.innerWidth <= 860 ? window.innerWidth : sec.querySelector(".tree-stage-in").clientWidth;   // phones: full bleed
+      var w = Math.min(colw, avail * 1280 / 916);
+      canvas.style.width = Math.floor(w) + "px"; canvas.style.height = Math.floor(w * 916 / 1280) + "px";
+      tree.resize(); drawn = -2;
     }
-    v.addEventListener("seeking", function () { seeking = true; });
-    v.addEventListener("seeked", function () { seeking = false; tick(); });
-    v.addEventListener("loadeddata", function () { tick(); });
-    v.addEventListener("timeupdate", tick);
-    v.addEventListener("ended", function () { v.pause(); });
-    // v3 (Nicky: "still not smooth enough"): forward, the video PLAYS towards the scroll position instead of seeking to it
-    // (playback decodes frame after frame at a true 25 fps; seeking on iOS lands late and steps). The speed follows the
-    // distance: fast flicks play up to 4x, a slow scroll plays slowly, and it stops where the finger stops. Scrolling back
-    // seeks (gated: never while a seek is still resolving).
-    var rate = 1;
-    function draw() {
+    function frame() {
       ticking = false;
-      var d = v.duration; if (!d || !isFinite(d) || still) return;
-      var target = progress() * (d - 0.04), ct = v.currentTime, diff = target - ct;
-      if (diff > 0.05) {
-        var r = Math.min(4, Math.max(0.5, diff * 2.2));
-        if (Math.abs(r - rate) > 0.08) { rate = r; try { v.playbackRate = r; } catch (e) {} }
-        if (v.paused) { var pp = v.play(); if (pp && pp.catch) pp.catch(function () {}); }
-      } else if (diff < -0.12) {
-        if (!v.paused) v.pause();
-        if (!seeking) { try { v.currentTime = Math.max(0, ct + diff * 0.35); } catch (e) {} }   // glide back in steps
-      } else if (!v.paused) v.pause();
-      if (Math.abs(diff) > 0.05 || !v.paused) tick();
+      var target = progress() * tree.END;
+      cur = cur < 0 ? target : cur + (target - cur) * 0.14;
+      if (Math.abs(target - cur) < 0.003) cur = target;
+      var key = Math.round(cur * 400);
+      if (key !== drawn) { tree.draw(cur); drawn = key; }
+      if (cur !== target) tick();
     }
-    function tick() { if (!ticking) { ticking = true; requestAnimationFrame(draw); } }
-    function fit() {   // the video fills what the stage leaves under the headline, never wider than the column
-      var avail = stage.clientHeight - head.offsetHeight - 24, w = Math.min(sec.querySelector(".tree-stage-in").clientWidth, avail * 720 / 642);
-      v.style.width = Math.max(200, Math.floor(w)) + "px";
-    }
-    window.__treeApply = function () {
-      var l = window.__lang || "de"; v.setAttribute("aria-label", ARIA[l]);
-      if (l === lang) return; lang = l;
-      if (near) load(); else v.poster = "assets/film_tree_" + l + (still ? "_end" : "_start") + ".jpg";
-    };
-    window.__treeApply();
-    new IntersectionObserver(function (es) { if (es[0].isIntersecting && !near) { near = true; load(); } }, { rootMargin: "1400px 0px" }).observe(sec);
+    function tick() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+    window.__treeApply = function () { var l = window.__lang || "de"; tree.setTexts(TEXTS[l]); canvas.setAttribute("aria-label", TEXTS[l].aria); drawn = -2; tick(); };
+    navh(); fit(); window.__treeApply();
     window.addEventListener("scroll", tick, { passive: true });
-    window.addEventListener("resize", function () { fit(); tick(); });
-    fit();
+    window.addEventListener("resize", function () { navh(); fit(); tick(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { drawn = -2; tick(); });
   })();
 
   // scroll reveals
