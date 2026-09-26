@@ -1100,8 +1100,8 @@ section { padding: 46px 0 52px; }
 .tree-stage-in { display: flex; flex-direction: column; height: 100%; padding-top: 34px; padding-bottom: 10px; }
 .tree-head { margin-bottom: 6px; }
 .tree-canvas-box { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; }
-.tree-canvas {
-  display: block; height: auto; max-width: 100%; aspect-ratio: 720 / 642;
+.tree-canvas, .tree-video {
+  display: block; height: auto; max-width: 100%; aspect-ratio: 720 / 642; background: transparent;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 4%, #000 96%, transparent 100%);
   -webkit-mask-composite: source-in;
           mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 4%, #000 96%, transparent 100%);
