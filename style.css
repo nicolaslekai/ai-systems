@@ -1095,7 +1095,7 @@ section { padding: 46px 0 52px; }
 #system .auto-shot { margin-top: 40px; }
 /* the data tree: headline + tree pinned under the header, the tree grows with the scroll, the text follows */
 #tree { padding-top: 0; }
-.tree-scroll { position: relative; height: 230vh; }
+.tree-scroll { position: relative; height: 280vh; }   /* longer run = fewer frames per scroll step (smoother) */
 .tree-stage { position: sticky; top: var(--navh, 100px); height: calc(100vh - var(--navh, 100px)); height: calc(100svh - var(--navh, 100px)); overflow: hidden; }
 .tree-stage-in { display: flex; flex-direction: column; height: 100%; padding-top: 34px; padding-bottom: 10px; }
 .tree-head { margin-bottom: 6px; }
@@ -1108,7 +1108,7 @@ section { padding: 46px 0 52px; }
           mask-composite: intersect;
 }
 .tree-text { margin-top: 18px; }
-@media (max-width: 860px) { .tree-scroll { height: 200vh; } .tree-stage-in { padding-top: 24px; } }
+@media (max-width: 860px) { .tree-scroll { height: 240vh; } .tree-stage-in { padding-top: 24px; } }
 @media (prefers-reduced-motion: reduce) { .tree-scroll { height: auto; } .tree-stage { position: static; height: auto; } .tree-stage-in { height: auto; } }
 /* the secure text now follows the shield */
 .secure-text { margin-top: 22px; }
