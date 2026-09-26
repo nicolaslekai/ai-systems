@@ -1086,3 +1086,32 @@ section { padding: 46px 0 52px; }
 }
 /* long fact labels (e.g. "heute anfangen, morgen wachsen") wrap inside their column instead of running into the text */
 .why-facts strong { white-space: normal; }
+
+/* ============ SITE v2c (26.09 afternoon): less text, picture first, the tree as a cinematic scroll ============ */
+/* 01 + 02: picture first, text beside it (desktop) or under it (phone) */
+@media (min-width: 861px) { .sys-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); } }   /* desktop only; phones stack */
+@media (min-width: 861px) { .side-grid { grid-template-columns: minmax(240px, 300px) 1fr; } }
+.side-copy .why-facts { margin-top: 18px; }
+#system .auto-shot { margin-top: 40px; }
+/* the data tree: headline + tree pinned under the header, the tree grows with the scroll, the text follows */
+#tree { padding-top: 0; }
+.tree-scroll { position: relative; height: 230vh; }
+.tree-stage { position: sticky; top: var(--navh, 100px); height: calc(100vh - var(--navh, 100px)); height: calc(100svh - var(--navh, 100px)); overflow: hidden; }
+.tree-stage-in { display: flex; flex-direction: column; height: 100%; padding-top: 34px; padding-bottom: 10px; }
+.tree-head { margin-bottom: 6px; }
+.tree-canvas-box { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; }
+.tree-canvas {
+  display: block; height: auto; max-width: 100%; aspect-ratio: 720 / 642;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 4%, #000 96%, transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 4%, #000 96%, transparent 100%);
+          mask-composite: intersect;
+}
+.tree-text { margin-top: 18px; }
+@media (max-width: 860px) { .tree-scroll { height: 200vh; } .tree-stage-in { padding-top: 24px; } }
+@media (prefers-reduced-motion: reduce) { .tree-scroll { height: auto; } .tree-stage { position: static; height: auto; } .tree-stage-in { height: auto; } }
+/* the secure text now follows the shield */
+.secure-text { margin-top: 22px; }
+/* 01: the film's big-type moment, "nice and big and fat" (Nicky) */
+.big-h.os-big { font-size: clamp(46px, 10.4vw, 156px); line-height: 0.9; letter-spacing: -0.05em; hyphens: manual; -webkit-hyphens: manual; }
+#system .sec-head-big { margin-bottom: 40px; }
