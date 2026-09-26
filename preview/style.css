@@ -1,5 +1,5 @@
   :root {
-    --paper: #1a1a1c;
+    --paper: #1c1c1e;   /* = the film's dark stage, so the film's clips and stills sit seamlessly on the page */
     --paper-2: #222225;
     --ink: #f0efec;
     --ink-soft: #a3a3ab;
