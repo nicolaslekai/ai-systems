@@ -54,8 +54,7 @@
 #team .cards{margin-top:20px}
 @media(max-width:760px){#team{--bh:100vw} #team>.wrap{padding-top:calc(var(--bh) * .55)}}
 
-/* Team: nur noch die Architekten-Karte */
-#team .cards.team{grid-template-columns:minmax(0,560px)}
+/* Team: Nicolas + Mirko (Regie-Karte ganz unten) */
 
 /* Regie-Band ganz unten, anderer Look: hell, offen, ohne Karte (Nicky 24.11.2026) */
 .regie-band{padding:clamp(56px,7vw,96px) 0}

@@ -85,9 +85,10 @@ T = {
   w_eyebrow="Munich · London", w_h2="Built <em>by me.</em>",
   w_lead="No handing off to third parties, no layer in between: you talk to the person who writes the code — from the first conversation into day-to-day operation.",
   t_alt="A broadcast video patch bay in a rack, black coax cables with silver BNC plugs, one cable glowing coral",
-  t_h2="You talk to the person <em>who builds.</em>", t_lead="One person, two crafts, twenty years in film and music.",
+  t_h2="You talk to the people <em>who build.</em>", t_lead="Two people, forty years between them in film, music and post-production.",
   t_cards=[("File 01 · AI Systems Architect", "Nicolas Lekai", "Builds AI operating systems, control centres and production pipelines for companies. Twenty years in the film and music industry: from the recording studio through web development to visual effects. Along the way, web technology developer for the IFC and the World Bank in Washington DC. He still builds the systems behind the images.", None),
-           ("File 02 · VFX Director — Film · AI", "The director side", "VFX director. In London he went from Nuke compositor to senior artist at INK on automotive and commercial films. Today he directs from Germany with his own studio: films, VFX, post- and audio production. The explainer film on this page comes out of that pipeline.", ("https://nicolaslekai.com/", "nicolaslekai.com →"))],
+           ("File 02 · Producer — Post · VFX", "Mirko Hampel", "Twenty years in post-production: VFX producer, managing director and head of post. He advises and looks after clients from the first call to the final delivery, keeps budget and schedule honest, and is simply a great person to work with.", None),
+           ("File 03 · VFX Director — Film · AI", "The director side", "VFX director. In London he went from Nuke compositor to senior artist at INK on automotive and commercial films. Today he directs from Germany with his own studio: films, VFX, post- and audio production. The explainer film on this page comes out of that pipeline.", ("https://nicolaslekai.com/", "nicolaslekai.com →"))],
   faq_h2="Frequently asked <em>questions.</em>",
   faq=[("What is an AI operating system?", "Your own system in which all the AI models and tools you pay for run under one roof: a hub with the costs per model, a small assistant for every role and approval before anything is sent."),
        ("Where does our data run?", "Wherever you want. Where client data must not leave the building, the models run on your server or your computer. No obligation to use the cloud."),
@@ -156,9 +157,10 @@ T = {
   w_eyebrow="München · London", w_h2="Gebaut <em>von mir.</em>",
   w_lead="Keine Weitergabe an Dritte, keine Zwischenschicht: Sie sprechen mit dem, der den Code schreibt — vom ersten Gespräch bis in den laufenden Betrieb.",
   t_alt="Ein Video-Steckfeld im Rack, schwarze Koaxkabel mit silbernen BNC-Steckern, ein Kabel leuchtet korallenrot",
-  t_h2="Sie sprechen mit dem, <em>der baut.</em>", t_lead="Ein Mensch, zwei Handwerke, zwanzig Jahre Film und Musik.",
+  t_h2="Sie sprechen mit denen, <em>die bauen.</em>", t_lead="Zwei Menschen, zusammen vierzig Jahre Film, Musik und Postproduktion.",
   t_cards=[("File 01 · AI Systems Architect", "Nicolas Lekai", "Baut KI-Betriebssysteme, Leitstände und Produktions-Pipelines für Betriebe. Zwanzig Jahre in der Film- und Musikbranche: vom Tonstudio über die Webentwicklung zu den Visual Effects. Dazwischen Web-Technologie-Entwickler für die IFC und die Weltbank in Washington DC. Er baut bis heute die Systeme hinter den Bildern.", None),
-           ("File 02 · VFX Director — Film · KI", "Die Regie-Seite", "VFX Director. In London vom Nuke-Compositor zum Senior Artist bei INK, für Automobil- und Werbefilme. Heute führt er Regie aus Deutschland mit eigenem Studio: Filme, VFX, Post- und Tonproduktion. Der Erklärfilm auf dieser Seite kommt aus dieser Pipeline.", ("https://nicolaslekai.com/", "nicolaslekai.com →"))],
+           ("File 02 · Producer — Post · VFX", "Mirko Hampel", "Zwanzig Jahre Postproduktion: VFX Producer, Geschäftsführer und Head of Postproduktion. Er berät und betreut Kunden vom ersten Gespräch bis zur Abgabe, hält Budget und Zeitplan im Blick und ist einfach ein toller Typ.", None),
+           ("File 03 · VFX Director — Film · KI", "Die Regie-Seite", "VFX Director. In London vom Nuke-Compositor zum Senior Artist bei INK, für Automobil- und Werbefilme. Heute führt er Regie aus Deutschland mit eigenem Studio: Filme, VFX, Post- und Tonproduktion. Der Erklärfilm auf dieser Seite kommt aus dieser Pipeline.", ("https://nicolaslekai.com/", "nicolaslekai.com →"))],
   faq_h2="Häufige <em>Fragen.</em>",
   faq=[("Was ist ein KI-Betriebssystem?", "Ein eigenes System, in dem alle KI-Modelle und Werkzeuge, für die Sie zahlen, unter einer Haube laufen: eine Zentrale mit den Kosten je Modell, ein kleiner Assistent für jede Rolle und Freigabe vor jedem Versand."),
        ("Wo laufen unsere Daten?", "Wo Sie es wollen. Wo Kundendaten das Haus nicht verlassen dürfen, laufen die Modelle auf Ihrem Server oder Ihrem Rechner. Kein Cloud-Zwang."),
@@ -202,9 +204,9 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     beg = "".join(f'\n    <div class="card"><div class="was">{ico(i)}{w}</div><h3>{h}</h3><p>{p}</p></div>' for i, w, h, p in t["beg"])
     cards = "".join(f'\n    <div class="card person"><div class="rolle">{ro}</div><h3>{n}</h3><p>{p}</p>'
                     + (f'<p><a class="mehr" href="{l[0]}" target="_blank" rel="noopener">{l[1]}</a></p>' if l else "") + '</div>'
-                    for ro, n, p, l in t["t_cards"][:1])
+                    for ro, n, p, l in t["t_cards"][:2])
     # Regie-Karte (Nicky 24.11.2026: "remove this … put it at the bottom … in a different look"): eigenes helles Band ueber dem Fuss
-    ro2, n2, p2, l2 = t["t_cards"][1]
+    ro2, n2, p2, l2 = t["t_cards"][2]
     regie = (f'<section class="tile light regie-band" id="regie"><div class="wrap regie">\n'
              f'  <div class="regie-kopf"><div class="eyebrow">{ro2}</div><h2>{n2}</h2></div>\n'
              f'  <div class="regie-text"><p>{p2}</p><p><a class="btn ghost" href="{l2[0]}" target="_blank" rel="noopener">{l2[1]}</a></p></div>\n'
