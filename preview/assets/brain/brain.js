@@ -37,8 +37,8 @@
   const TAU = Math.PI * 2;
   const reduziert = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Farben wie Nickis Datenring + Seite (Tiefblau, Hellblau, Weiß); Kugelkörper wie im Brain-Reiter
-  const RING = ['#ad5610', '#d9782a', '#f4933b', '#fbd5b0', '#ad5610', '#ff7f61', '#f4933b', '#fdf0e4', '#c4640f', '#f4933b', '#8f460c', '#f8c79a'];
-  const FADEN = '244,147,59', KNOTEN = '253,240,228', BODY = '#151312';
+  const RING = ['#c9ccd1', '#ff7f61', '#e6e8eb', '#ffc4b5', '#8f9399', '#ff7f61', '#f5f6f8', '#ffd9cf', '#a9acb1', '#ff9a82', '#6e7378', '#dfe1e4'];
+  const FADEN = '255,127,97', KNOTEN = '245,246,248', BODY = '#151415';
 
   // deterministischer Zufall (gleiches Bild bei jedem Laden)
   let seed = 7;
@@ -120,7 +120,7 @@
 
     // Glimmen hinter dem Ring
     const g = ctx.createRadialGradient(cx, cy, KR * 0.6, cx, cy, R * 1.05);
-    g.addColorStop(0, 'rgba(170,81,0,0.10)'); g.addColorStop(1, 'rgba(170,81,0,0)');
+    g.addColorStop(0, 'rgba(170,33,0,0.10)'); g.addColorStop(1, 'rgba(170,33,0,0)');
     ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R * 1.05, 0, TAU); ctx.fill();
 
     // gebündelte Fäden: Bezier über einen Kontrollpunkt Richtung Mitte (Bündelung wie Holten, vereinfacht)
@@ -150,7 +150,7 @@
     ctx.lineWidth = 1;
     for (let i = 0; i < ANKER; i++) {
       const a = anker[i] + ringRot, r1 = R * 0.915, r2 = R * (0.915 + balken[i]);
-      ctx.strokeStyle = 'rgba(244,147,59,0.28)';
+      ctx.strokeStyle = 'rgba(255,127,97,0.28)';
       ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); ctx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2); ctx.stroke();
     }
     // segmentierter Ring (12 Bögen mit Lücken, Farben aus Nickis Datenring)

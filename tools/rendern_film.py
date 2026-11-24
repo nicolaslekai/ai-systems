@@ -178,6 +178,43 @@ JOBS["system-hell-a-clean"] = ("Image 1 is the photograph: keep every object, it
   "the light, the colours and the framing exactly as they are. One change: the top of the small silver studio computer "
   "at the back right is plain brushed aluminium, completely unmarked. 16:9.", "16:9", "4K", 9811, ["@system-hell-a"])
 
+# Runde 4 (Nicky 24.11.2026: "redo some of the images without them having orange highlights, but let's make them
+# coral this time"): dieselben freigegebenen Bilder, nur der orange Akzent wird Koralle. Referenz = das Bild selbst.
+KORALLE_EDIT = ("Image 1 is the photograph: keep every object, person, position, material, light, shadow, texture, the "
+  "grain and the framing exactly as they are. One change: every warm orange accent becomes coral (#ff7f61), a soft "
+  "pinkish coral red. {wo} Everything else keeps its exact colour.")
+for _n, _src, _v, _r, _wo in [
+    ("gpu-koralle", "gpu", "16:9", "4K", "The logo mark on the side plate is coral."),
+    ("gpu-hoch-koralle", "gpu-hoch", "4:5", "2K", "The logo mark on the side plate is coral."),
+    ("bau-ki-koralle", "bau-ki", "3:2", "2K", "The small dot on the icon is coral."),
+    ("bau-apps-koralle", "bau-apps", "3:2", "2K", "The small dot in the highlighted row is coral."),
+    ("bau-automatisierung-koralle", "bau-automatisierung", "3:2", "2K", "The small status light and any glow between the cards are coral."),
+    ("ablauf-prototyp-koralle", "ablauf-prototyp", "3:2", "2K", "The marker on the laptop timeline is coral."),
+    ("ablauf-uebergabe-koralle", "ablauf-uebergabe", "3:2", "2K", "The elastic band on the manual is coral."),
+    ("stein-block-koralle", "stein-block", "16:9", "2K", "The glowing joint between the stones glows coral."),
+    ("patchfeld-rack-koralle", "patchfeld-rack", "16:9", "4K", "The one glowing cable glows coral."),
+    ("patchfeld-rack-hoch-koralle", "patchfeld-rack-hoch", "9:16", "2K", "The one glowing cable glows coral."),
+    ("system-koralle", "system-hell-a-clean", "16:9", "4K", "The glowing ring of the small white hub in the centre glows coral."),
+]:
+    JOBS[_n] = (KORALLE_EDIT.format(wo=_wo) + " " + _v + ".", _v, _r, 9900 + len(JOBS), ["@" + _src])
+
+# Hero-Grafikkarte, weniger Firma (Nicky 24.11.2026: "a little bit less corporate … on a nice table, or in that rustic
+# exposed brick setting"). Karte rechts im Bild, links Ruhe fuer den Text. Logo-Referenz in Koralle.
+LOGO_KORALLE = "logo_mark_coral_ref.png"
+GPU_RUSTIKAL_KARTE = ("Image 1 is a logo mark: an isometric open square frame drawn as one coral line. A high-end graphics "
+  "card with a brushed silver side plate, graphite shroud, two fans and dense heat-sink fins; on the side plate the logo "
+  "mark from Image 1 engraved and filled coral (#ff7f61), followed by engraved lettering \"RENDER CORE · 48 GB\". That is "
+  "the only marking. The card sits in the RIGHT two thirds of the frame, crisp and sharp in every detail; the LEFT third is "
+  "calm and slightly darker. ")
+GPU_RUSTIKAL = {
+  "gpu-tisch": "It lies on a worn walnut table in a loft studio by a tall steel-frame window, beside a light meter, a roll of 35mm film and a stoneware espresso cup. ",
+  "gpu-ziegel": "It leans upright against an exposed brick wall on an old oak workbench, beside a coiled black cable and a small potted plant, soft daylight from a window on the left. ",
+  "gpu-werkbank": "It lies on a scuffed wooden workbench in a brick-walled film studio, next to a vintage film camera body and a few lens caps, a warm desk lamp glowing far in the background. ",
+  "gpu-sideboard": "It stands on a low walnut sideboard against a whitewashed brick wall, next to a stack of film books and a ceramic vase with a dry branch, morning light raking across the brick. ",
+}
+for _i, (_n, _ort) in enumerate(GPU_RUSTIKAL.items()):
+    JOBS[_n] = (GPU_RUSTIKAL_KARTE + _ort + "47 degree lens (50mm), f/5.6. " + FILM + " 16:9.", "16:9", "2K", 9951 + _i, [LOGO_KORALLE])
+
 
 def post(wf):
     body = json.dumps({"prompt": wf, "extra_data": {"api_key_comfy_org": KEY}}).encode()
@@ -245,6 +282,8 @@ def main():
     logo = Image.open(ROOT / "assets/logo-mark-orange.png").convert("RGBA")
     weiss = Image.new("RGBA", logo.size, "white"); weiss.alpha_composite(logo)
     weiss.convert("RGB").save(COMFY / "input" / LOGO)
+    k = Image.open(ROOT / "assets/logo-mark-coral.png").convert("RGBA")
+    w2 = Image.new("RGBA", k.size, "white"); w2.alpha_composite(k); w2.convert("RGB").save(COMFY / "input" / LOGO_KORALLE)
     namen = sys.argv[1:] or list(JOBS)
     erst = [n for n in namen if not any(r.startswith("@") for r in JOBS[n][4])]
     dann = [n for n in namen if n not in erst]

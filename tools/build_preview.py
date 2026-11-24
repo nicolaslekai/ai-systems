@@ -23,7 +23,7 @@ SITE = "https://consulting.nicolaslekai.com/"
 
 # Nicolas' Marke: der isometrische offene Rahmen in Orange (assets/logo-mark-orange.png) + Wortmarke
 def brand(a):
-    return (f'<span class="nl-brand"><img class="nl-mark" src="{a}logo-mark-orange.webp" width="512" height="384" alt="">'
+    return (f'<span class="nl-brand"><img class="nl-mark" src="{a}logo-mark-coral.webp" width="512" height="384" alt="">'
             '<span>NICOLAS&nbsp;LEKAI</span></span>')
 
 T = {
@@ -33,7 +33,7 @@ T = {
   desc="I build companies their own AI operating system, web apps and AI automation: all models and tools under one roof, costs in view, a human approves what goes out. Munich · Melbourne.",
   nav=[("#themen", "What I build"), ("#arbeitsweise", "How I work"), ("#team", "About")],
   cta="Start a project", also="Also",
-  hero_alt="A silver graphics card in a bright studio; on its brushed side plate the open-frame logo mark in orange and the lettering RENDER CORE · 48 GB",
+  hero_alt="A silver graphics card in a bright studio; on its brushed side plate the open-frame logo mark in coral and the lettering RENDER CORE · 48 GB",
   eyebrow="AI Systems Architect · Munich · Melbourne",
   h1="Your own AI operating system <em>for your business.</em>",
   lead="I build your company its own AI operating system, web apps and automation for whatever repeats every week. A human approves anything that goes out. You work directly with the person who builds it.",
@@ -43,7 +43,7 @@ T = {
   themen_h2="What I build <em>and how it gets to you.</em>",
   themen_lead="Whatever I build takes the same route: from the first conversation to something that runs in your business.",
   bauten=[
-   ("bau-ki.webp", "Illustrative image: an operating system built from frosted-glass panes in a bright studio, a grid of rounded icons, one with a small orange dot, an approval panel with a check mark, a timeline strip below",
+   ("bau-ki.webp", "Illustrative image: an operating system built from frosted-glass panes in a bright studio, a grid of rounded icons, one with a small coral dot, an approval panel with a check mark, a timeline strip below",
     "Your own AI operating system", "All models and tools under one roof, costs in view, a small assistant for every role — and an approval before anything goes out."),
    ("bau-apps.webp", "Illustrative image: a film-production app built from frosted-glass panes: a shot list with thumbnails, one row highlighted, the same list on a phone-sized pane, an audio waveform behind",
     "Web apps and custom software", "Web applications, desktop apps, interfaces and data pipelines — for processes standard software doesn’t cover. You own the source code."),
@@ -59,7 +59,7 @@ T = {
     "Quote", "Fixed price or capped hours", "A clear frame with a cap. No surprises, no subscription rent."),
    ("i-wuerfel", "ablauf-prototyp.webp", "An open laptop with an edit timeline, beside it a storyboard sketch and a sticky note, a hand drawing",
     "Prototype", "in days", "You see early what is taking shape and steer along. Iteration instead of a novel-length spec."),
-   ("i-uebergabe", "ablauf-uebergabe.webp", "A sand-coloured manual with an orange elastic band, a portable SSD and a key on top, a tattooed hand sliding it across the table",
+   ("i-uebergabe", "ablauf-uebergabe.webp", "A sand-coloured manual with a coral elastic band, a portable SSD and a key on top, a tattooed hand sliding it across the table",
     "Handover", "with source code", "Source code, documentation, instructions. You don’t depend on me — but I stay within reach."),
   ],
   beg_alt="Four young creatives laugh around a high walnut table in a brick loft; one points at a laptop with an edit timeline, a film poster of a woman on a rooftop at dusk leans against the wall",
@@ -71,9 +71,9 @@ T = {
   sys_h2="Camera, edit, render: <em>one system.</em>",
   sys_lead="Everything your production works with is connected to the same core. What gets settled in the edit is known afterwards to every assistant on set, in grading and on the render server.",
   sys_marken={"camera": "Camera", "server": "Render server", "desk": "Edit suite", "laptop": "Grading", "tablet": "Storyboard", "phone": "Set", "core": "Project memory"},
-  sys_alt="A film studio laid out like a product diorama on a pale grey surface: a cinema camera on a tripod, a studio display with an edit timeline, a small silver computer, a tablet with a storyboard, a grading panel with three trackballs, a rack of posters and social cut-downs from the same film still, headphones and a clapperboard, all cabled to a small white hub with an orange ring",
+  sys_alt="A film studio laid out like a product diorama on a pale grey surface: a cinema camera on a tripod, a studio display with an edit timeline, a small silver computer, a tablet with a storyboard, a grading panel with three trackballs, a rack of posters and social cut-downs from the same film still, headphones and a clapperboard, all cabled to a small white hub with a coral ring",
   sys_cap="Camera, edit, grading, storyboard, posters and render machine on one hub: the project memory at the core",
-  stein_alt="A laid course of cut granite, one joint between the blocks glowing warm orange",
+  stein_alt="A laid course of cut granite, one joint between the blocks glowing coral",
   stein="A foundation to build on: a system that lasts, instead of a fix that holds until the next tool arrives.",
   g_eyebrow="Company memory", g_h2="A memory <em>that keeps learning.</em>",
   g_lead="At the core of every AI operating system is a company memory: decisions, solutions and facts as a linked store that every assistant in the team queries.",
@@ -83,7 +83,7 @@ T = {
   w_alt="An edit suite in a bright loft: two editors seen from behind at a walnut desk with a grading panel and a camera, a young woman in a denim jacket leans over the monitor and points at the timeline",
   w_eyebrow="Munich · Melbourne", w_h2="Built <em>by me.</em>",
   w_lead="No handing off to third parties, no layer in between: you talk to the person who writes the code — from the first conversation into day-to-day operation.",
-  t_alt="A broadcast video patch bay in a rack, black coax cables with silver BNC plugs, one cable glowing warm orange",
+  t_alt="A broadcast video patch bay in a rack, black coax cables with silver BNC plugs, one cable glowing coral",
   t_h2="You talk to the person <em>who builds.</em>", t_lead="One person, two crafts.",
   t_cards=[("File 01 · AI Systems Architect", "Nicolas Lekai", "Builds AI operating systems, control centres and production pipelines for companies. Comes from web development and visual effects and still builds the systems behind the images.", None),
            ("File 02 · Director — Film · AI · VFX", "The director side", "Films, VFX, post- and audio production. The explainer film on this page comes out of my own pipeline.", ("https://nicolaslekai.com/", "nicolaslekai.com →"))],
@@ -104,7 +104,7 @@ T = {
   desc="Ich baue Betrieben ein eigenes KI-Betriebssystem, Web-Anwendungen und KI-Automatisierung: alle Modelle und Werkzeuge unter einer Haube, die Kosten im Blick, Freigabe durch einen Menschen. München · Melbourne.",
   nav=[("#themen", "Was ich baue"), ("#arbeitsweise", "Wie ich arbeite"), ("#team", "Über mich")],
   cta="Projekt anfragen", also="Außerdem",
-  hero_alt="Eine silberne Grafikkarte im hellen Studio; auf der gebürsteten Seitenplatte das offene Rahmen-Logo in Orange und der Schriftzug RENDER CORE · 48 GB",
+  hero_alt="Eine silberne Grafikkarte im hellen Studio; auf der gebürsteten Seitenplatte das offene Rahmen-Logo in Koralle und der Schriftzug RENDER CORE · 48 GB",
   eyebrow="AI Systems Architect · München · Melbourne",
   h1="Ihr eigenes KI-Betriebssystem <em>für Ihren Betrieb.</em>",
   lead="Ich baue Ihrem Betrieb ein eigenes KI-Betriebssystem, Web-Anwendungen und Automatisierung für alles, was sich jede Woche wiederholt. Was nach außen geht, gibt ein Mensch frei. Sie arbeiten direkt mit dem, der es baut.",
@@ -114,7 +114,7 @@ T = {
   themen_h2="Was ich baue <em>und wie es zu Ihnen kommt.</em>",
   themen_lead="Was ich baue, geht immer denselben Weg: vom ersten Gespräch bis zu etwas, das bei Ihnen läuft.",
   bauten=[
-   ("bau-ki.webp", "Symbolbild: ein Betriebssystem aus Milchglasscheiben im hellen Studio, ein Raster runder Symbole, eines mit kleinem orangem Punkt, eine Freigabe mit Haken, darunter eine Timeline-Leiste",
+   ("bau-ki.webp", "Symbolbild: ein Betriebssystem aus Milchglasscheiben im hellen Studio, ein Raster runder Symbole, eines mit kleinem korallenem Punkt, eine Freigabe mit Haken, darunter eine Timeline-Leiste",
     "Ihr eigenes KI-Betriebssystem", "Alle Modelle und Werkzeuge unter einer Haube, die Kosten im Blick, ein kleiner Assistent für jede Rolle — und eine Freigabe, bevor etwas nach außen geht."),
    ("bau-apps.webp", "Symbolbild: eine Produktions-App aus Milchglasscheiben: eine Shotliste mit Vorschaubildern, eine Zeile hervorgehoben, dieselbe Liste auf einer Handy-Scheibe, dahinter eine Tonspur",
     "Web-Apps und Software nach Maß", "Web-Anwendungen, Desktop-Apps, Schnittstellen und Datenpipelines — für Abläufe, die Standardsoftware nicht abdeckt. Der Quellcode gehört Ihnen."),
@@ -130,7 +130,7 @@ T = {
     "Angebot", "Festpreis oder Stundenrahmen", "Klarer Rahmen mit Deckel. Keine Überraschungen, keine Abo-Miete."),
    ("i-wuerfel", "ablauf-prototyp.webp", "Ein aufgeklappter Laptop mit Schnitt-Timeline, daneben eine Storyboard-Skizze und ein Klebezettel, eine Hand zeichnet",
     "Prototyp", "in Tagen", "Sie sehen früh, was entsteht, und lenken mit. Iteration statt Pflichtenheft-Roman."),
-   ("i-uebergabe", "ablauf-uebergabe.webp", "Eine sandfarbene Anleitung mit orangem Gummiband, darauf eine SSD und ein Schlüssel, eine tätowierte Hand schiebt sie über den Tisch",
+   ("i-uebergabe", "ablauf-uebergabe.webp", "Eine sandfarbene Anleitung mit korallenem Gummiband, darauf eine SSD und ein Schlüssel, eine tätowierte Hand schiebt sie über den Tisch",
     "Übergabe", "mit Quellcode", "Quellcode, Doku, Anleitung. Sie sind nicht von mir abhängig — aber ich bleibe erreichbar."),
   ],
   beg_alt="Vier junge Kreative lachen um einen Stehtisch aus Nussholz in einem Backstein-Loft; einer zeigt auf einen Laptop mit Schnitt-Timeline, an der Wand lehnt ein Filmplakat einer Frau auf einem Dach in der Dämmerung",
@@ -142,9 +142,9 @@ T = {
   sys_h2="Kamera, Schnitt, Render: <em>ein System.</em>",
   sys_lead="Alles, womit Ihre Produktion arbeitet, hängt am selben Kern. Was im Schnitt geklärt wird, weiß danach jeder Assistent am Set, im Grading und auf dem Render-Server.",
   sys_marken={"camera": "Kamera", "server": "Render-Server", "desk": "Schnitt", "laptop": "Grading", "tablet": "Storyboard", "phone": "Set", "core": "Projekt-Gedächtnis"},
-  sys_alt="Ein Filmstudio als Produkt-Diorama auf hellgrauem Grund: Kinokamera auf Stativ, Studio-Bildschirm mit Schnitt-Timeline, ein kleiner silberner Rechner, ein Tablet mit Storyboard, ein Grading-Pult mit drei Trackballs, ein Ständer mit Plakaten und Social-Formaten aus demselben Filmbild, Kopfhörer und eine Klappe, alle verkabelt mit einem kleinen weißen Knoten mit orangem Ring",
+  sys_alt="Ein Filmstudio als Produkt-Diorama auf hellgrauem Grund: Kinokamera auf Stativ, Studio-Bildschirm mit Schnitt-Timeline, ein kleiner silberner Rechner, ein Tablet mit Storyboard, ein Grading-Pult mit drei Trackballs, ein Ständer mit Plakaten und Social-Formaten aus demselben Filmbild, Kopfhörer und eine Klappe, alle verkabelt mit einem kleinen weißen Knoten mit korallenem Ring",
   sys_cap="Kamera, Schnitt, Grading, Storyboard, Plakate und Render-Rechner an einem Knoten: das Projekt-Gedächtnis im Kern",
-  stein_alt="Eine gesetzte Lage aus behauenem Granit, eine Fuge zwischen den Blöcken leuchtet warm orange",
+  stein_alt="Eine gesetzte Lage aus behauenem Granit, eine Fuge zwischen den Blöcken leuchtet korallenrot",
   stein="Ein Fundament, auf das sich bauen lässt: ein System, das bleibt, statt einer Lösung, die hält, bis das nächste Werkzeug kommt.",
   g_eyebrow="Firmengedächtnis", g_h2="Ein Gedächtnis, <em>das mitlernt.</em>",
   g_lead="Im Kern jedes KI-Betriebssystems steht ein Firmengedächtnis: Entscheidungen, Lösungen und Fakten als vernetzter Speicher, den jeder Assistent im Team abfragt.",
@@ -154,7 +154,7 @@ T = {
   w_alt="Ein Schnittraum in einem hellen Loft: zwei Cutter von hinten an einem Nussholztisch mit Grading-Pult und Kamera, eine junge Frau in Jeansjacke beugt sich über den Monitor und zeigt auf die Timeline",
   w_eyebrow="München · Melbourne", w_h2="Gebaut <em>von mir.</em>",
   w_lead="Keine Weitergabe an Dritte, keine Zwischenschicht: Sie sprechen mit dem, der den Code schreibt — vom ersten Gespräch bis in den laufenden Betrieb.",
-  t_alt="Ein Video-Steckfeld im Rack, schwarze Koaxkabel mit silbernen BNC-Steckern, ein Kabel leuchtet warm orange",
+  t_alt="Ein Video-Steckfeld im Rack, schwarze Koaxkabel mit silbernen BNC-Steckern, ein Kabel leuchtet korallenrot",
   t_h2="Sie sprechen mit dem, <em>der baut.</em>", t_lead="Ein Mensch, zwei Handwerke.",
   t_cards=[("File 01 · AI Systems Architect", "Nicolas Lekai", "Baut KI-Betriebssysteme, Leitstände und Produktions-Pipelines für Betriebe. Kommt aus der Webentwicklung und den Visual Effects und baut bis heute die Systeme hinter den Bildern.", None),
            ("File 02 · Director — Film · KI · VFX", "Die Regie-Seite", "Filme, VFX, Post- und Tonproduktion. Der Erklärfilm auf dieser Seite kommt aus meiner eigenen Pipeline.", ("https://nicolaslekai.com/", "nicolaslekai.com →"))],
@@ -227,10 +227,10 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <link rel="alternate" hreflang="de" href="{SITE}de/">
 <link rel="icon" type="image/png" sizes="32x32" href="{root}favicon-32x32.png">
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
-<link rel="stylesheet" href="{a}style.css?v=nl1">
-<link rel="stylesheet" href="{a}nl.css?v=nl2">{f'''
-<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s2">
-<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s2';}})();</script>''' if thema else ""}
+<link rel="stylesheet" href="{a}style.css?v=nl3">
+<link rel="stylesheet" href="{a}nl.css?v=nl3">{f'''
+<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s3">
+<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s3';}})();</script>''' if thema else ""}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -323,7 +323,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     <p>{t["g_p"]}</p>
   </div>
   <figure class="g-bild" data-brain="{t["g_brain"]}">
-    <img src="{a}brain/brain-doppelring_KJ_v002.webp" width="900" height="900" alt="{esc(t["g_alt"])}" loading="lazy">
+    <img src="{a}brain/brain-doppelring_KJ_v003.webp" width="900" height="900" alt="{esc(t["g_alt"])}" loading="lazy">
     <figcaption>{t["g_cap"]}</figcaption>
   </figure>
   <script src="{a}brain/brain.js?v=nl1" defer></script>
@@ -400,11 +400,11 @@ if __name__ == "__main__":
         # Live: Seite an die Wurzel, die Vorschau-Assets nach /assets (keine Namenskollisionen mit dem Altbestand)
         for d in ["bilder", "brain"]:
             shutil.copytree(PREV / "assets" / d, ROOT / "assets" / d, dirs_exist_ok=True)
-        for f in ["style.css", "nl.css", "logo-mark-orange.webp"]:
+        for f in ["style.css", "nl.css", "logo-mark-coral.webp", "koralle-silber.css"]:
             shutil.copy(PREV / "assets" / f, ROOT / "assets" / f)
-        (ROOT / "index.html").write_text(page(T["en"], "", "", "de/", "index,follow"))
+        (ROOT / "index.html").write_text(page(T["en"], "", "", "de/", "index,follow", thema="koralle-silber"))
         (ROOT / "de").mkdir(exist_ok=True)
-        (ROOT / "de/index.html").write_text(page(T["de"], "../", "../", "../", "index,follow"))
+        (ROOT / "de/index.html").write_text(page(T["de"], "../", "../", "../", "index,follow", thema="koralle-silber"))
         print("LIVE: index.html + de/index.html + assets/")
     else:
         thema = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--thema=")), None)

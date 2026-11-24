@@ -1,0 +1,49 @@
+/* Farbthema KORALLE · WEISS · SILBER · consulting.nicolaslekai.com (24.11.2026)
+   Nicky: "I like coral, but not the sand. So let's have coral and white and silver."
+   Koralle #ff7f61 (Kimi Jimmy) ist der Akzent auf dunklen Baendern und auf den Hauptknoepfen; helle Baender sind
+   reines Weiss; Silber traegt die Ueberschrift-Schlussteile auf Weiss (Metall-Verlauf mit wanderndem Glanz), die
+   Zweitknoepfe (gebuerstetes Aluminium), die Labels und Linien. Kein dunkles Orange mehr.
+   Wird NACH style.css und nl.css geladen. */
+
+:root{
+  --akzent-hell:#ff7f61;      /* Koralle auf Dunkel, 6,9:1 */
+  --akzent-dunkel:#5f6368;    /* Graphit-Silber auf Weiss, 6,2:1 — Symbole, Linien, Links */
+  --akzent-zwei:#d4d7db;
+  --akzent-ink:#1c1c1e;
+  --light:#ffffff;
+  --silber-dunkel:linear-gradient(100deg,#2f3236 0%,#7d8187 18%,#3e4146 34%,#8f9399 50%,#383b40 66%,#73777d 82%,#33363a 100%);
+  --alu:linear-gradient(180deg,#fbfbfc 0%,#e4e6e9 42%,#c3c6cb 52%,#d9dbde 100%);
+}
+.tile.light{background:#ffffff}
+
+/* Ueberschrift-Schlussteil: Koralle auf Dunkel, Silber-Metall auf Weiss */
+.tile.dark h1 em,.tile.dark h2 em,.hero-bild h1 em{color:#ff7f61}
+.tile.light h1 em,.tile.light h2 em{
+  background:var(--silber-dunkel);background-size:220% 100%;background-position:0% 50%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  animation:silber-glanz 9s ease-in-out infinite alternate;
+}
+@keyframes silber-glanz{to{background-position:100% 50%}}
+@media (prefers-reduced-motion:reduce){.tile.light h1 em,.tile.light h2 em{animation:none}}
+
+/* Labels ueber den Ueberschriften: Silber */
+.tile.dark .eyebrow,.hero-bild .eyebrow{color:#d4d7db}
+.tile.light .eyebrow{color:#6e7378}
+
+/* Hauptknopf Koralle mit dunkler Schrift, ueberall gleich */
+.btn.primary,.btn.primary:hover,.light .btn.primary,.light .btn.primary:hover,
+.kontakt .daten a.btn.primary,.kontakt .daten a.btn.primary:hover{background:#ff7f61;color:#1c1c1e;-webkit-text-fill-color:#1c1c1e}
+.btn.primary:hover{filter:brightness(1.05)}
+
+/* Zweitknopf: gebuerstetes Aluminium */
+.btn.ghost,.light .btn.ghost{
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,rgba(0,0,0,0) 1px 3px),var(--alu);
+  color:#1c1c1e;border:1px solid rgba(255,255,255,.6);
+  box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,0,0,.16),0 2px 12px rgba(0,0,0,.3);
+}
+.light .btn.ghost{border-color:rgba(0,0,0,.14);box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,0,0,.12),0 1px 4px rgba(0,0,0,.1)}
+.btn.ghost:hover{color:#1c1c1e;border-color:rgba(255,255,255,.9);filter:brightness(1.04)}
+
+/* Links auf dunklen Karten bleiben hell lesbar */
+.bau .mehr,.card .mehr{color:#ff9a82}
+.film-wrap{--a:#ff7f61}
