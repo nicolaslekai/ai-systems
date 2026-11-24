@@ -344,5 +344,51 @@ ECHT_HOCH = ("Image 1 is the photograph: the same loft, the same daylight, the s
   "open laptop on it. 47 degree lens (50mm). Real documentary photo: skin with pores and flyaway hairs, fabric weave, "
   "Kodak Portra 400 grain across the whole frame. 4:5.")
 
+# Runde 2 (Nicky: "the hands are weird ... it still looks fake, can we do it bigger in 2.5 pro"): jede Hand beschrieben, quality max
+ECHT_HAENDE = ("Image 1 is the photograph: keep the loft, the window light, the four people with their faces, hair and "
+  "clothes, the walnut table, the wall screen and the framing. Re-photograph the moment as a real candid documentary "
+  "photo. HANDS: the tall guy in the workwear jacket points at the laptop screen with his right index finger, the other "
+  "fingers loosely curled, his left hand in his jacket pocket. The guy in the beanie holds his right hand open at chest "
+  "height, palm up, mid-gesture, his left arm relaxed at his side. The woman with the braids rests her left hand flat on "
+  "the table edge. The woman in the cardigan holds a white coffee cup with both hands close to her chest. Every hand "
+  "anatomically real: five fingers, knuckles, visible veins and nails, natural skin creases. Shot on a Leica M6, 35mm "
+  "Summicron at f/2.8, Kodak Portra 400 scanned at full resolution, grain across the whole frame, skin with pores and "
+  "flyaway hairs, fabric weave, soft daylight from the tall windows on the LEFT. 16:9.")
+
+# Nicky: "do those images with nano please" — gleicher Haende-Prompt, Referenz = enger GPT-Schnitt
+JOBS["begleitung-runde-nano-a"] = (ECHT_HAENDE, "16:9", "4K", 9451, ["@begleitung-runde-gpt2-eng"])
+JOBS["begleitung-runde-nano-b"] = (ECHT_HAENDE, "16:9", "4K", 9452, ["@begleitung-runde-gpt2-eng"])
+
+# Nicky: "render it bigger in GPT Image 2.5 Pro" — Kamera naeher, Leute groesser im Bild
+ECHT_NAH = ("Image 1 is the photograph: the same four people with the same faces, hair, clothes, hands and laughter, the "
+  "same loft, window light, walnut table, laptop and wall screen. The camera has stepped two metres closer: the four "
+  "people now fill the frame from the hips up, their heads in the upper third, the laptop on the table in the lower "
+  "middle, a slice of brick and the wall screen between them. HANDS stay exactly as in Image 1: index finger on the "
+  "laptop screen, one hand in a jacket pocket, an open palm at chest height, a hand flat on the table, both hands around "
+  "a white cup. Every hand anatomically real with knuckles, nails and skin creases. Real candid documentary photo: "
+  "Leica M6, 35mm Summicron at f/2.8, Kodak Portra 400 grain across the frame, skin with pores and flyaway hairs, fabric "
+  "weave, soft daylight from the tall windows on the LEFT. 16:9.")
+
+# Nicky: "the big screen doesn't have to be blurred ... put something actually cool on there, like a drinks ad"
+ECHT_NAH_SCREEN = ("Image 1 is the photograph: the same four people with the same faces, hair, clothes, hands and laughter, "
+  "the same loft, window light, walnut table and laptop. The camera has stepped two metres closer: the four fill the "
+  "frame from the hips up, heads in the upper third. The large wall screen between them is in crisp focus and shows an "
+  "edit suite with a drinks commercial in the viewer: a tall frosted glass of sparkling coral-pink spritz with ice and a "
+  "lime wheel on a sunlit marble bar, condensation running down the glass, a plain glass with no lettering; below it a "
+  "colour-coded timeline. The laptop shows the same frame. HANDS as in Image 1: index finger on the laptop screen, one "
+  "hand in a jacket pocket, an open palm at chest height, a hand flat on the table, both hands around a white cup, every "
+  "hand anatomically real. Real candid documentary photo: Leica M6, 35mm Summicron at f/5.6, deep focus, Kodak Portra "
+  "400 grain, skin with pores and flyaway hairs, fabric weave, soft daylight from the tall windows on the LEFT. 16:9.")
+JOBS["begleitung-screen-nanopro"] = (ECHT_NAH_SCREEN, "16:9", "4K", 9471, ["@begleitung-runde-wahl2"])
+
+# Handy-Fassung der GPT-Screen-Fassung (Nicky: "use the one you think")
+ECHT_HOCH_SCREEN = ("Image 1 is the photograph: the same loft, daylight, four people with the same faces, hair, clothes "
+  "and laughter, the same wall screen showing the edit suite with the coral spritz drinks commercial, crisp and sharp. "
+  "The camera has stepped to the right and closer for a vertical frame. GEOMETRY: the laughing woman with the braids and "
+  "the guy with the beanie stand in the MIDDLE, upper bodies filling the upper two thirds, the wall screen with the "
+  "spritz glass behind and between them. FOREGROUND LEFT, soft, the cardigan shoulder and white cup of the woman with "
+  "the glasses. The walnut table with the open laptop runs along the bottom third. Hands relaxed and anatomically real. "
+  "Real documentary photo: 47 degree lens (50mm) at f/5.6, Kodak Portra 400 grain, skin with pores, fabric weave. 4:5.")
+
 if __name__ == "__main__":
     main()
