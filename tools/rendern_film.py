@@ -447,5 +447,13 @@ TEAM_REVIEW_CLEAN = ("Image 1 is the photograph: keep the VFX studio, the projec
   "the walls are plain dark concrete with a few framed concept-art landscape prints; the books on the low table are "
   "plain dark hardcovers. Real still from a feature film, Kodak Vision3 500T grain, 16:9.")
 
+# Systembild erweitert (Nicky 24.11. 23:32: "can we see all of the screen and then fade the image into the white of the textblock")
+JOBS["system-weit"] = ("Image 1 is the photograph with an empty pale grey margin at the top and on the left. Extend the "
+  "scene into that margin: the same seamless pale lilac-grey studio surface and the same soft even studio light continue "
+  "outward. The studio display at the top is now complete: its full screen with the edit timeline, its top edge and thin "
+  "black bezel fully visible. The cinema camera on the left is complete with its full rig, top handle and matte box. "
+  "Everything already in the photograph stays exactly as it is: every device, cable, coral plug, the hub and the light. "
+  "Clean product diorama photograph, soft shadows, calm space above the devices, 3:2.", "3:2", "4K", 9981, ["@system-pad"])
+
 if __name__ == "__main__":
     main()

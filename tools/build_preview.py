@@ -245,8 +245,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
 <link rel="stylesheet" href="{a}style.css?v=nl4">
 <link rel="stylesheet" href="{a}nl.css?v=nl4">{f'''
-<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s12">
-<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s12';}})();</script>''' if thema else ""}
+<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s14">
+<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s14';}})();</script>''' if thema else ""}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -319,7 +319,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     <p class="lead">{t["sys_lead"]}</p>
   </div>
   <figure class="nl-system-bild">
-    <img src="{b}system-film.webp" width="2400" height="1340" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
+    <img src="{b}system-film-weit.webp" width="2400" height="1870" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
   </figure>
 </section>
 <section class="tile light bildband next gross">

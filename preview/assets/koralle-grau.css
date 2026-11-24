@@ -49,6 +49,16 @@
 .nl-system{padding-bottom:0}
 .nl-system .nl-system-bild{max-width:none;width:100vw;margin:clamp(28px,4vw,48px) 0 0 calc(50% - 50vw)}
 .nl-system .nl-system-bild img{width:100%;height:auto;display:block}
+/* Wie otterstein.ai (Nicky 24.11. 23:33): das Bild blendet oben und unten weich in das Band aus und rutscht am
+   Desktop ein Stueck unter den Textblock. Bild nach oben erweitert (ganzer Monitor, ganze Kamera). */
+.nl-system>.wrap{position:relative;z-index:1}
+.nl-system .nl-system-bild img{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 18%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 18%)}
+@media(min-width:900px){
+  .nl-system .nl-system-bild{margin-top:clamp(-80px,-4.5vw,-36px)}
+  .nl-system .nl-system-bild img{aspect-ratio:3/2;object-fit:cover;object-position:50% 100%;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 12%);mask-image:linear-gradient(to bottom,transparent 0,#000 12%)}
+}
 
 /* Team-Band schlanker (Nicky 24.11.2026: "make this section slimmer"): niedrigeres Bild, Text frueher */
 #team{--bh:min(36vw,calc(80svh - 57px))}
