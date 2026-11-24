@@ -89,8 +89,14 @@ const TEX_BASE = (() => {
   try { return new URL('tex/', document.currentScript.src).href; } catch (err) { return 'assets/system3d/tex/'; }
 })();"""))
 sub("const GROUND = 0x1c1c1e;               // Seitengrund, wie --dark in style.css",
-    keep("const GROUND = 0xececee;               // Grund des Bandes, wie .nl-system in koralle-grau.css (hellgrau wie im Bild)"))
-sub("const DOCK_R = 0.86;", keep("const DOCK_R = 0.9; "))
+    keep("""const GROUND = 0xdedce4;               // Boden im Standbild gemessen (kuehles helles Lila-Grau), wie .nl-system in koralle-grau.css
+// Farben aus dem alten Standbild gemessen (24.11.2026, system-koralle_KJ_v001.png): Puck oben #e1dce5,
+// Kabel #dcdbe3, Stecker im Mittel #f79b99 (Schatten #e66e73, Licht #feb7b0), Leuchtring #f4aba2.
+// Die Grundfarben unten sind so gewaehlt, dass das beleuchtete Ergebnis diese Werte trifft.
+const HUB_WHITE = 0xe9e5ee, CABLE_WHITE = 0xe4e2ea, PLUG_CORAL = 0xe57f7d;
+const RING_CORE = 0xf3837f, RING_GLOW = 0xf6aaa2, RING_HOT = 0xffc9bf;
+const PLUG_W = 0.2, PLUG_H = 0.17, PLUG_LEN = 0.44;   // Stecker wie im Bild: kurze rechteckige Tuelle"""))
+sub("const DOCK_R = 0.86;", keep("const DOCK_R = 1.05;"))
 sub("THREE.PCFSoftShadowMap", "THREE.PCFShadowMap")   # three 0.187: PCFSoft gibt es nicht mehr (Warnung in der Konsole)
 sub("    this.scene.fog = new THREE.Fog(GROUND, 16, 34);\n", "")
 sub("this.camera = new THREE.PerspectiveCamera(30, 2, 0.1, 80);",
@@ -119,11 +125,11 @@ GERAETE = r"""/**
  */
 function studio() {
   return {
-    silver: new THREE.MeshStandardMaterial({ color: 0xd9dadd, metalness: 0.7, roughness: 0.28 }),
-    white: new THREE.MeshStandardMaterial({ color: 0xd9d9dc, roughness: 0.5 }),
+    silver: new THREE.MeshStandardMaterial({ color: 0xd6d3dd, metalness: 0.65, roughness: 0.28 }),
+    white: new THREE.MeshPhysicalMaterial({ color: 0xdedae4, roughness: 0.4, clearcoat: 0.6, clearcoatRoughness: 0.25 }),
     pale: new THREE.MeshStandardMaterial({ color: 0xe6e7e9, roughness: 0.75 }),
     grey: new THREE.MeshStandardMaterial({ color: 0x5c5e63, metalness: 0.3, roughness: 0.5 }),
-    graphite: new THREE.MeshStandardMaterial({ color: 0x3d3f44, metalness: 0.35, roughness: 0.42 }),
+    graphite: new THREE.MeshStandardMaterial({ color: 0x46444b, metalness: 0.35, roughness: 0.4 }),
     black: new THREE.MeshStandardMaterial({ color: 0x151517, metalness: 0.3, roughness: 0.38 }),
     gloss: new THREE.MeshPhysicalMaterial({ color: 0x0c0c0d, roughness: 0.1, clearcoat: 1, clearcoatRoughness: 0.06 }),
     coral: new THREE.MeshBasicMaterial({ color: ACCENT }),
@@ -252,7 +258,7 @@ function buildRenderBox(shadowTex) {
   add(g, new THREE.CircleGeometry(0.018, 16), m.coral, 0.85, 0.26, F).castShadow = false;
   addContactShadow(g, shadowTex, 3.2, 3.2);
   // Anschluesse vorn rechts, dort gehen die Kabel ab (im Bild vier Stecker in Koralle)
-  g.userData.plugs = [0.35, 0.55, 0.75].map((x) => new THREE.Vector3(x, 0.12, D / 2 + 0.05));
+  g.userData.plugs = [0.2, 0.44, 0.68, 0.92].map((x) => new THREE.Vector3(x, 0.12, D / 2 + 0.02));
   g.userData.label = new THREE.Vector3(0, H + 0.5, 0);
   return g;
 }
@@ -378,6 +384,7 @@ function buildHeadphones(shadowTex) {
     pad.rotation.y = Math.PI / 2;
   }
   addContactShadow(g, shadowTex, 2.0, 1.3);
+  g.userData.plug = new THREE.Vector3(R + 0.32, 0.1, -0.12);   // neben der rechten Muschel
   g.userData.label = new THREE.Vector3(0, 1.3, 0);
   return g;
 }
@@ -440,24 +447,73 @@ sub("""function add(parent, geo, mat, x = 0, y = 0, z = 0) {
   const m = new THREE.Mesh(geo, mat);""", keep("""function add(parent, geo, mat, x = 0, y = 0, z = 0) {
   const m = geo.isMesh ? geo : new THREE.Mesh(geo, mat);"""))
 
-# ───────────────────────── 4 · Knoten und Boden ─────────────────────────
+# ───────────────────────── 4 · Knoten, Stecker, Leitungen, Boden ─────────────────────────
+# V5.1 (Nicky kreist den Knoten ein; "the colors are still not like in the image … more transparent / blinn
+# materials … get coral plugs accurate"): Farben aus dem Standbild gemessen; Knoten als dicker Puck aus
+# satiniertem Kunststoff mit runder Oberkante und durchscheinendem Leuchtring; Stecker als glaenzende Tuellen,
+# einer je Leitung, gleichmaessig um den Rand. Leuchten ohne Canvas-Farbe: Ringkern unbeleuchtet, weiche Raender
+# ueber Vertex-Alpha (Geometrie), Bodenschein ueber die weisse Fleckmaske. Keine Transmission: sie zeichnet die
+# Szene in jedem Bild ein zweites Mal, am Handy zu teuer; der Milchglas-Eindruck kommt aus Kern + Lackschicht.
 swap_function("buildDock", r"""function buildDock(spotTex) {
-  // Weisser Knoten mit Klarlack und leuchtendem Ring in Koralle, wie im Bild.
   const group = new THREE.Group();
-  const shell = new THREE.MeshPhysicalMaterial({ color: 0xfbfbfb, roughness: 0.3, clearcoat: 0.7, clearcoatRoughness: 0.2 });
-  const inner = new THREE.MeshStandardMaterial({ color: 0xf0f0f1, roughness: 0.45 });
-  add(group, new THREE.CylinderGeometry(DOCK_R - 0.05, DOCK_R, 0.2, 96), shell, 0, 0.1, 0);
-  add(group, new THREE.TorusGeometry(DOCK_R - 0.06, 0.05, 14, 96), shell, 0, 0.2, 0).rotation.x = Math.PI / 2;
-  add(group, new THREE.CylinderGeometry(DOCK_R - 0.1, DOCK_R - 0.1, 0.012, 96), inner, 0, 0.22, 0).castShadow = false;
-  const glowMat = new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true });
-  const ring = add(group, new THREE.TorusGeometry(DOCK_R * 0.5, 0.035, 12, 96), glowMat, 0, 0.23, 0);
-  ring.rotation.x = Math.PI / 2;
+  const R = DOCK_R, H = 0.5, E = 0.18;                 // Radius, Hoehe, Rundung der Oberkante
+  // Profil der Drehform: Fuss leicht eingezogen, gerade Seite, runde Oberkante, flache Oberseite
+  const pts = [new THREE.Vector2(0, 0), new THREE.Vector2(R - 0.1, 0), new THREE.Vector2(R - 0.03, 0.025), new THREE.Vector2(R, 0.08), new THREE.Vector2(R, H - E)];
+  for (let i = 1; i <= 10; i++) { const a = (i / 10) * Math.PI / 2; pts.push(new THREE.Vector2(R - E + Math.cos(a) * E, H - E + Math.sin(a) * E)); }
+  pts.push(new THREE.Vector2(0, H));
+  const shell = new THREE.MeshPhysicalMaterial({ color: HUB_WHITE, roughness: 0.42, clearcoat: 1, clearcoatRoughness: 0.16, sheen: 0.4, sheenColor: 0xffffff });
+  add(group, new THREE.LatheGeometry(pts, 128), shell, 0, 0, 0);
+  // Weiche Lichtbaender mit Vertex-Alpha: Farbe fest, Deckkraft je Punkt (keine Textur, daher iOS-sicher)
+  const band = (geo, alphaAt) => {
+    const pos = geo.attributes.position, col = new Float32Array(pos.count * 4), c = new THREE.Color(RING_GLOW);
+    for (let i = 0; i < pos.count; i++) col.set([c.r, c.g, c.b, alphaAt(pos.getX(i), pos.getY(i), pos.getZ(i))], i * 4);
+    geo.setAttribute('color', new THREE.BufferAttribute(col, 4));
+    return geo;
+  };
+  const glowMat = new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, depthWrite: false, side: THREE.DoubleSide });
+  const r0 = R * 0.58, w = R * 0.085;
+  const soft = (t) => t * t * (3 - 2 * t);
+  const flat = (geo) => { const m = add(group, geo, glowMat, 0, H + 0.003, 0); m.rotation.x = -Math.PI / 2; m.castShadow = false; m.renderOrder = 2; return m; };
+  flat(band(new THREE.RingGeometry(r0 + w / 2, R - E * 0.4, 128, 6), (x, y) => 0.5 * (1 - soft(Math.min(1, (Math.hypot(x, y) - r0 - w / 2) / (R * 0.24))))));
+  flat(band(new THREE.RingGeometry(r0 - w / 2 - R * 0.2, r0 - w / 2, 128, 6), (x, y) => 0.38 * soft(Math.max(0, 1 - (r0 - w / 2 - Math.hypot(x, y)) / (R * 0.2)))));
+  // Ringkern unbeleuchtet, dazu zwei hellere Kanten (Milchglas)
+  const core = new THREE.MeshBasicMaterial({ color: RING_CORE });
+  const ring = add(group, new THREE.RingGeometry(r0 - w / 2, r0 + w / 2, 128), core, 0, H + 0.004, 0);
+  ring.rotation.x = -Math.PI / 2;
   ring.castShadow = false;
-  const haloMat = new THREE.MeshBasicMaterial({ map: spotTex, color: ACCENT, transparent: true, opacity: 0.16, depthWrite: false });
-  const halo = add(group, new THREE.PlaneGeometry(DOCK_R * 1.7, DOCK_R * 1.7), haloMat, 0, 0.234, 0);
-  halo.rotation.x = -Math.PI / 2;
-  halo.castShadow = false;
-  return { group, glow: [glowMat, haloMat], spine: null };
+  const edge = new THREE.MeshBasicMaterial({ color: RING_GLOW });
+  for (const [a, b] of [[r0 - w / 2 - 0.012, r0 - w / 2 + 0.008], [r0 + w / 2 - 0.008, r0 + w / 2 + 0.012]]) {
+    const e = add(group, new THREE.RingGeometry(a, b, 128), edge, 0, H + 0.005, 0);
+    e.rotation.x = -Math.PI / 2;
+    e.castShadow = false;
+  }
+  // Klarlack-Deckel: glaenzende Spiegelung quer ueber Ring und Oberseite
+  const lid = add(group, new THREE.CircleGeometry(R - E * 0.6, 96), new THREE.MeshPhysicalMaterial({
+    color: 0xffffff, roughness: 0.12, clearcoat: 1, clearcoatRoughness: 0.05, transparent: true, opacity: 0.18, depthWrite: false,
+  }), 0, H + 0.008, 0);
+  lid.rotation.x = -Math.PI / 2;
+  lid.castShadow = false;
+  lid.renderOrder = 3;
+  // Licht, das unten seitlich durch den Kunststoff scheint
+  const sideGeo = band(new THREE.CylinderGeometry(R + 0.006, R + 0.006, H * 0.62, 128, 6, true), (x, y) => 0.85 * (1 - soft(Math.min(1, (y + H * 0.31) / (H * 0.62)))));
+  const side = add(group, sideGeo, glowMat, 0, H * 0.31 + 0.004, 0);
+  side.castShadow = false;
+  side.renderOrder = 2;
+  // Schein auf dem Boden um den Puck (weisse Maske, Farbe ueber das Material)
+  const floorMat = new THREE.MeshBasicMaterial({ map: spotTex, color: RING_GLOW, transparent: true, opacity: 0.55, depthWrite: false });
+  const floorGlow = add(group, new THREE.PlaneGeometry(R * 3.8, R * 3.8), floorMat, 0, 0.006, 0);
+  floorGlow.rotation.x = -Math.PI / 2;
+  floorGlow.castShadow = false;
+  floorGlow.renderOrder = -1;
+  const calm = new THREE.Color(RING_CORE), hot = new THREE.Color(RING_HOT);
+  /** Aufbau und Puls: Kommt ein Signal an, leuchtet der Ring kurz heller. */
+  function update(reveal, energy) {
+    const e = Math.min(1, energy);
+    core.color.copy(calm).lerp(hot, e * 0.8);
+    glowMat.opacity = reveal * Math.min(1, 0.8 + e * 0.35);
+    floorMat.opacity = reveal * (0.7 + e * 0.3);
+  }
+  return { group, glow: [], spine: null, update };
 }""")
 
 swap_function("buildFloor", r"""function buildFloor() {
@@ -474,21 +530,62 @@ swap_function("buildFloor", r"""function buildFloor() {
   return { group, ring: new THREE.Group(), marks: [], pool: new THREE.MeshBasicMaterial(), pulse };
 }""")
 
-# ───────────────────────── 5 · Leitungen: weiss, Stecker Koralle ─────────────────────────
-sub("  const y = kind === 'thin' ? 0.016 : 0.024;", keep("  const y = 0.045;"))
-sub("dir.clone().multiplyScalar(DOCK_R + 0.02).setY(0.06),", keep("dir.clone().multiplyScalar(DOCK_R + 0.04).setY(0.09),"))
-sub("const geo = new THREE.TubeGeometry(curve, TUBULAR, lit ? 0.021 : kind === 'thin' ? 0.011 : 0.018, RADIAL, false);",
-    keep("const geo = new THREE.TubeGeometry(curve, TUBULAR, 0.04, RADIAL, false);"))
-sub("""    ? new THREE.MeshBasicMaterial({ color: new THREE.Color(ACCENT).multiplyScalar(1.35) })
-    : new THREE.MeshStandardMaterial({ color: kind === 'thin' ? 0x23262a : 0x4b5159, roughness: 0.5, metalness: 0.2 });""",
-    keep("""    ? new THREE.MeshStandardMaterial({ color: 0xf6f6f7, roughness: 0.5 })
-    : new THREE.MeshStandardMaterial({ color: 0xf6f6f7, roughness: 0.5 });   // weiss wie im Bild"""))
-sub("const plugMat = new THREE.MeshStandardMaterial({ color: 0x1b1d20, metalness: 0.4, roughness: 0.5 });",
-    keep("const plugMat = new THREE.MeshBasicMaterial({ color: ACCENT });"))
-sub("const plug = add(parent, new THREE.BoxGeometry(0.07, 0.05, 0.1), plugMat, from.x, Math.max(0.03, from.y), from.z);",
-    keep("const plug = add(parent, new THREE.BoxGeometry(0.11, 0.09, 0.22), plugMat, from.x, Math.max(0.05, from.y), from.z);"))
-sub("const jack = add(parent, new THREE.BoxGeometry(0.1, 0.06, 0.08), plugMat, dir.x * (DOCK_R + 0.01), 0.05, dir.z * (DOCK_R + 0.01));",
-    keep("const jack = add(parent, new THREE.BoxGeometry(0.2, 0.1, 0.12), plugMat, dir.x * (DOCK_R + 0.04), 0.09, dir.z * (DOCK_R + 0.04));"))
+swap_function("buildCable", r"""function buildCable(parent, from, bend, kind, dockA) {
+  // Leitung vom Geraet ueber den Boden zum Knoten, an beiden Enden eine glaenzende Tuelle in Koralle.
+  // dockA: Winkel des Steckplatzes am Knoten (gleichmaessig verteilt, siehe build).
+  const a = Math.atan2(from.z, from.x);
+  const dir = new THREE.Vector3(Math.cos(a), 0, Math.sin(a));       // vom Knoten nach aussen
+  const perp = new THREE.Vector3(-dir.z, 0, dir.x);
+  const dist = Math.hypot(from.x, from.z);
+  const ad = dockA === undefined ? a : dockA;
+  const dd = new THREE.Vector3(Math.cos(ad), 0, Math.sin(ad));
+  const y = 0.05, py = PLUG_H / 2 + 0.01;
+  const toHub = dir.clone().negate();
+  const plugY = Math.max(py, from.y);
+  const start = from.clone().addScaledVector(toHub, PLUG_LEN + 0.12).setY(plugY);
+  const end = dd.clone().multiplyScalar(DOCK_R - 0.03 + PLUG_LEN + 0.12).setY(py);
+  const pts = [
+    start,
+    from.clone().addScaledVector(toHub, PLUG_LEN + 0.5).setY(y),
+    dir.clone().multiplyScalar(0.6).addScaledVector(dd, 0.4).normalize().multiplyScalar(dist * 0.55).addScaledVector(perp, bend).setY(y),
+    dd.clone().multiplyScalar(DOCK_R + 1.4).addScaledVector(perp, bend * 0.25).setY(y),
+    dd.clone().multiplyScalar(DOCK_R + PLUG_LEN + 0.5).setY(py * 0.8),
+    end,
+  ];
+  const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.5);
+  const TUBULAR = 140, RADIAL = 8;
+  const geo = new THREE.TubeGeometry(curve, TUBULAR, 0.045, RADIAL, false);
+  const mesh = new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({ color: CABLE_WHITE, roughness: 0.38, clearcoat: 0.6, clearcoatRoughness: 0.3 }));
+  mesh.castShadow = true;
+  geo.setDrawRange(0, 0);
+  parent.add(mesh);
+  const plugMat = new THREE.MeshPhysicalMaterial({ color: PLUG_CORAL, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.12 });
+  const devPlug = makePlug(plugMat);
+  devPlug.position.copy(from).addScaledVector(toHub, PLUG_LEN / 2).setY(plugY);
+  devPlug.lookAt(devPlug.position.clone().add(dir));
+  parent.add(devPlug);
+  const hubPlug = makePlug(plugMat);
+  hubPlug.position.copy(dd).multiplyScalar(DOCK_R - 0.03 + PLUG_LEN / 2).setY(py);
+  hubPlug.lookAt(new THREE.Vector3(0, py, 0));
+  parent.add(hubPlug);
+  return { mesh, curve, lit: false, count: TUBULAR * RADIAL * 6, perSegment: RADIAL * 6, ends: [devPlug, hubPlug] };
+}""")
+
+STECKER = r"""/**
+ * Stecker wie im Bild: rechteckige Tuelle mit runden Kanten (vorn, +z), dahinter ein kurzer Knickschutz.
+ * @param {THREE.Material} mat Glaenzender Kunststoff in Koralle.
+ * @returns {THREE.Group} Der Stecker; +z zeigt in die Buchse.
+ */
+function makePlug(mat) {
+  const g = new THREE.Group();
+  add(g, slab(PLUG_W, PLUG_H, PLUG_LEN, 0.05), mat, 0, 0, 0);
+  const neck = add(g, new THREE.CylinderGeometry(0.06, 0.08, 0.16, 20), mat, 0, 0, -(PLUG_LEN / 2 + 0.06));
+  neck.rotation.x = Math.PI / 2;
+  return g;
+}
+
+"""
+sub("/**\n * Baut den Server-Schrank", keep(STECKER) + "/**\n * Baut den Server-Schrank")
 
 # ───────────────────────── 6 · Aufbau: Licht, Belegung, Leitungsplan, Umriss ─────────────────────────
 sub("""    const key = new THREE.DirectionalLight(0xffffff, 1.25);
@@ -535,23 +632,39 @@ cut("    const placed = [", "    this.rack = rack;\n", r"""    // Bilder aus dem
       this.devices.push({ obj, at, size, key: '', anchor: obj.localToWorld(obj.userData.label.clone()) });
       await this.prime(obj, true);
     }
-    const [camera, display, box, tablet, grade, clapper, , prints] = this.devices.map((d) => d.obj);
+    const [camera, display, box, tablet, grade, clapper, phones, prints] = this.devices.map((d) => d.obj);
 """, include_end=True)
 cut("    const plan = [", "    this.cables = [];", """    const plan = [
       [world(camera, camera.userData.plug), 0.6, 'grey', 0.0],
       [world(display, display.userData.plug), 0.5, 'grey', 0.06],
-      [world(box, box.userData.plugs[0]), -0.25, 'grey', 0.12],
-      [world(box, box.userData.plugs[1]), -0.1, 'grey', 0.15],
-      [world(box, box.userData.plugs[2]), 0.05, 'grey', 0.18],
+      [world(box, box.userData.plugs[0]), 0, 'grey', 0.12],
+      [world(box, box.userData.plugs[1]), 0, 'grey', 0.15],
+      [world(box, box.userData.plugs[2]), 0, 'grey', 0.18],
+      [world(box, box.userData.plugs[3]), 0, 'grey', 0.21],
       [world(tablet, tablet.userData.plug), -0.3, 'grey', 0.24],
       [world(grade, grade.userData.plug), -0.4, 'grey', 0.3],
       [world(clapper, clapper.userData.plug), 0.35, 'grey', 0.36],
       [world(prints, prints.userData.plug), 0.4, 'grey', 0.42],
+      [world(phones, phones.userData.plug), -0.2, 'grey', 0.45],
     ];
+    // Steckplaetze am Knoten: jede Leitung dockt in ihrer eigenen Richtung an, mit Mindestabstand zur
+    // naechsten (wie im Bild: rechts liegen die vier Stecker vom Render-Rechner dicht nebeneinander)
+    const order = plan.map(([from], i) => [Math.atan2(from.z, from.x), i]).sort((u, v) => u[0] - v[0]);
+    const ang = order.map(([a]) => a), minGap = (Math.PI * 2) / 14;
+    for (let it = 0; it < 80; it++) {
+      for (let j = 0; j < ang.length; j++) {
+        const k = (j + 1) % ang.length;
+        const gap = ang[k] - ang[j] + (k === 0 ? Math.PI * 2 : 0);
+        if (gap < minGap) { const push = (minGap - gap) / 2; ang[j] -= push; ang[k] += push; }
+      }
+    }
+    const dockA = [];
+    order.forEach(([, i], j) => { dockA[i] = ang[j]; });
 """)
+sub("const cable = buildCable(this.cableGroup, from, bend, kind);", keep("const cable = buildCable(this.cableGroup, from, bend, kind, dockA[i]);"))
 cut("      const mate = buildCable(", "      this.cables.push(mate);\n", "", include_end=True)
 sub("s.scale.setScalar((cable.lit ? 0.4 : 0.28) * (0.55 + 0.45 * k));", keep("s.scale.setScalar(0.32 * (0.55 + 0.45 * k));"))
-sub("map: spot, color: cable.lit ? 0xeafaff : ACCENT,", keep("map: spot, color: ACCENT,"))
+sub("map: spot, color: cable.lit ? 0xeafaff : ACCENT,", keep("map: spot, color: RING_CORE,"))
 sub("new THREE.SpriteMaterial({ map: spot, color: 0xeafaff,", keep("new THREE.SpriteMaterial({ map: spot, color: ACCENT,"))
 sub("this.coreAnchor = new THREE.Vector3(1.12, CORE_Y + CORE_R * 0.72, 0);", keep("this.coreAnchor = new THREE.Vector3(0, 1, 0);"))
 
@@ -575,7 +688,7 @@ sub("    lights.add(this.dust);\n    await this.prime(lights);\n  }",
     }
     for (let i = 0; i < 12; i++) {
       const a = (i / 12) * Math.PI * 2;
-      this.bounds.push({ p: new THREE.Vector3(Math.cos(a) * DOCK_R, 0.25, Math.sin(a) * DOCK_R), label: false });
+      for (const y of [0, 0.55]) this.bounds.push({ p: new THREE.Vector3(Math.cos(a) * (DOCK_R + PLUG_LEN + 0.15), y, Math.sin(a) * (DOCK_R + PLUG_LEN + 0.15)), label: false });
     }
   }
 
@@ -641,7 +754,7 @@ sub("this.dust.material.opacity = 0.32 * smooth(0.2, 0.8, p);", keep("this.dust.
 sub("r.visible = k < 1 && coreReveal > 0.5;", keep("r.visible = false;                         // ohne Kern keine steigenden Lichtpunkte"))
 cut("    // Leuchten am Server: ein paar wechseln je Runde die Farbe", "\n\n", "")
 sub("for (const m of this.dock.glow) m.opacity = (m.map ? 0.16 : 1) * smooth(0.5, 0.75, p) * (m.map ? 1 + this.energy : 1);",
-    keep("for (const m of this.dock.glow) m.opacity = (m.map ? 0.32 : 1) * smooth(0.3, 0.5, p) * (m.map ? 1 + this.energy * 1.5 : 1);"))
+    keep("this.dock.update(smooth(0.3, 0.5, p), this.energy);   // Ring pulst, wenn ein Signal ankommt"))
 
 # ───────────────────────── 8 · Farben: Koralle statt Blau, Grau statt Graublau ─────────────────────────
 def shift(r, g, b):
@@ -672,7 +785,8 @@ def hs(m):
 parts = re.split(r"(/\*KEEP\{\*/.*?/\*\}KEEP\*/)", s, flags=re.S)
 for n, part in enumerate(parts):
     if part.startswith(KEEP_A):
-        part = part[len(KEEP_A):-len(KEEP_B)]
+        parts[n] = part[len(KEEP_A):-len(KEEP_B)]        # eigene Bloecke: Farben aus dem Standbild gemessen, unveraendert
+        continue
     else:
         part = part.replace("blending: THREE.AdditiveBlending", "blending: THREE.NormalBlending")
         part = re.sub(r"new THREE\.Color\(ACCENT\)\.multiplyScalar\(\s*1(?:\.\d+)?\s*\)", "new THREE.Color(ACCENT)", part)
