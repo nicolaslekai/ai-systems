@@ -35,7 +35,7 @@ T = {
   nav=[("#themen", "What I build"), ("#arbeitsweise", "How I work"), ("#team", "About")],
   cta="Start a project", also="Also",
   hero_alt="A graphics card on a worn walnut table by a steel-frame window in a brick loft; on its silver plate the open-frame logo mark and RENDER CORE · 48 GB in coral, beside it a light meter, a film canister and a stoneware cup",
-  eyebrow="AI Systems Architect · Munich · London",
+  eyebrow="AI operating systems · Munich · London",
   h1="Your own AI operating system <em>for your business.</em>",
   lead="I build your company its own AI operating system, web apps and automation for whatever repeats every week. A human approves anything that goes out. You work directly with the person who builds it.",
   ghost="What I build",
@@ -107,7 +107,7 @@ T = {
   nav=[("#themen", "Was ich baue"), ("#arbeitsweise", "Wie ich arbeite"), ("#team", "Über mich")],
   cta="Projekt anfragen", also="Außerdem",
   hero_alt="Eine Grafikkarte auf einem alten Nussholztisch am Stahlfenster in einem Backstein-Loft; auf der silbernen Platte das offene Rahmen-Logo und RENDER CORE · 48 GB in Koralle, daneben ein Belichtungsmesser, eine Filmdose und eine Steinguttasse",
-  eyebrow="AI Systems Architect · München · London",
+  eyebrow="KI-Betriebssysteme · München · London",
   h1="Ihr eigenes KI-Betriebssystem <em>für Ihren Betrieb.</em>",
   lead="Ich baue Ihrem Betrieb ein eigenes KI-Betriebssystem, Web-Anwendungen und Automatisierung für alles, was sich jede Woche wiederholt. Was nach außen geht, gibt ein Mensch frei. Sie arbeiten direkt mit dem, der es baut.",
   ghost="Was ich baue",
@@ -402,7 +402,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     document.addEventListener('click', function (ev) {{ if (mn.open && (!mn.contains(ev.target) || ev.target.closest('a'))) mn.open = false; }});
   }}
 </script>
-<script src="{a}hero-luefter.js?v=3" defer></script>
+<script src="{a}hero-luefter.js?v=4" defer></script>
 </body></html>
 '''
 

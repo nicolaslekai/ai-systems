@@ -17,8 +17,8 @@
   // tex = gebackener Blattkranz (tools/luefter_textur.py): der Desktop-Luefter ist voll im Bild und dient beiden Fassungen,
   // fuer das Hochkant-Bild farblich angeglichen — dessen Luefter ist am linken Rand abgeschnitten.
   const BILDER = {
-    'team-gpu.webp':      [{ c: [1230, 639], r: [168, 257], h: [1215, 642], hr: [61, 96], tex: 'luefter-polar.webp' }],
-    'team-gpu-hoch.webp': [{ c: [115, 651],  r: [170, 262], h: [100, 649],  hr: [62, 96], tex: 'luefter-polar-hoch.webp' }]
+    'team-gpu.webp':      [{ c: [1230, 639], r: [168, 257], h: [1215, 642], hr: [70, 108], tex: 'luefter-polar.webp' }],
+    'team-gpu-hoch.webp': [{ c: [115, 651],  r: [170, 262], h: [100, 649],  hr: [71, 108], tex: 'luefter-polar-hoch.webp' }]
   };
   const N = 1400, M = 200, TAU = Math.PI * 2;
   const GRUND = TAU / 7;          // rad/s: eine Umdrehung in 7 s
@@ -57,21 +57,24 @@
       const x0 = Math.max(0, Math.floor(cx - rx)), y0 = Math.max(0, Math.floor(cy - ry));
       const x1 = Math.min(nw, Math.ceil(cx + rx)), y1 = Math.min(nh, Math.ceil(cy + ry));
       const w = x1 - x0, h = y1 - y0;
-      const phi = new Int16Array(w * h).fill(-1), rhoI = new Uint8Array(w * h);
+      const phi = new Int16Array(w * h).fill(-1), rhoI = new Uint8Array(w * h), alpha = new Uint8Array(w * h);
       for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
         const X = x0 + x + 0.5, Y = y0 + y + 0.5;
         const hu = (X - f.h[0]) / f.hr[0], hv = (Y - f.h[1]) / f.hr[1];
-        if (hu * hu + hv * hv < 1) continue;                       // Nabe bleibt das Standbild
+        const q = Math.sqrt(hu * hu + hv * hv);
+        if (q < 1) continue;                                         // Nabe samt dunklem Rand bleibt das Standbild (24.11.: Kerbe am Nabenrand)
         const du = (X - cx) / rx - px, dv = (Y - cy) / ry - py;
         let a = Math.atan2(dv, du); if (a < 0) a += TAU;
         const i = Math.min(N - 1, Math.floor(a / TAU * N)), rho = Math.hypot(du, dv) / rand[i];
         if (rho >= 0.995) continue;                                  // Ring bleibt das Standbild
         phi[y * w + x] = i; rhoI[y * w + x] = Math.min(M - 1, Math.floor(rho * M));
+        // weiche Kanten: an der Nabe ueber 14 %, am Ring ueber die letzten 4 %
+        alpha[y * w + x] = Math.round(255 * Math.min(1, (q - 1) / 0.14, (0.995 - rho) / 0.04));
       }
       const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
       buehne.appendChild(cv);
       const ctx = cv.getContext('2d');
-      luefter.push({ cv, ctx, bild: ctx.createImageData(w, h), tex, phi, rhoI, x0, y0, w, h });
+      luefter.push({ cv, ctx, bild: ctx.createImageData(w, h), tex, phi, rhoI, alpha, x0, y0, w, h });
     }
     legen();
   }
@@ -96,7 +99,7 @@
         if (i < 0) { out[o + 3] = 0; continue; }
         let k = i - shift; if (k < 0) k += N;
         const s = (k * M + rhoI[p]) * 4;
-        out[o] = tex[s]; out[o + 1] = tex[s + 1]; out[o + 2] = tex[s + 2]; out[o + 3] = 255;
+        out[o] = tex[s]; out[o + 1] = tex[s + 1]; out[o + 2] = tex[s + 2]; out[o + 3] = l.alpha[p];
       }
       l.ctx.putImageData(l.bild, 0, 0);
     }
