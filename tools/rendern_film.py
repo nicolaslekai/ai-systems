@@ -390,5 +390,62 @@ ECHT_HOCH_SCREEN = ("Image 1 is the photograph: the same loft, daylight, four pe
   "the glasses. The walnut table with the open laptop runs along the bottom third. Hands relaxed and anatomically real. "
   "Real documentary photo: 47 degree lens (50mm) at f/5.6, Kodak Portra 400 grain, skin with pores, fabric weave. 4:5.")
 
+# Team-Band (Nicky 24.11.2026: "this image is a bit too brutal ... something sweeter, a cool office where some people
+# hang out, we see the backs of them working on some stuff that looks like cool 3D art")
+TEAM_BUERO = ("A cosy creative studio in a converted brick loft, late afternoon: tall steel-frame windows on the LEFT with "
+  "warm low sun, big plants, a worn leather sofa, a shelf of records and books, a few warm bulbs hanging on a cord. "
+  "GEOMETRY: three young artists seen from behind at a long walnut desk in the MIDDLE of the frame, relaxed and at "
+  "ease: a woman in a knitted beanie leaning back in her chair, a guy with headphones around his neck, a woman sitting "
+  "cross-legged on a stool holding a coffee. Their large monitors show colourful 3D art in progress: a soft glossy "
+  "sculpted character with coral and pale blue materials in a 3D viewport, and a dreamy pastel landscape render. A "
+  "sleepy dog lies on the rug beside the desk. The upper third of the frame is calm brick wall and window light. Real "
+  "candid documentary photo: Leica M6, 35mm Summicron at f/4, Kodak Portra 400 grain, warm soft daylight, fabric and "
+  "skin texture, hands relaxed and anatomically real. 16:9.")
+
+# Bereinigung Studio v1: Spruch-Plakate und Buchruecken sind der KI-Verraeter
+TEAM_BUERO_CLEAN = ("Image 1 is the photograph: keep the studio, the warm low sun, the three artists from behind with "
+  "their poses and clothes, the chairs, the dog on the rug, the sofa, the plants, the record shelves and the three "
+  "monitors with the 3D character and the pastel landscapes exactly as they are. Changes: the framed poster on the "
+  "brick wall shows a simple abstract print of soft shapes. Every sign, crate, box and book spine is plain and "
+  "unmarked. Through the tall windows on the LEFT a quiet street of old brick townhouses in the late sun. Real candid "
+  "documentary photo, Kodak Portra 400 grain, 16:9.")
+
+# Studio v2 (Nicky 24.11.: "too loose, needs to look more professional and more interesting photo, too much like a living room")
+TEAM_SUITE = ("A professional post-production suite at night, photographed from the back of the room. "
+  "GEOMETRY: a large reference screen fills the front wall in the upper MIDDLE, showing a glossy 3D render in progress: "
+  "a sculpted chrome and coral abstract form on a soft grey cyclorama, studio-lit. Below it a long dark oak desk with a "
+  "colour grading panel, three calibrated monitors with 3D viewports and node graphs in dark grey interfaces, a pen "
+  "tablet. Three artists seen from behind, silhouetted against the screen: a woman in a black turtleneck seated in the "
+  "MIDDLE, one hand on the trackball; a man standing at her RIGHT shoulder, one arm crossed, pointing at the screen with "
+  "the other hand; a third seated far LEFT with headphones on. Grey fabric acoustic panels on the walls, a glass wall on "
+  "the RIGHT with the dark corridor behind. LIGHT: ~70% cool neutral glow from the screens, ~20% warm coral from the "
+  "render reflecting on faces and desk, ~10% a dim practical strip under the desk. Deep blacks, clean air, full clarity "
+  "to the front wall. Real still from a feature film: Arri Alexa, 32mm lens at f/2, Kodak Vision3 500T grain, soft "
+  "halation on the screen edges, every hand anatomically real with five fingers. 16:9.")
+
+TEAM_REVIEW = ("A high-end VFX studio during a dailies review, photographed low from behind the last row. "
+  "GEOMETRY: in the upper MIDDLE a wide projection screen shows a 3D shot in progress: a dramatic cliffside coastal "
+  "landscape at golden hour, half of it still a grey clay wireframe render, the other half fully lit. In front of it, "
+  "seen from behind as dark silhouettes, five artists: two seated on a low grey sofa in the MIDDLE, one leaning on the "
+  "back of the sofa, a woman standing at the screen on the LEFT gesturing at the horizon line, a man on the RIGHT at a "
+  "standing desk with a laptop and a pen tablet. Polished concrete floor, black steel beams, a row of workstations with "
+  "dual monitors glowing along the RIGHT wall. LIGHT: ~70% warm projector spill from the screen, ~20% cool blue from the "
+  "workstation monitors, ~10% a single coral accent lamp on the LEFT. Clean air, sharp silhouettes, rich shadow detail. "
+  "Real still from a feature film: Arri Alexa, 28mm lens at f/2.8, Kodak Vision3 500T grain, soft halation on the "
+  "projection, every hand anatomically real with five fingers. 16:9.")
+
+TEAM_SUITE_CLEAN = ("Image 1 is the photograph: keep the post-production suite, the three artists from behind with their "
+  "poses, hands and clothes, the chairs, the desk, the three monitors, the large screen with the chrome and coral "
+  "sculpture, the speakers, the plants and the night light exactly as they are. Changes: the framed print on the LEFT "
+  "wall is a dark abstract landscape photograph without any lettering; the glass wall on the RIGHT shows a dim empty "
+  "corridor with plain dark walls; every box and book on the desk and shelves is plain and unmarked. Real still from a "
+  "feature film, Kodak Vision3 500T grain, 16:9.")
+
+TEAM_REVIEW_CLEAN = ("Image 1 is the photograph: keep the VFX studio, the projection with the cliffside coastal landscape "
+  "half grey wireframe, the five artists with their poses, hands and clothes, the sofa, the coral lamp, the standing desk, "
+  "the workstations and the light exactly as they are. Changes: the projection shows only the image, its edges clean; "
+  "the walls are plain dark concrete with a few framed concept-art landscape prints; the books on the low table are "
+  "plain dark hardcovers. Real still from a feature film, Kodak Vision3 500T grain, 16:9.")
+
 if __name__ == "__main__":
     main()

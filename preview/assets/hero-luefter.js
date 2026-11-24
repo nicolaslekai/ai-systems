@@ -1,10 +1,14 @@
-/* Hero: Luefter drehen sich langsam + kleine Kamerafahrt beim Scrollen · consulting.nicolaslekai.com · 24.11.2026
+/* Hero: Luefter drehen sich mit dem Scrollen · consulting.nicolaslekai.com · 24.11.2026
    Nicky: "I think we could slowly turn the graphic card blades" — "do a little render of it and a little cinematic scroll".
+   Nicky 24.11. 18:09: "we dont want to scale the image towards us, we only want the fans to spin with the scrolling".
+   -> Keine Kamerafahrt mehr: Bild steht (kein scale, kein translate). Der Scroll treibt die Luefter direkt an
+      (runter = vorwaerts, hoch = rueckwaerts, mit Nachlauf), dazu bleibt das langsame Grunddrehen.
    Kein Video, kein Modell: das Standbild bleibt die Quelle. Pro Luefter wird der Blattkranz (zwischen Nabe und Ring)
    in Polarkoordinaten um die Nabe abgetastet und Bild fuer Bild um den Drehwinkel versetzt wieder hingezeichnet.
    Radius wird relativ zum Ring gemessen (rho 0..1), deshalb bleibt der Ring fest und nichts Silbernes wandert ein.
    Wo der Luefter am Bildrand abgeschnitten ist, fuellt die Blattteilung (7 Blaetter) die Luecke.
-   Scrollen: Bild faehrt langsam heran und sinkt etwas ab, Text hebt sich und blendet aus, Luefter drehen kurz schneller.
+   Scrollen: Luefter drehen mit (an den Scrollweg gekoppelt), Text hebt sich und blendet aus (breit) bzw. das Bild
+   dunkelt unter dem Text ab (Handy). Das Bild selbst bewegt sich nicht.
    "Bewegung reduzieren": nichts davon. Ohne JavaScript bleibt das Standbild. */
 (function () {
   'use strict';
@@ -21,7 +25,9 @@
     'team-gpu-hoch.webp': [{ c: [115, 651],  r: [170, 262], h: [100, 649],  hr: [71, 108], tex: 'luefter-polar-hoch.webp' }]
   };
   const N = 1400, M = 200, TAU = Math.PI * 2;
-  const GRUND = TAU / 7;          // rad/s: eine Umdrehung in 7 s
+  const GRUND = TAU / 14;         // rad/s: Grunddrehen, eine Umdrehung in 14 s
+  const PRO_PX = TAU / 650;       // Scroll-Kopplung: 650 px Scrollweg = eine Umdrehung
+  const NACHLAUF = 0.004;         // Restanteil nach 1 s — weicher Nachlauf (~0.18 s Zeitkonstante)
   const text = sec.querySelector('.wrap');
 
   const buehne = document.createElement('div');
@@ -30,7 +36,7 @@
   const schleier = sec.querySelector('.schleier');
   sec.insertBefore(buehne, schleier || img.closest('picture').nextSibling);
 
-  let luefter = [], aktiv = false, winkel = 0, schub = 0, letzt = 0, scrollAlt = window.scrollY, start = 0, lauf = 0;
+  let luefter = [], aktiv = false, grund = 0, ziel = 0, gedreht = 0, letzt = 0, scrollAlt = window.scrollY, lauf = 0;
 
   function laden(url) {
     return new Promise((ok, nein) => { const t = new Image(); t.decoding = 'async'; t.onload = () => ok(t); t.onerror = nein; t.src = url; });
@@ -87,14 +93,11 @@
     const s = Math.max(bw / nw, bh / nh), pos = getComputedStyle(img).objectPosition.split(' ');
     const pc = v => (v && v.endsWith('%')) ? parseFloat(v) / 100 : 0.5;
     const ox = (bw - nw * s) * pc(pos[0]), oy = (bh - nh * s) * pc(pos[1]);
-    // Fluchtpunkt der Kamerafahrt: die Karte (Schriftzug), in Pixeln der Bildbox — fuer Bild und Luefter gleich
-    const f = (BILDER[(img.currentSrc || img.src).split('/').pop().split('?')[0]] || [{}])[0].fokus;
-    if (f) { const o = `${(ox + f[0] * s).toFixed(1)}px ${(oy + f[1] * s).toFixed(1)}px`; img.style.transformOrigin = o; buehne.style.transformOrigin = o; if (schleier) schleier.style.transformOrigin = o; }
     for (const l of luefter) Object.assign(l.cv.style, { left: (ox + l.x0 * s) + 'px', top: (oy + l.y0 * s) + 'px', width: (l.w * s) + 'px', height: (l.h * s) + 'px' });
   }
 
-  function malen() {
-    const shift = Math.floor((winkel / TAU) * N) % N;
+  function malen(winkel) {
+    const shift = Math.floor((((winkel % TAU) + TAU) % TAU) / TAU * N) % N;
     for (const l of luefter) {
       const out = l.bild.data, { tex, phi, rhoI } = l;
       for (let p = 0, n = phi.length; p < n; p++) {
@@ -108,50 +111,31 @@
     }
   }
 
-  // Kamerafahrt: Ankommen (leichter Rueckzug) + Scrollen (heranfahren, absinken), Text hebt sich und blendet aus
-  // Kamerafahrt. Breit: Ankommen (leichter Rueckzug) + beim Scrollen heranfahren und absinken.
-  // Handy (Nicky 24.11.: "we want to see some of that nice wall ... only see this when we scroll"): weit anfangen mit
-  // Ziegelwand und Fenster, beim Scrollen faehrt die Kamera auf die Karte; das Bild bleibt dabei stehen, der Text zieht drueber.
+  // Bild steht. Breit: der Text hebt sich beim Scrollen leicht und blendet aus (bewegt nur die Schrift, nie das Bild).
   const handy = window.matchMedia('(max-width: 900px)');
-  function kamera(jetzt) {
-    const an = Math.min(1, (jetzt - start) / 2600), ankunft = 1 - Math.pow(1 - an, 3);
-    let t;
-    if (handy.matches) {
-      const weg = (img.offsetHeight || 1) * 0.9, y = Math.max(0, window.scrollY);
-      const p = Math.min(1, y / weg), e = p * p * (3 - 2 * p);
-      const z = 1.04 - 0.04 * ankunft + 1.05 * e;
-      const ty = (Math.min(y, weg) * 0.62).toFixed(1);
-      t = `translate3d(0,${ty}px,0) scale(${z.toFixed(4)})`;
-      // der Schleier faehrt mit, und das Bild dunkelt ab, sobald der Text darueberzieht — Schrift bleibt lesbar
-      if (schleier) schleier.style.transform = t;
-      const hell = `brightness(${(1 - 0.55 * e).toFixed(3)})`; img.style.filter = hell; buehne.style.filter = hell;
-      if (text) { text.style.transform = ''; text.style.opacity = ''; }
-    } else {
-      const hoehe = sec.offsetHeight || 1;
-      const p = Math.min(1, Math.max(0, window.scrollY / hoehe)), e = p * p * (3 - 2 * p);
-      const z = 1.06 - 0.06 * ankunft + 0.12 * e;
-      t = `translate3d(0,${(e * 5).toFixed(3)}%,0) scale(${z.toFixed(4)})`;
-      if (schleier) schleier.style.transform = ''; img.style.filter = ''; buehne.style.filter = '';
-      if (text) { text.style.transform = `translate3d(0,${(-e * 48).toFixed(1)}px,0)`; text.style.opacity = (1 - e * 0.85).toFixed(3); }
-    }
-    img.style.transform = t; buehne.style.transform = t;
+  function schrift() {
+    if (!text) return;
+    if (handy.matches) { text.style.transform = ''; text.style.opacity = ''; return; }
+    const p = Math.min(1, Math.max(0, window.scrollY / (sec.offsetHeight || 1))), e = p * p * (3 - 2 * p);
+    text.style.transform = `translate3d(0,${(-e * 48).toFixed(1)}px,0)`; text.style.opacity = (1 - e * 0.85).toFixed(3);
   }
 
   function bild(jetzt) {
     if (!aktiv) return;
     const dt = Math.min(0.05, (jetzt - letzt) / 1000 || 0); letzt = jetzt;
-    const sy = window.scrollY, v = Math.abs(sy - scrollAlt); scrollAlt = sy;
-    schub = Math.min(3, schub * Math.pow(0.12, dt) + v * 0.004);  // Scrollen gibt Schub, klingt in ~1 s ab
-    winkel = (winkel + GRUND * (1 + schub) * dt) % TAU;
-    if (luefter.length) malen();
-    kamera(jetzt);
+    const sy = window.scrollY, d = sy - scrollAlt; scrollAlt = sy;
+    ziel += d * PRO_PX;                                            // Scrollweg -> Drehwinkel (vorwaerts/rueckwaerts)
+    gedreht += (ziel - gedreht) * (1 - Math.pow(NACHLAUF, dt));    // Nachlauf, damit es wie Masse wirkt
+    grund = (grund + GRUND * dt) % TAU;
+    if (luefter.length) malen(grund + gedreht);
+    schrift();
     requestAnimationFrame(bild);
   }
 
   function los() {
     aufbauen();
-    start = performance.now(); letzt = start;
-    new IntersectionObserver(es => { const war = aktiv; aktiv = es[0].isIntersecting; if (aktiv && !war) { letzt = performance.now(); requestAnimationFrame(bild); } }).observe(sec);
+    letzt = performance.now();
+    new IntersectionObserver(es => { const war = aktiv; aktiv = es[0].isIntersecting; if (aktiv && !war) { letzt = performance.now(); scrollAlt = window.scrollY; requestAnimationFrame(bild); } }).observe(sec);
     let neu = 0;
     window.addEventListener('resize', () => { clearTimeout(neu); neu = setTimeout(legen, 120); });
     // Bildwechsel Handy/Desktop (picture/source) -> neu aufbauen

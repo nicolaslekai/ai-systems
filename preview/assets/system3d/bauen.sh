@@ -18,7 +18,7 @@ trap 'rm -rf "$tmp"' EXIT
 (cd "$tmp" && npm install --silent --no-audit --no-fund "three@$THREE_VERSION" "esbuild@$ESBUILD_VERSION" >/dev/null)
 NODE_PATH="$tmp/node_modules" "$tmp/node_modules/.bin/esbuild" system3d.src.js \
   --bundle --minify --format=iife --target=es2020 --legal-comments=none \
-  --banner:js="/* Systembild otterstein.ai — gepackt aus system3d.src.js und three.js $THREE_VERSION (MIT-Lizenz, https://threejs.org). Nicht von Hand aendern: assets/system3d/bauen.sh */" \
+  --banner:js="/* Systembild consulting.nicolaslekai.com — gepackt aus system3d.src.js und three.js $THREE_VERSION (MIT-Lizenz, https://threejs.org). Nicht von Hand aendern: assets/system3d/bauen.sh */" \
   --outfile=system3d.js
 ls -l system3d.js | awk '{printf "system3d.js: %.0f KB\n", $5/1024}'
 gzip -c system3d.js | wc -c | awk '{printf "gepackt (gzip): %.0f KB\n", $1/1024}'

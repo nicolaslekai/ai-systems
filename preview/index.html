@@ -23,8 +23,8 @@
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="stylesheet" href="assets/style.css?v=nl4">
 <link rel="stylesheet" href="assets/nl.css?v=nl4">
-<link rel="stylesheet" id="thema" href="assets/koralle-grau.css?v=s4">
-<script>(function(){var m=location.search.match(/thema=(\w+)/);if(m)document.getElementById('thema').href='assets/'+m[1]+'.css?v=s4';})();</script>
+<link rel="stylesheet" id="thema" href="assets/koralle-grau.css?v=s10">
+<script>(function(){var m=location.search.match(/thema=(\w+)/);if(m)document.getElementById('thema').href='assets/'+m[1]+'.css?v=s10';})();</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://consulting.nicolaslekai.com/#nicolas", "name": "Nicolas Lekai", "url": "https://consulting.nicolaslekai.com/", "jobTitle": "AI Systems Architect", "email": "mailto:nicolaslekai@gmail.com", "sameAs": ["https://nicolaslekai.com/"], "worksFor": {"@id": "https://consulting.nicolaslekai.com/#practice"}}, {"@type": "Person", "@id": "https://consulting.nicolaslekai.com/#mirko", "name": "Mirko Hampel", "jobTitle": "Producer, post-production and VFX", "worksFor": {"@id": "https://consulting.nicolaslekai.com/#practice"}}, {"@type": "ProfessionalService", "@id": "https://consulting.nicolaslekai.com/#practice", "name": "Machinerooms", "alternateName": "Machinerooms · AI operating systems", "url": "https://consulting.nicolaslekai.com/", "email": "mailto:nicolaslekai@gmail.com", "founder": [{"@id": "https://consulting.nicolaslekai.com/#nicolas"}, {"@id": "https://consulting.nicolaslekai.com/#mirko"}], "areaServed": ["DE", "AT", "CH", "GB"], "description": "We build companies their own AI operating system, web apps and AI automation: all models and tools under one roof, costs in view, a human approves what goes out. Munich · London."}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is an AI operating system?", "acceptedAnswer": {"@type": "Answer", "text": "Your own system in which all the AI models and tools you pay for run under one roof: a hub with the costs per model, a small assistant for every role and approval before anything is sent."}}, {"@type": "Question", "name": "Where does our data run?", "acceptedAnswer": {"@type": "Answer", "text": "Wherever you want. Where client data must not leave the building, the models run on your server or your computer. No obligation to use the cloud."}}, {"@type": "Question", "name": "How do we start?", "acceptedAnswer": {"@type": "Answer", "text": "With an audit: five days in which we look at how work really runs at your company. Then we build in weekly steps (4–8 weeks) and train your people."}}, {"@type": "Question", "name": "Who owns the source code?", "acceptedAnswer": {"@type": "Answer", "text": "You do. For web apps and software we hand over source code, documentation and instructions."}}]}]}</script>
 </head>
 <body>
@@ -43,7 +43,7 @@
 </div></header>
 
 <section class="tile dark hero bild-hinter hero-bild mit-hoch">
-  <picture><img class="hg" src="assets/bilder/team-gpu.webp" width="2400" height="1340" alt="A graphics card on a worn walnut table by a steel-frame window in a brick loft; on its silver plate the open-frame logo mark and RENDER CORE · 48 GB in coral, beside it a light meter, a film canister and a stoneware cup" fetchpriority="high" decoding="async"></picture>
+  <picture><source media="(max-width: 900px)" srcset="assets/bilder/hero-film-handy.webp" width="900" height="900"><img class="hg" src="assets/bilder/hero-film-breit.webp" width="1600" height="900" alt="A graphics card on a worn walnut table by a steel-frame window in a brick loft; on its silver plate the open-frame logo mark and RENDER CORE · 48 GB in coral, beside it a light meter, a film canister and a stoneware cup" fetchpriority="high" decoding="async"></picture>
   <span class="schleier" aria-hidden="true"></span>
   <div class="wrap"><div class="hero-gitter">
   <div class="text">
@@ -123,9 +123,15 @@
     <h2>Camera, edit, render: <em>one system.</em></h2>
     <p class="lead">Everything your production works with is connected to the same core. What gets settled in the edit is known afterwards to every assistant on set, in grading and on the render server.</p>
   </div>
-  <figure class="nl-system-bild">
-    <img src="assets/bilder/system-film.webp" width="2400" height="1340" loading="lazy" decoding="async" alt="A film studio laid out like a product diorama on a pale grey surface: a cinema camera on a tripod, a studio display with an edit timeline, a small silver computer, a tablet with a storyboard, a grading panel with three trackballs, a rack of posters and social cut-downs from the same film still, headphones and a clapperboard, all cabled to a small white hub with a coral ring">
+  <figure class="s3d">
+    <div class="s3d-buehne" data-system3d data-src="assets/system3d/system3d.js?v=870ae168d3" data-marken="{&quot;camera&quot;: &quot;Camera&quot;, &quot;server&quot;: &quot;Render server&quot;, &quot;desk&quot;: &quot;Edit suite&quot;, &quot;laptop&quot;: &quot;Grading&quot;, &quot;tablet&quot;: &quot;Storyboard&quot;, &quot;phone&quot;: &quot;Set&quot;, &quot;core&quot;: &quot;Project memory&quot;}">
+      <picture>
+        <source media="(max-width:760px)" srcset="assets/system3d/systembild-hoch_KJ_v006.webp" width="1170" height="843">
+        <img src="assets/system3d/systembild_KJ_v006.webp" width="2400" height="1200" loading="lazy" decoding="async" alt="A light film studio as a 3D diorama: a cinema camera on a tripod, an edit suite with a timeline on the monitor, a silver render server, a tablet with a storyboard, a grading panel with three trackballs and a phone on set, each connected by a cable to a white hub in the middle; above it floats the project memory, a sphere of stacked coral rings">
+      </picture>
+    </div>
   </figure>
+  <script src="assets/system3d/laden.js?v=350d3d0c40" defer></script>
 </section>
 <section class="tile light bildband next gross">
   <div class="bb-bild">
@@ -222,5 +228,5 @@
     document.addEventListener('click', function (ev) { if (mn.open && (!mn.contains(ev.target) || ev.target.closest('a'))) mn.open = false; });
   }
 </script>
-<script src="assets/hero-luefter.js?v=5" defer></script>
+<script src="assets/hero-film.js?v=3" defer></script>
 </body></html>

@@ -72,7 +72,7 @@ T = {
   sys_h2="Camera, edit, render: <em>one system.</em>",
   sys_lead="Everything your production works with is connected to the same core. What gets settled in the edit is known afterwards to every assistant on set, in grading and on the render server.",
   sys_marken={"camera": "Camera", "server": "Render server", "desk": "Edit suite", "laptop": "Grading", "tablet": "Storyboard", "phone": "Set", "core": "Project memory"},
-  sys_alt="A film studio laid out like a product diorama on a pale grey surface: a cinema camera on a tripod, a studio display with an edit timeline, a small silver computer, a tablet with a storyboard, a grading panel with three trackballs, a rack of posters and social cut-downs from the same film still, headphones and a clapperboard, all cabled to a small white hub with a coral ring",
+  sys_alt="A light film studio as a 3D diorama: a cinema camera on a tripod, an edit suite with a timeline on the monitor, a silver render server, a tablet with a storyboard, a grading panel with three trackballs and a phone on set, each connected by a cable to a white hub in the middle; above it floats the project memory, a sphere of stacked coral rings",
   sys_cap="Camera, edit, grading, storyboard, posters and render machine on one hub: the project memory at the core",
   stein_alt="A laid course of cut granite, one joint between the blocks glowing coral",
   stein="A foundation to build on: a system that lasts, instead of a fix that holds until the next tool arrives.",
@@ -144,7 +144,7 @@ T = {
   sys_h2="Kamera, Schnitt, Render: <em>ein System.</em>",
   sys_lead="Alles, womit Ihre Produktion arbeitet, hängt am selben Kern. Was im Schnitt geklärt wird, weiß danach jeder Assistent am Set, im Grading und auf dem Render-Server.",
   sys_marken={"camera": "Kamera", "server": "Render-Server", "desk": "Schnitt", "laptop": "Grading", "tablet": "Storyboard", "phone": "Set", "core": "Projekt-Gedächtnis"},
-  sys_alt="Ein Filmstudio als Produkt-Diorama auf hellgrauem Grund: Kinokamera auf Stativ, Studio-Bildschirm mit Schnitt-Timeline, ein kleiner silberner Rechner, ein Tablet mit Storyboard, ein Grading-Pult mit drei Trackballs, ein Ständer mit Plakaten und Social-Formaten aus demselben Filmbild, Kopfhörer und eine Klappe, alle verkabelt mit einem kleinen weißen Knoten mit korallenem Ring",
+  sys_alt="Ein helles Filmstudio als 3D-Diorama: Kinokamera auf Stativ, Schnittplatz mit Timeline am Bildschirm, ein silberner Render-Server, ein Tablet mit Storyboard, ein Grading-Pult mit drei Rollkugeln und ein Telefon am Set, jedes per Kabel mit einem weißen Knoten in der Mitte verbunden; darüber schwebt das Projekt-Gedächtnis, eine Kugel aus gestapelten korallenen Ringen",
   sys_cap="Kamera, Schnitt, Grading, Storyboard, Plakate und Render-Rechner an einem Knoten: das Projekt-Gedächtnis im Kern",
   stein_alt="Eine gesetzte Lage aus behauenem Granit, eine Fuge zwischen den Blöcken leuchtet korallenrot",
   stein="Ein Fundament, auf das sich bauen lässt: ein System, das bleibt, statt einer Lösung, die hält, bis das nächste Werkzeug kommt.",
@@ -179,6 +179,11 @@ def ico(i):
 
 def esc(s):
     return s.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
+
+def s3d_stand(name):
+    """Cache-Buster fuer das 3D-Systembild: die ersten zehn Zeichen des sha256 der Datei (wie bei O&S)."""
+    import hashlib
+    return hashlib.sha256((PREV / "assets/system3d" / name).read_bytes()).hexdigest()[:10]
 
 def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     a, b, r = base + "assets/", base + "assets/bilder/", root + "assets/"
@@ -240,8 +245,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
 <link rel="stylesheet" href="{a}style.css?v=nl4">
 <link rel="stylesheet" href="{a}nl.css?v=nl4">{f'''
-<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s4">
-<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s4';}})();</script>''' if thema else ""}
+<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s10">
+<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s10';}})();</script>''' if thema else ""}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -260,7 +265,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 </div></header>
 
 <section class="tile dark hero bild-hinter hero-bild mit-hoch">
-  <picture><img class="hg" src="{b}team-gpu.webp" width="2400" height="1340" alt="{esc(t["hero_alt"])}" fetchpriority="high" decoding="async"></picture>
+  <picture><source media="(max-width: 900px)" srcset="{b}hero-film-handy.webp" width="900" height="900"><img class="hg" src="{b}hero-film-breit.webp" width="1600" height="900" alt="{esc(t["hero_alt"])}" fetchpriority="high" decoding="async"></picture>
   <span class="schleier" aria-hidden="true"></span>
   <div class="wrap"><div class="hero-gitter">
   <div class="text">
@@ -313,9 +318,15 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     <h2>{t["sys_h2"]}</h2>
     <p class="lead">{t["sys_lead"]}</p>
   </div>
-  <figure class="nl-system-bild">
-    <img src="{b}system-film.webp" width="2400" height="1340" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
+  <figure class="s3d">
+    <div class="s3d-buehne" data-system3d data-src="{a}system3d/system3d.js?v={s3d_stand("system3d.js")}" data-marken="{marken}">
+      <picture>
+        <source media="(max-width:760px)" srcset="{a}system3d/systembild-hoch_KJ_v006.webp" width="1170" height="843">
+        <img src="{a}system3d/systembild_KJ_v006.webp" width="2400" height="1200" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
+      </picture>
+    </div>
   </figure>
+  <script src="{a}system3d/laden.js?v={s3d_stand("laden.js")}" defer></script>
 </section>
 <section class="tile light bildband next gross">
   <div class="bb-bild">
@@ -402,7 +413,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     document.addEventListener('click', function (ev) {{ if (mn.open && (!mn.contains(ev.target) || ev.target.closest('a'))) mn.open = false; }});
   }}
 </script>
-<script src="{a}hero-luefter.js?v=5" defer></script>
+<script src="{a}hero-film.js?v=3" defer></script>
 </body></html>
 '''
 
@@ -412,7 +423,11 @@ if __name__ == "__main__":
         # Live: Seite an die Wurzel, die Vorschau-Assets nach /assets (keine Namenskollisionen mit dem Altbestand)
         for d in ["bilder", "brain"]:
             shutil.copytree(PREV / "assets" / d, ROOT / "assets" / d, dirs_exist_ok=True)
-        for f in ["style.css", "nl.css", "logo-mark-coral.webp", "koralle-grau.css", "hero-luefter.js"]:
+        # 3D-Systembild: nur was die Seite laedt (gepackte Szene, Lader, Standbilder), nicht Quelle und Packskript
+        (ROOT / "assets/system3d").mkdir(parents=True, exist_ok=True)
+        for f in ["system3d.js", "laden.js", "systembild_KJ_v006.webp", "systembild-hoch_KJ_v006.webp"]:
+            shutil.copy(PREV / "assets/system3d" / f, ROOT / "assets/system3d" / f)
+        for f in ["style.css", "nl.css", "logo-mark-coral.webp", "koralle-grau.css", "hero-luefter.js", "hero-film.js"]:
             shutil.copy(PREV / "assets" / f, ROOT / "assets" / f)
         (ROOT / "index.html").write_text(page(T["en"], "", "", "de/", "index,follow", thema="koralle-grau"))
         (ROOT / "de").mkdir(exist_ok=True)
