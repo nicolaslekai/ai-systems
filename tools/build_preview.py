@@ -177,7 +177,7 @@ def ico(i):
 def esc(s):
     return s.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
 
-def page(t, base, root, other_href, robots="noindex,nofollow"):
+def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     a, b, r = base + "assets/", base + "assets/bilder/", root + "assets/"
     url = SITE + ("de/" if t["lang"] == "de" else "")
     ld = {"@context": "https://schema.org", "@graph": [
@@ -228,7 +228,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow"):
 <link rel="icon" type="image/png" sizes="32x32" href="{root}favicon-32x32.png">
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
 <link rel="stylesheet" href="{a}style.css?v=nl1">
-<link rel="stylesheet" href="{a}nl.css?v=nl2">
+<link rel="stylesheet" href="{a}nl.css?v=nl2">{f'''
+<link rel="stylesheet" href="{a}{thema}.css?v=s1">''' if thema else ""}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -405,7 +406,8 @@ if __name__ == "__main__":
         (ROOT / "de/index.html").write_text(page(T["de"], "../", "../", "../", "index,follow"))
         print("LIVE: index.html + de/index.html + assets/")
     else:
-        (PREV / "index.html").write_text(page(T["en"], "", "../", "de/"))
+        thema = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--thema=")), None)
+        (PREV / "index.html").write_text(page(T["en"], "", "../", "de/", thema=thema))
         (PREV / "de").mkdir(exist_ok=True)
-        (PREV / "de/index.html").write_text(page(T["de"], "../", "../../", "../"))
+        (PREV / "de/index.html").write_text(page(T["de"], "../", "../../", "../", thema=thema))
         print("preview/index.html + preview/de/index.html")

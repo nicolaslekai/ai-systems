@@ -1,0 +1,49 @@
+/* Farbthema SILBER · consulting.nicolaslekai.com (Entwurf 24.11.2026)
+   Nicky: "i think silver would look really nice if we can do the silver look maybe via some clever coding".
+   Silber ist keine Flaechenfarbe, sondern ein Verlauf mit Glanzkanten: Ueberschrift-Schlussteil als Metall-Schrift
+   (background-clip:text), Knoepfe als gebuerstetes Aluminium mit Lichtkante, Linien und Symbole in Silbergrau.
+   Das Logo bleibt der einzige warme Punkt. Wird NACH style.css und nl.css geladen. */
+
+:root{
+  --akzent-hell:#c9ccd1;      /* Silber auf Dunkel: Symbole, Linien, Punkte */
+  --akzent-dunkel:#5f6368;    /* Graphit auf Hell, 5,9:1 */
+  --akzent-zwei:#c9ccd1;
+  --akzent-ink:#1c1c1e;
+  --silber-hell:linear-gradient(100deg,#8f9297 0%,#f5f6f8 18%,#a9acb1 34%,#e6e8eb 50%,#8c8f94 66%,#f1f2f4 82%,#9b9ea3 100%);
+  --silber-dunkel:linear-gradient(100deg,#2f3236 0%,#7d8187 18%,#3e4146 34%,#8f9399 50%,#383b40 66%,#73777d 82%,#33363a 100%);
+  --alu:linear-gradient(180deg,#fbfbfc 0%,#e4e6e9 42%,#c3c6cb 52%,#d9dbde 100%);
+}
+
+/* Ueberschrift-Schlussteil: Metall-Schrift mit langsam wanderndem Glanz */
+h1 em,h2 em{
+  background:var(--silber-hell);background-size:220% 100%;background-position:0% 50%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  animation:silber-glanz 9s ease-in-out infinite alternate;
+}
+.tile.light h1 em,.tile.light h2 em{background-image:var(--silber-dunkel)}
+@keyframes silber-glanz{to{background-position:100% 50%}}
+@media (prefers-reduced-motion:reduce){h1 em,h2 em{animation:none}}
+
+/* Zeile ueber den Ueberschriften: helles Silber statt Koralle */
+.tile.dark .eyebrow,.hero-bild .eyebrow{color:#d4d7db}
+.tile.light .eyebrow{color:#6e7378}
+
+/* Knoepfe: gebuerstetes Aluminium, Lichtkante oben, dunkle Schrift */
+.btn.primary,.btn.primary:hover,.light .btn.primary,.light .btn.primary:hover,
+.kontakt .daten a.btn.primary,.kontakt .daten a.btn.primary:hover{
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,rgba(0,0,0,0) 1px 3px),var(--alu);
+  color:#1c1c1e;-webkit-text-fill-color:#1c1c1e;
+  border:1px solid rgba(255,255,255,.6);
+  box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,0,0,.16),0 2px 12px rgba(0,0,0,.35);
+}
+.light .btn.primary,.light .btn.primary:hover{border-color:rgba(0,0,0,.16);box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,0,0,.14),0 1px 4px rgba(0,0,0,.12)}
+.btn.primary:hover{filter:brightness(1.04)}
+.btn.ghost:hover{border-color:#c9ccd1;color:#fff}
+
+/* Links in Karten bleiben lesbar: auf dunklen Karten Silber, auf hellem Grund Graphit */
+.bau .mehr,.card .mehr{color:#d4d7db}
+.tile.light > .wrap > p a,.tile.light .faq a{color:#5f6368}
+
+/* Film-Knopf im Hero: silberner Punkt */
+.film-dot{background:var(--alu)!important;box-shadow:inset 0 1px 0 #fff,0 2px 12px rgba(0,0,0,.4)}
+.film-dot::before,.film-dot::after{border-left-color:#1c1c1e!important}
