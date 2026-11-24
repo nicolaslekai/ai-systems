@@ -260,7 +260,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 </div></header>
 
 <section class="tile dark hero bild-hinter hero-bild mit-hoch">
-  <picture><source media="(max-width:760px)" srcset="{b}team-gpu-hoch.webp" width="1100" height="1366"><img class="hg" src="{b}team-gpu.webp" width="2400" height="1340" alt="{esc(t["hero_alt"])}" fetchpriority="high" decoding="async"></picture>
+  <picture><img class="hg" src="{b}team-gpu.webp" width="2400" height="1340" alt="{esc(t["hero_alt"])}" fetchpriority="high" decoding="async"></picture>
   <span class="schleier" aria-hidden="true"></span>
   <div class="wrap"><div class="hero-gitter">
   <div class="text">
@@ -402,7 +402,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     document.addEventListener('click', function (ev) {{ if (mn.open && (!mn.contains(ev.target) || ev.target.closest('a'))) mn.open = false; }});
   }}
 </script>
-<script src="{a}hero-luefter.js?v=4" defer></script>
+<script src="{a}hero-luefter.js?v=5" defer></script>
 </body></html>
 '''
 

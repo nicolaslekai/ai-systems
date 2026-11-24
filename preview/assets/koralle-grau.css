@@ -74,3 +74,13 @@
 @keyframes luefter-ein{from{opacity:0}}
 
 .tile.light{--a:#ff7f61}
+
+/* Handy-Hero (Nicky 24.11.2026): breites Bild statt Hochkant-Ausschnitt, zuerst Ziegelwand, Fenster, Tasse und
+   Filmdose, die Karte rechts angeschnitten; die Fahrt auf die Karte kommt beim Scrollen (assets/hero-luefter.js). */
+@media(max-width:900px){
+  .hero-bild.mit-hoch .hg{object-position:26% 50%}
+  .hero-bild.mit-hoch .hg,.hero-bild.mit-hoch .schleier{height:100vw}
+  .hero.hero-bild.mit-hoch{padding-top:66vw}
+  .hero-bild.mit-hoch .schleier{background:linear-gradient(180deg,rgba(20,20,22,.1) 0%,rgba(20,20,22,.16) 50%,rgba(20,20,22,.88) 76%,var(--dark) 100%)}
+}
+@media(max-width:900px){.hero-bild.mit-hoch .schleier{will-change:transform}}

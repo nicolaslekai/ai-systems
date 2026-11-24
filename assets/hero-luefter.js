@@ -17,7 +17,7 @@
   // tex = gebackener Blattkranz (tools/luefter_textur.py): der Desktop-Luefter ist voll im Bild und dient beiden Fassungen,
   // fuer das Hochkant-Bild farblich angeglichen — dessen Luefter ist am linken Rand abgeschnitten.
   const BILDER = {
-    'team-gpu.webp':      [{ c: [1230, 639], r: [168, 257], h: [1215, 642], hr: [70, 108], tex: 'luefter-polar.webp' }],
+    'team-gpu.webp':      [{ c: [1230, 639], r: [168, 257], h: [1215, 642], hr: [70, 108], tex: 'luefter-polar.webp', fokus: [1560, 660] }],
     'team-gpu-hoch.webp': [{ c: [115, 651],  r: [170, 262], h: [100, 649],  hr: [71, 108], tex: 'luefter-polar-hoch.webp' }]
   };
   const N = 1400, M = 200, TAU = Math.PI * 2;
@@ -87,6 +87,9 @@
     const s = Math.max(bw / nw, bh / nh), pos = getComputedStyle(img).objectPosition.split(' ');
     const pc = v => (v && v.endsWith('%')) ? parseFloat(v) / 100 : 0.5;
     const ox = (bw - nw * s) * pc(pos[0]), oy = (bh - nh * s) * pc(pos[1]);
+    // Fluchtpunkt der Kamerafahrt: die Karte (Schriftzug), in Pixeln der Bildbox — fuer Bild und Luefter gleich
+    const f = (BILDER[(img.currentSrc || img.src).split('/').pop().split('?')[0]] || [{}])[0].fokus;
+    if (f) { const o = `${(ox + f[0] * s).toFixed(1)}px ${(oy + f[1] * s).toFixed(1)}px`; img.style.transformOrigin = o; buehne.style.transformOrigin = o; if (schleier) schleier.style.transformOrigin = o; }
     for (const l of luefter) Object.assign(l.cv.style, { left: (ox + l.x0 * s) + 'px', top: (oy + l.y0 * s) + 'px', width: (l.w * s) + 'px', height: (l.h * s) + 'px' });
   }
 
@@ -106,15 +109,32 @@
   }
 
   // Kamerafahrt: Ankommen (leichter Rueckzug) + Scrollen (heranfahren, absinken), Text hebt sich und blendet aus
+  // Kamerafahrt. Breit: Ankommen (leichter Rueckzug) + beim Scrollen heranfahren und absinken.
+  // Handy (Nicky 24.11.: "we want to see some of that nice wall ... only see this when we scroll"): weit anfangen mit
+  // Ziegelwand und Fenster, beim Scrollen faehrt die Kamera auf die Karte; das Bild bleibt dabei stehen, der Text zieht drueber.
+  const handy = window.matchMedia('(max-width: 900px)');
   function kamera(jetzt) {
-    const hoehe = sec.offsetHeight || 1;
-    const p = Math.min(1, Math.max(0, window.scrollY / hoehe));
-    const e = p * p * (3 - 2 * p);
     const an = Math.min(1, (jetzt - start) / 2600), ankunft = 1 - Math.pow(1 - an, 3);
-    const z = 1.06 - 0.06 * ankunft + 0.12 * e;
-    const t = `translate3d(0,${(e * 5).toFixed(3)}%,0) scale(${z.toFixed(4)})`;
+    let t;
+    if (handy.matches) {
+      const weg = (img.offsetHeight || 1) * 0.9, y = Math.max(0, window.scrollY);
+      const p = Math.min(1, y / weg), e = p * p * (3 - 2 * p);
+      const z = 1.04 - 0.04 * ankunft + 1.05 * e;
+      const ty = (Math.min(y, weg) * 0.62).toFixed(1);
+      t = `translate3d(0,${ty}px,0) scale(${z.toFixed(4)})`;
+      // der Schleier faehrt mit, und das Bild dunkelt ab, sobald der Text darueberzieht — Schrift bleibt lesbar
+      if (schleier) schleier.style.transform = t;
+      const hell = `brightness(${(1 - 0.55 * e).toFixed(3)})`; img.style.filter = hell; buehne.style.filter = hell;
+      if (text) { text.style.transform = ''; text.style.opacity = ''; }
+    } else {
+      const hoehe = sec.offsetHeight || 1;
+      const p = Math.min(1, Math.max(0, window.scrollY / hoehe)), e = p * p * (3 - 2 * p);
+      const z = 1.06 - 0.06 * ankunft + 0.12 * e;
+      t = `translate3d(0,${(e * 5).toFixed(3)}%,0) scale(${z.toFixed(4)})`;
+      if (schleier) schleier.style.transform = ''; img.style.filter = ''; buehne.style.filter = '';
+      if (text) { text.style.transform = `translate3d(0,${(-e * 48).toFixed(1)}px,0)`; text.style.opacity = (1 - e * 0.85).toFixed(3); }
+    }
     img.style.transform = t; buehne.style.transform = t;
-    if (text) { text.style.transform = `translate3d(0,${(-e * 48).toFixed(1)}px,0)`; text.style.opacity = (1 - e * 0.85).toFixed(3); }
   }
 
   function bild(jetzt) {
