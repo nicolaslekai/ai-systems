@@ -245,8 +245,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
 <link rel="stylesheet" href="{a}style.css?v=nl4">
 <link rel="stylesheet" href="{a}nl.css?v=nl4">{f'''
-<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s11">
-<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s11';}})();</script>''' if thema else ""}
+<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s12">
+<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s12';}})();</script>''' if thema else ""}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -318,15 +318,9 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     <h2>{t["sys_h2"]}</h2>
     <p class="lead">{t["sys_lead"]}</p>
   </div>
-  <figure class="s3d">
-    <div class="s3d-buehne" data-system3d data-src="{a}system3d/system3d.js?v={s3d_stand("system3d.js")}" data-marken="{marken}">
-      <picture>
-        <source media="(max-width:760px)" srcset="{a}system3d/systembild-hoch_KJ_v010.webp" width="1170" height="690">
-        <img src="{a}system3d/systembild_KJ_v010.webp" width="2400" height="1060" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
-      </picture>
-    </div>
+  <figure class="nl-system-bild">
+    <img src="{b}system-film.webp" width="2400" height="1340" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
   </figure>
-  <script src="{a}system3d/laden.js?v={s3d_stand("laden.js")}" defer></script>
 </section>
 <section class="tile light bildband next gross">
   <div class="bb-bild">
