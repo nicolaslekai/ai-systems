@@ -72,7 +72,7 @@ T = {
   sys_h2="Camera, edit, render: <em>one system.</em>",
   sys_lead="Everything your production works with is connected to the same core. What gets settled in the edit is known afterwards to every assistant on set, in grading and on the render server.",
   sys_marken={"camera": "Camera", "server": "Render server", "desk": "Edit suite", "laptop": "Grading", "tablet": "Storyboard", "phone": "Set", "core": "Project memory"},
-  sys_alt="A light film studio as a 3D diorama: a cinema camera on a tripod, an edit suite with a timeline on the monitor, a silver render server, a tablet with a storyboard, a grading panel with three trackballs and a phone on set, each connected by a cable to a white hub in the middle; above it floats the project memory, a sphere of stacked coral rings",
+  sys_alt="A film studio laid out like a product diorama on a pale grey surface: a cinema camera on a tripod, a studio display with an edit timeline, a small silver render computer, a tablet with a storyboard and a pencil, a grading panel with three trackballs, a clapperboard, white headphones and an acrylic stand with photo prints of the same film still, all cabled to a small white hub with a coral ring",
   sys_cap="Camera, edit, grading, storyboard, posters and render machine on one hub: the project memory at the core",
   stein_alt="A laid course of cut granite, one joint between the blocks glowing coral",
   stein="A foundation to build on: a system that lasts, instead of a fix that holds until the next tool arrives.",
@@ -144,7 +144,7 @@ T = {
   sys_h2="Kamera, Schnitt, Render: <em>ein System.</em>",
   sys_lead="Alles, womit Ihre Produktion arbeitet, hängt am selben Kern. Was im Schnitt geklärt wird, weiß danach jeder Assistent am Set, im Grading und auf dem Render-Server.",
   sys_marken={"camera": "Kamera", "server": "Render-Server", "desk": "Schnitt", "laptop": "Grading", "tablet": "Storyboard", "phone": "Set", "core": "Projekt-Gedächtnis"},
-  sys_alt="Ein helles Filmstudio als 3D-Diorama: Kinokamera auf Stativ, Schnittplatz mit Timeline am Bildschirm, ein silberner Render-Server, ein Tablet mit Storyboard, ein Grading-Pult mit drei Rollkugeln und ein Telefon am Set, jedes per Kabel mit einem weißen Knoten in der Mitte verbunden; darüber schwebt das Projekt-Gedächtnis, eine Kugel aus gestapelten korallenen Ringen",
+  sys_alt="Ein Filmstudio als Produkt-Diorama auf hellgrauem Grund: Kinokamera auf Stativ, Studio-Bildschirm mit Schnitt-Timeline, ein kleiner silberner Render-Rechner, ein Tablet mit Storyboard und Stift, ein Grading-Pult mit drei Rollkugeln, eine Filmklappe, weiße Kopfhörer und ein Acrylständer mit Fotoabzügen aus demselben Filmbild, alle verkabelt mit einem kleinen weißen Knoten mit korallenem Ring",
   sys_cap="Kamera, Schnitt, Grading, Storyboard, Plakate und Render-Rechner an einem Knoten: das Projekt-Gedächtnis im Kern",
   stein_alt="Eine gesetzte Lage aus behauenem Granit, eine Fuge zwischen den Blöcken leuchtet korallenrot",
   stein="Ein Fundament, auf das sich bauen lässt: ein System, das bleibt, statt einer Lösung, die hält, bis das nächste Werkzeug kommt.",
@@ -321,8 +321,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   <figure class="s3d">
     <div class="s3d-buehne" data-system3d data-src="{a}system3d/system3d.js?v={s3d_stand("system3d.js")}" data-marken="{marken}">
       <picture>
-        <source media="(max-width:760px)" srcset="{a}system3d/systembild-hoch_KJ_v006.webp" width="1170" height="843">
-        <img src="{a}system3d/systembild_KJ_v006.webp" width="2400" height="1200" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
+        <source media="(max-width:760px)" srcset="{a}system3d/systembild-hoch_KJ_v007.webp" width="1170" height="690">
+        <img src="{a}system3d/systembild_KJ_v007.webp" width="2400" height="1060" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
       </picture>
     </div>
   </figure>
@@ -425,8 +425,9 @@ if __name__ == "__main__":
             shutil.copytree(PREV / "assets" / d, ROOT / "assets" / d, dirs_exist_ok=True)
         # 3D-Systembild: nur was die Seite laedt (gepackte Szene, Lader, Standbilder), nicht Quelle und Packskript
         (ROOT / "assets/system3d").mkdir(parents=True, exist_ok=True)
-        for f in ["system3d.js", "laden.js", "systembild_KJ_v006.webp", "systembild-hoch_KJ_v006.webp"]:
+        for f in ["system3d.js", "laden.js", "systembild_KJ_v007.webp", "systembild-hoch_KJ_v007.webp"]:
             shutil.copy(PREV / "assets/system3d" / f, ROOT / "assets/system3d" / f)
+        shutil.copytree(PREV / "assets/system3d/tex", ROOT / "assets/system3d/tex", dirs_exist_ok=True)   # Bilder fuer Bildschirme und Fotos
         for f in ["style.css", "nl.css", "logo-mark-coral.webp", "koralle-grau.css", "hero-luefter.js", "hero-film.js"]:
             shutil.copy(PREV / "assets" / f, ROOT / "assets" / f)
         (ROOT / "index.html").write_text(page(T["en"], "", "", "de/", "index,follow", thema="koralle-grau"))

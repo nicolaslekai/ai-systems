@@ -1,8 +1,8 @@
-/* Systembild consulting.nicolaslekai.com · V4 hell · 24.11.2026 — erzeugt von tools/system3d_film.py aus der
-   Szene von otterstein.ai. Nicht von Hand aendern: Skript anpassen, neu erzeugen, bauen.sh.
-   Helles Filmstudio in Koralle: Kinokamera, Schnittplatz, Render-Rechner, Grading-Pult, Storyboard-Tablet und
-   Telefon am Set haengen mit Leitungen am Projekt-Gedaechtnis in der Mitte. Die Kamera passt sich in jedem Bild
-   so ein, dass nichts angeschnitten wird (fit). */
+/* Systembild consulting.nicolaslekai.com · V5 · 24.11.2026 — erzeugt von tools/system3d_film.py aus der Szene von
+   otterstein.ai. Nicht von Hand aendern: Skript anpassen, neu erzeugen, bauen.sh.
+   Das helle Studio-Diorama aus dem Bild davor als 3D: dieselben Gegenstaende, Plaetze und derselbe Blickwinkel,
+   Bildschirme und Fotos mit den Bildern aus dem Standbild (tex/). Die Kamera passt sich in jedem Bild so ein,
+   dass nichts angeschnitten wird (fit). */
 /* Systembild in 3D · otterstein.ai · 2026-11-22 (V2, am selben Tag)
    Nicolas, 22.11.2026: „build a 3D graphic … that shows server and the computers connecting
    and it's all in one brain" und „put it underneath how we work for now".
@@ -55,14 +55,17 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 
 const ACCENT = 0xff7f61;               // Koralle, wie --akzent-hell in koralle-grau.css
-const GROUND = 0xf5f5f7;               // Grund des hellen Bandes, wie .nl-system in koralle-grau.css
-const CORE_SCALE = 0.62;              // Kern kleiner als bei O&S: im hellen Studio sollen die Geraete tragen
+// Texturen aus dem alten Standbild liegen neben dieser Datei in tex/ (Adresse aus dem eigenen <script>)
+const TEX_BASE = (() => {
+  try { return new URL('tex/', document.currentScript.src).href; } catch (err) { return 'assets/system3d/tex/'; }
+})();
+const GROUND = 0xececee;               // Grund des Bandes, wie .nl-system in koralle-grau.css (hellgrau wie im Bild)
 const TUMBLE = [0.071, 0.13, 0.041];   // Raten des Kerns in rad/s, wie in brain.js (unrunde Verhältnisse)
-const CORE_Y = 1.85;                   // Hoehe der Kernmitte; tiefer als bei O&S, der Kern ist kleiner
+const CORE_Y = 2.3;                    // Höhe der Kernmitte über dem Boden
 const CORE_R = 1.25;                   // Radius der Kugel, die die Lagen ergeben
 const LAYERS = 9;
 const SEAMS = 8;                       // Nähte zwischen zwei benachbarten Lagen
-const DOCK_R = 0.86;                   // Radius des Sockels, an dem die Leitungen enden
+const DOCK_R = 0.9;                    // Radius des Sockels, an dem die Leitungen enden
 const BUILD_SECONDS = 4;                // Dauer des Aufbaus, sobald das Band im Bild ist
 const DEG = Math.PI / 180;
 
@@ -205,7 +208,7 @@ function rr(g, x, y, w, h, r, fill) {
 function makeScreenTexture(w, h, kind, seed) {
   const { c, g } = canvas(w, h);
   const rnd = seeded(seed);
-  const A = '#ff7f61', BG = '#0f0f0f', P1 = '#191919', P2 = '#222222', L1 = '#373737', L2 = '#4f4f4f';
+  const A = '#ec755a', BG = '#0f0f0f', P1 = '#191919', P2 = '#222222', L1 = '#373737', L2 = '#4f4f4f';
   const u = w / 100;                                   // ein Hundertstel der Breite als Maß
   g.fillStyle = BG;
   g.fillRect(0, 0, w, h);
@@ -300,95 +303,6 @@ function makeScreenTexture(w, h, kind, seed) {
     }
     bars(5 * u, 84 * u, [0, 1, 2, 3, 4, 5].map(() => (40 + rnd() * 48) * u), 1.6 * u, 4.6 * u, L1);
     rr(g, 5 * u, 84 * u + 2 * 6.2 * u, 62 * u, 1.6 * u, u, A);
-  } else if (kind === 'timeline') {
-    // Schnitt: oben Quelle und Programm (Abendhimmel in Koralle-Grau), darunter Spuren mit Clips, Abspielkopf Koralle
-    rr(g, 0, 0, w, 5 * u, 0, '#1b1b1b');
-    for (let i = 0; i < 3; i++) rr(g, (2 + i * 2.2) * u, 1.8 * u, 1.4 * u, 1.4 * u, u, '#4b4b4b');
-    const vh = h * 0.42;
-    [[2, 47], [51, 47]].forEach(([x, vw], i) => {
-      rr(g, x * u, 7 * u, vw * u, vh, 0.8 * u, '#050505');
-      const sky = g.createLinearGradient(0, 7 * u, 0, 7 * u + vh);
-      sky.addColorStop(0, '#2c2c2c'); sky.addColorStop(0.62, i ? '#c9897b' : '#9a7a74'); sky.addColorStop(1, '#3a3638');
-      rr(g, (x + 1) * u, 8 * u, (vw - 2) * u, vh - 2 * u, 0.6 * u, sky);
-      g.fillStyle = 'rgba(12,12,12,0.85)';
-      g.fillRect((x + 1) * u, 8 * u + vh * 0.7, (vw - 2) * u, vh * 0.3 - 2 * u);
-      g.beginPath(); g.ellipse((x + vw * (i ? 0.6 : 0.42)) * u, 8 * u + vh * 0.62, vh * 0.09, vh * 0.3, 0, 0, Math.PI * 2); g.fill();
-    });
-    const ty = 9 * u + vh, th = h - ty - 2 * u;
-    rr(g, 2 * u, ty, 96 * u, th, 0.8 * u, '#161616');
-    const tracks = 5, tH = th / (tracks + 0.6);
-    for (let t = 0; t < tracks; t++) {
-      const y = ty + 0.6 * tH + t * tH;
-      rr(g, 2.5 * u, y + tH * 0.15, 6 * u, tH * 0.7, 0.5 * u, '#272727');
-      let x = 9.5 * u;
-      while (x < 96 * u) {
-        const cw = (6 + rnd() * 16) * u;
-        if (rnd() > 0.18) rr(g, x, y + tH * 0.15, Math.min(cw, 97 * u - x), tH * 0.7, 0.6 * u, t < 3 ? (rnd() > 0.72 ? A : '#5f5f5f') : '#3b3b3b');
-        x += cw + 0.6 * u;
-      }
-    }
-    g.fillStyle = A; g.fillRect(58 * u, ty, 0.35 * u, th);
-    g.beginPath(); g.moveTo(56.8 * u, ty); g.lineTo(59.5 * u, ty); g.lineTo(58.15 * u, ty + 1.6 * u); g.fill();
-  } else if (kind === 'grade') {
-    // Grading: Bild oben links, Waveform rechts, drei Farbraeder unten (grau mit Punkt in Koralle)
-    rr(g, 0, 0, w, h, 0, '#141414');
-    const vh = h * 0.5;
-    const sky = g.createLinearGradient(0, 3 * u, 0, 3 * u + vh);
-    sky.addColorStop(0, '#2c2c2c'); sky.addColorStop(0.65, '#c9897b'); sky.addColorStop(1, '#3a3638');
-    rr(g, 3 * u, 3 * u, 56 * u, vh, 0.8 * u, sky);
-    g.fillStyle = 'rgba(12,12,12,0.85)'; g.fillRect(3 * u, 3 * u + vh * 0.72, 56 * u, vh * 0.28);
-    g.beginPath(); g.ellipse(26 * u, 3 * u + vh * 0.62, vh * 0.1, vh * 0.32, 0, 0, Math.PI * 2); g.fill();
-    rr(g, 62 * u, 3 * u, 35 * u, vh, 0.8 * u, '#050505');
-    for (let i = 0; i < 320; i++) {
-      const x = 63 * u + rnd() * 33 * u, base = 3 * u + vh * (0.2 + 0.25 * Math.sin((x / w) * 9) + 0.4 * rnd());
-      g.fillStyle = i % 3 ? 'rgba(220,220,222,0.55)' : A; g.fillRect(x, base, 0.4 * u, 0.4 * u);
-    }
-    const wy = 6 * u + vh, wr = Math.min(12 * u, (h - wy - 3 * u) / 2.2);
-    for (let i = 0; i < 3; i++) {
-      const cx = (18 + i * 32) * u, cy = wy + wr * 1.1;
-      g.fillStyle = '#5d5d5d'; g.beginPath(); g.arc(cx, cy, wr, 0, Math.PI * 2); g.fill();
-      g.fillStyle = '#1f1f1f'; g.beginPath(); g.arc(cx, cy, wr * 0.8, 0, Math.PI * 2); g.fill();
-      g.strokeStyle = '#3b3b3b'; g.lineWidth = 0.3 * u;
-      g.beginPath(); g.moveTo(cx - wr * 0.8, cy); g.lineTo(cx + wr * 0.8, cy); g.moveTo(cx, cy - wr * 0.8); g.lineTo(cx, cy + wr * 0.8); g.stroke();
-      g.fillStyle = i === 1 ? A : '#d6d7da'; g.beginPath(); g.arc(cx + wr * 0.28 * (i - 1 || 0.6), cy - wr * 0.22, wr * 0.13, 0, Math.PI * 2); g.fill();
-    }
-  } else if (kind === 'scopes') {
-    // Breiter Streifen am Grading-Pult: Farbrad, Waveform, Farbrad
-    rr(g, 0, 0, w, h, 0, '#111111');
-    const ph = h - 4 * u, pw = 31 * u;
-    for (let i = 0; i < 3; i++) {
-      const x = (1.5 + i * 32.5) * u, y = 2 * u;
-      rr(g, x, y, pw, ph, u, '#1d1d1d');
-      if (i === 1) {
-        for (let k = 0; k < 260; k++) {
-          const px = x + 1.5 * u + rnd() * (pw - 3 * u), py = y + ph * (0.25 + 0.22 * Math.sin(px / w * 14) + 0.38 * rnd());
-          g.fillStyle = k % 3 ? 'rgba(220,220,222,0.6)' : A; g.fillRect(px, py, 0.35 * u, 0.35 * u);
-        }
-      } else {
-        for (const f of [0.27, 0.73]) {
-          const cx = x + pw * f, cy = y + ph / 2, r = ph * 0.36;
-          g.fillStyle = '#5d5d5d'; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.fill();
-          g.fillStyle = '#1f1f1f'; g.beginPath(); g.arc(cx, cy, r * 0.8, 0, Math.PI * 2); g.fill();
-          g.fillStyle = f < 0.5 && i === 0 ? A : '#d6d7da'; g.beginPath(); g.arc(cx + r * 0.2, cy - r * 0.2, r * 0.16, 0, Math.PI * 2); g.fill();
-        }
-      }
-    }
-  } else if (kind === 'board') {
-    // Storyboard auf hellem Papier: sechs Bildfelder mit Bleistiftlinien, eines in Koralle markiert
-    rr(g, 0, 0, w, h, 0, '#f7f7f5');
-    rr(g, 0, 0, w, 8 * u, 0, '#ececee');
-    rr(g, 5 * u, 3 * u, 22 * u, 2.2 * u, u, '#9c9c9c');
-    rr(g, w - 14 * u, 2.4 * u, 9 * u, 3.4 * u, 1.7 * u, A);
-    for (let i = 0; i < 6; i++) {
-      const x = (5 + (i % 2) * 46) * u, y = (12 + Math.floor(i / 2) * 29) * u;
-      rr(g, x, y, 43 * u, 21 * u, 1.2 * u, '#ffffff');
-      g.strokeStyle = '#c9cbcf'; g.lineWidth = 0.35 * u; g.strokeRect(x, y, 43 * u, 21 * u);
-      g.strokeStyle = '#585858'; g.lineWidth = 0.45 * u;
-      g.beginPath(); g.moveTo(x + 4 * u, y + 17 * u); g.lineTo(x + (14 + rnd() * 10) * u, y + (6 + rnd() * 6) * u); g.lineTo(x + 39 * u, y + 15 * u); g.stroke();
-      g.beginPath(); g.ellipse(x + (24 + rnd() * 8) * u, y + 11 * u, 2.2 * u, 5 * u, 0, 0, Math.PI * 2); g.stroke();
-      if (i === 3) { g.strokeStyle = A; g.lineWidth = 0.9 * u; g.strokeRect(x - 0.6 * u, y - 0.6 * u, 44.2 * u, 22.2 * u); }
-      rr(g, x, y + 23 * u, (14 + rnd() * 18) * u, 1.4 * u, u, '#c4c6ca');
-    }
   } else {                                             // phone
     rr(g, 0, 0, w, 16 * u, 0, P1);
     rr(g, 34 * u, 2.5 * u, 32 * u, 5 * u, 2.5 * u, '#000');   // Kameraaussparung
@@ -474,7 +388,7 @@ function screenGeometry(w, h, r) {
  * @returns {THREE.Mesh} Der Körper.
  */
 function add(parent, geo, mat, x = 0, y = 0, z = 0) {
-  const m = new THREE.Mesh(geo, mat);
+  const m = geo.isMesh ? geo : new THREE.Mesh(geo, mat);
   m.position.set(x, y, z);
   m.castShadow = true;
   parent.add(m);
@@ -491,15 +405,15 @@ function add(parent, geo, mat, x = 0, y = 0, z = 0) {
  */
 function deviceMaterials(screenMap) {
   return {
-    alu: new THREE.MeshStandardMaterial({ color: 0xd3d5d9, metalness: 1, roughness: 0.3 }),       // Silber
-    dark: new THREE.MeshStandardMaterial({ color: 0x2c2c2c, metalness: 0.45, roughness: 0.5 }),
-    key: new THREE.MeshStandardMaterial({ color: 0xf2f2f4, metalness: 0, roughness: 0.55 }),       // helle Tasten
-    glass: new THREE.MeshStandardMaterial({ color: 0x0b0b0b, metalness: 0.2, roughness: 0.12 }),
+    alu: new THREE.MeshStandardMaterial({ color: 0x8f8f8f, metalness: 1, roughness: 0.34 }),
+    dark: new THREE.MeshStandardMaterial({ color: 0x171717, metalness: 0.5, roughness: 0.55 }),
+    key: new THREE.MeshStandardMaterial({ color: 0x1d1d1d, metalness: 0.2, roughness: 0.62 }),
+    glass: new THREE.MeshStandardMaterial({ color: 0x060606, metalness: 0.2, roughness: 0.12 }),
     screen: new THREE.MeshBasicMaterial({ map: screenMap }),
     // Glas: schwarz und spiegelnd, additiv über dem Bild — es bleiben nur die Spiegelungen des Raums stehen.
     sheen: new THREE.MeshStandardMaterial({
       color: 0x000000, metalness: 1, roughness: 0.07, envMapIntensity: 1.5,
-      transparent: true, opacity: 0.32, depthWrite: false, blending: THREE.AdditiveBlending,
+      transparent: true, opacity: 0.5, depthWrite: false, blending: THREE.NormalBlending,
     }),
   };
 }
@@ -515,7 +429,7 @@ function deviceMaterials(screenMap) {
 function addContactShadow(group, tex, w, d) {
   const m = new THREE.Mesh(
     new THREE.PlaneGeometry(w, d),
-    new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, opacity: 0.4 }),
+    new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, opacity: 0.32 }),
   );
   m.rotation.x = -Math.PI / 2;
   m.position.y = 0.007;
@@ -532,8 +446,14 @@ function addContactShadow(group, tex, w, d) {
  * @param {number} z Lage der Fleckmitte in z (vor dem Gerät ist positiv).
  * @param {number} strength Deckkraft, 0 bis 1.
  */
-function addScreenSpill() {
-  // Hell: kein Schein der Bildschirme auf dem Boden — auf hellem Grund saehe er wie ein Fleck aus.
+function addScreenSpill(group, tex, w, d, z, strength) {
+  const m = new THREE.Mesh(
+    new THREE.PlaneGeometry(w, d),
+    new THREE.MeshBasicMaterial({ map: tex, color: ACCENT, transparent: true, opacity: strength, depthWrite: false, blending: THREE.NormalBlending }),
+  );
+  m.rotation.x = -Math.PI / 2;
+  m.position.set(0, 0.009, z);
+  group.add(m);
 }
 
 /**
@@ -642,7 +562,7 @@ function buildWorkstation(screenMap, shadowTex, glowTex) {
   add(g, new THREE.CylinderGeometry(0.035, 0.035, 0.05, 16), m.dark, 0, 0.72, -0.045).rotation.x = Math.PI / 2;   // Gelenk
   add(g, slab(0.7, 0.46, 0.022, 0.07), m.alu, 0, 0.014, -0.03).rotation.x = -Math.PI / 2;
   // Schreibunterlage, darauf Tastatur und Maus
-  const mat = add(g, new THREE.ShapeGeometry(roundedShape(1.7, 0.56, 0.05)), new THREE.MeshStandardMaterial({ color: 0xdedfe2, roughness: 0.9 }), 0.12, 0.004, 0.72);
+  const mat = add(g, new THREE.ShapeGeometry(roundedShape(1.7, 0.56, 0.05)), m.dark, 0.12, 0.004, 0.72);
   mat.rotation.x = -Math.PI / 2;
   mat.castShadow = false;
   const board = new THREE.Group();
@@ -684,8 +604,8 @@ function buildWorkstation(screenMap, shadowTex, glowTex) {
 function buildHandheld(w, h, lean, screenMap, shadowTex, glowTex) {
   const g = new THREE.Group();
   const m = deviceMaterials(screenMap);
-  m.alu.color.setHex(0xc4c7cc);
-  m.alu.roughness = 0.34;
+  m.alu.color.setHex(0x3d3d3d);
+  m.alu.roughness = 0.42;
   const r = Math.min(w, h) * 0.13;
   const tilt = new THREE.Group();
   tilt.rotation.x = -lean * DEG;
@@ -715,173 +635,322 @@ function buildHandheld(w, h, lean, screenMap, shadowTex, glowTex) {
 }
 
 /**
- * Kinokamera auf Stativ, wie im Bild davor: Gehaeuse in Graphit mit silbernem Kaefig und Griff, Objektiv mit
- * Ringen, Kompendium mit Klappe, Stangen mit Schaerfezieher, Kontrollmonitor, Tally in Koralle. Darunter ein
- * Videokopf und drei silberne Doppelrohr-Beine mit Bodenspinne. Eine Leitung laeuft vom Gehaeuse zum Boden.
- * @returns {THREE.Group} Die Kamera; ``userData.plug`` und ``userData.label`` wie bei den anderen Geraeten.
+ * Werkstoffe des Studios: Silber, Weiss, Grau, Graphit, Schwarz, Glas, Koralle. Jedes Geraet bekommt eigene
+ * Exemplare, damit es unabhaengig ein- und ausgeblendet werden kann.
  */
-function buildCamera(screenMap, shadowTex) {
+function studio() {
+  return {
+    silver: new THREE.MeshStandardMaterial({ color: 0xd9dadd, metalness: 0.7, roughness: 0.28 }),
+    white: new THREE.MeshStandardMaterial({ color: 0xd9d9dc, roughness: 0.5 }),
+    pale: new THREE.MeshStandardMaterial({ color: 0xe6e7e9, roughness: 0.75 }),
+    grey: new THREE.MeshStandardMaterial({ color: 0x5e5e5e, metalness: 0.3, roughness: 0.5 }),
+    graphite: new THREE.MeshStandardMaterial({ color: 0x3f3f3f, metalness: 0.35, roughness: 0.42 }),
+    black: new THREE.MeshStandardMaterial({ color: 0x151515, metalness: 0.3, roughness: 0.38 }),
+    gloss: new THREE.MeshPhysicalMaterial({ color: 0x0c0c0c, roughness: 0.1, clearcoat: 1, clearcoatRoughness: 0.06 }),
+    coral: new THREE.MeshBasicMaterial({ color: ACCENT }),
+  };
+}
+
+/** Bildflaeche mit einem Bild aus tex/ (deckend); ohne Bild eine dunkle Flaeche. */
+function picture(tex, w, h, dark = 0x111111) {
+  const mat = new THREE.MeshBasicMaterial({ map: tex || null, color: tex ? 0xffffff : dark });
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
+  return m;
+}
+
+/** Spiegelnde Glasschicht ueber einem Bildschirm (nur Spiegelungen, additiv ueber dem dunklen Bild). */
+function glassSheen(w, h) {
+  return new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshStandardMaterial({
+    color: 0x000000, metalness: 1, roughness: 0.08, envMapIntensity: 1.2,
+    transparent: true, opacity: 0.22, depthWrite: false, blending: THREE.AdditiveBlending,
+  }));
+}
+
+/** Rohr zwischen zwei Punkten. */
+function rod(parent, a, b, r, mat, seg = 12) {
+  const m = add(parent, new THREE.CylinderGeometry(r, r, a.distanceTo(b), seg), mat, (a.x + b.x) / 2, (a.y + b.y) / 2, (a.z + b.z) / 2);
+  m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), b.clone().sub(a).normalize());
+  return m;
+}
+
+/**
+ * Kinokamera auf Stativ wie im Bild: silbernes Gehaeuse mit Kaefig und Tragegriff, schwarzes Objektiv mit
+ * Ringen, Kompendium in Dunkelgrau mit Klappen, Schaerfezieher mit grossem Rad, silbernes Stativ mit Kopf,
+ * Schwenkarm und Doppelrohr-Beinen.
+ */
+function buildCamera(shadowTex) {
   const root = new THREE.Group();
-  const SC = 1.55;                                      // groesser als echt, sonst verschwindet sie neben dem Schnittplatz
+  const SC = 2.7;
   const g = new THREE.Group();
   g.scale.setScalar(SC);
   root.add(g);
-  const m = deviceMaterials(screenMap);
-  const body = new THREE.MeshStandardMaterial({ color: 0x3f3f3f, metalness: 0.5, roughness: 0.4 });
-  const black = new THREE.MeshStandardMaterial({ color: 0x181818, metalness: 0.3, roughness: 0.48 });
-  const rubber = new THREE.MeshStandardMaterial({ color: 0x2b2b2b, metalness: 0, roughness: 0.85 });
-  const coral = new THREE.MeshBasicMaterial({ color: ACCENT });   // Koralle ungeschattet: so bleibt sie Koralle
+  const m = studio();
   const turn = (mesh) => { mesh.rotation.x = Math.PI / 2; return mesh; };
-  const H = 1.16;                                       // Hoehe der Objektivachse
+  const H = 1.42;
   const cam = new THREE.Group();
   cam.position.set(0, H, -0.04);
-  add(cam, slab(0.3, 0.3, 0.52, 0.05), body, 0, 0, -0.06);                                   // Gehaeuse
-  add(cam, slab(0.24, 0.19, 0.1, 0.02), black, 0, -0.01, -0.37);                            // Akku
-  add(cam, new THREE.BoxGeometry(0.32, 0.02, 0.46), m.alu, 0, 0.162, -0.06);               // Kaefig oben
-  for (const x of [-0.161, 0.161]) add(cam, new THREE.BoxGeometry(0.012, 0.24, 0.4), m.alu, x, 0, -0.06);
-  turn(add(cam, new THREE.CylinderGeometry(0.022, 0.022, 0.42, 16), m.alu, 0, 0.27, -0.04)); // Griff
-  for (const z of [0.12, -0.2]) add(cam, new THREE.BoxGeometry(0.035, 0.1, 0.035), m.alu, 0, 0.215, z);
-  // Objektiv
-  turn(add(cam, new THREE.CylinderGeometry(0.1, 0.1, 0.05, 40), m.alu, 0, 0, 0.225));
-  turn(add(cam, new THREE.CylinderGeometry(0.098, 0.09, 0.4, 40), black, 0, 0, 0.45));
-  for (const [z, r, mat] of [[0.33, 0.106, rubber], [0.46, 0.108, m.alu], [0.58, 0.112, rubber]]) turn(add(cam, new THREE.CylinderGeometry(r, r, 0.045, 40), mat, 0, 0, z));
-  turn(add(cam, new THREE.CylinderGeometry(0.118, 0.11, 0.04, 40), black, 0, 0, 0.66));
-  add(cam, new THREE.CircleGeometry(0.095, 40), m.glass, 0, 0, 0.681).castShadow = false;
-  // Kompendium mit oberer Klappe
-  const mb = new THREE.Group();
-  mb.position.set(0, 0, 0.8);
-  add(mb, new THREE.BoxGeometry(0.44, 0.03, 0.2), black, 0, 0.165, 0);
-  add(mb, new THREE.BoxGeometry(0.44, 0.03, 0.2), black, 0, -0.165, 0);
-  for (const x of [-0.205, 0.205]) add(mb, new THREE.BoxGeometry(0.03, 0.36, 0.2), black, x, 0, 0);
-  add(mb, new THREE.BoxGeometry(0.44, 0.008, 0.2), black, 0, 0.2, 0.1).rotation.x = -0.35;
+  add(cam, slab(0.3, 0.3, 0.5, 0.04), m.silver, 0, 0, -0.06);                               // Gehaeuse
+  add(cam, slab(0.22, 0.2, 0.12, 0.02), m.graphite, 0, -0.01, -0.37);                      // Akku
+  for (const x of [-0.162, 0.162]) add(cam, new THREE.BoxGeometry(0.014, 0.25, 0.4), m.silver, x, 0, -0.06);   // Seitenplatten
+  add(cam, new THREE.BoxGeometry(0.32, 0.022, 0.44), m.silver, 0, 0.162, -0.06);            // Kaefig oben
+  turn(add(cam, new THREE.CylinderGeometry(0.024, 0.024, 0.4, 16), m.silver, 0, 0.29, -0.03));   // Tragegriff
+  for (const z of [0.13, -0.19]) add(cam, new THREE.BoxGeometry(0.04, 0.12, 0.04), m.silver, 0, 0.22, z);
+  turn(add(cam, new THREE.CylinderGeometry(0.1, 0.1, 0.05, 40), m.silver, 0, 0, 0.215));   // Bajonett
+  turn(add(cam, new THREE.CylinderGeometry(0.1, 0.094, 0.42, 40), m.black, 0, 0, 0.45));   // Objektiv
+  for (const z of [0.33, 0.44, 0.56]) turn(add(cam, new THREE.CylinderGeometry(0.108, 0.108, 0.035, 40), m.graphite, 0, 0, z));
+  turn(add(cam, new THREE.CylinderGeometry(0.12, 0.11, 0.05, 40), m.black, 0, 0, 0.665));
+  add(cam, new THREE.CircleGeometry(0.095, 40), m.gloss, 0, 0, 0.692).castShadow = false;
+  const mb = new THREE.Group();                                                               // Kompendium
+  mb.position.set(0, 0, 0.82);
+  for (const y of [0.15, -0.15]) add(mb, new THREE.BoxGeometry(0.4, 0.024, 0.2), m.graphite, 0, y, 0);
+  for (const x of [-0.19, 0.19]) add(mb, new THREE.BoxGeometry(0.024, 0.32, 0.2), m.graphite, x, 0, 0);
+  add(mb, new THREE.BoxGeometry(0.46, 0.008, 0.24), m.graphite, 0, 0.2, 0.13).rotation.x = -0.45;   // Klappe oben
+  add(mb, new THREE.BoxGeometry(0.008, 0.36, 0.2), m.graphite, 0.25, 0, 0.12).rotation.y = 0.5;     // Klappe seitlich
   cam.add(mb);
-  // Stangen unter dem Objektiv, Schaerfezieher
-  for (const x of [-0.06, 0.06]) turn(add(cam, new THREE.CylinderGeometry(0.011, 0.011, 0.8, 10), m.alu, x, -0.19, 0.28));
-  add(cam, new THREE.BoxGeometry(0.06, 0.12, 0.07), black, 0.13, -0.14, 0.46);
-  add(cam, new THREE.CylinderGeometry(0.045, 0.045, 0.03, 24), m.alu, 0.175, -0.14, 0.46).rotation.z = Math.PI / 2;
-  // Kontrollmonitor links am Kaefig, zum Betrachter gedreht
-  const mon = new THREE.Group();
-  mon.position.set(-0.32, 0.3, 0.04);
-  mon.rotation.set(-0.1, -1.15, 0);
-  add(mon, slab(0.36, 0.24, 0.035, 0.025), black, 0, 0, 0);
-  add(mon, screenGeometry(0.33, 0.21, 0.012), m.screen, 0, 0, 0.0182).castShadow = false;
-  add(mon, screenGeometry(0.33, 0.21, 0.012), m.sheen, 0, 0, 0.0192).castShadow = false;
-  cam.add(mon);
-  add(cam, new THREE.CylinderGeometry(0.012, 0.012, 0.22, 8), m.alu, -0.22, 0.22, 0.04).rotation.z = 0.95;
-  add(cam, new THREE.BoxGeometry(0.03, 0.018, 0.01), new THREE.MeshBasicMaterial({ color: ACCENT }), 0.09, 0.1, 0.205).castShadow = false;   // Tally
+  for (const x of [-0.06, 0.06]) turn(add(cam, new THREE.CylinderGeometry(0.012, 0.012, 0.9, 10), m.silver, x, -0.2, 0.3));
+  const ff = add(cam, new THREE.CylinderGeometry(0.075, 0.075, 0.04, 32), m.graphite, -0.17, -0.13, 0.42);   // Schaerferad
+  ff.rotation.z = Math.PI / 2;
+  add(cam, new THREE.CylinderGeometry(0.035, 0.035, 0.05, 20), m.silver, -0.2, -0.13, 0.42).rotation.z = Math.PI / 2;
+  add(cam, new THREE.BoxGeometry(0.03, 0.016, 0.01), m.coral, 0.09, 0.1, 0.196).castShadow = false;     // Tally
   g.add(cam);
-  // Videokopf, Schwenkarm, Mittelsaeule
-  add(g, new THREE.BoxGeometry(0.2, 0.04, 0.3), black, 0, H - 0.175, -0.04);
-  add(g, new THREE.CylinderGeometry(0.1, 0.12, 0.13, 28), black, 0, H - 0.255, -0.04);
-  const pan = add(g, new THREE.CylinderGeometry(0.014, 0.014, 0.55, 10), m.alu, -0.1, H - 0.3, -0.36);
-  pan.rotation.set(1.15, 0, 0.3);
-  const top = new THREE.Vector3(0, H - 0.33, -0.04);
-  add(g, new THREE.CylinderGeometry(0.09, 0.07, 0.07, 24), black, top.x, top.y, top.z);
-  const up = new THREE.Vector3(0, 1, 0);
-  const tube = (a, b, r, mat) => {
-    const mesh = add(g, new THREE.CylinderGeometry(r, r, a.distanceTo(b), 10), mat, (a.x + b.x) / 2, (a.y + b.y) / 2, (a.z + b.z) / 2);
-    mesh.quaternion.setFromUnitVectors(up, b.clone().sub(a).normalize());
-    return mesh;
-  };
-  tube(top, new THREE.Vector3(0, 0.5, -0.04), 0.022, black);
-  const spider = new THREE.Vector3(0, 0.2, -0.04);
-  // Drei Beine aus je zwei Rohren, Klemme auf halber Hoehe, Gummifuss, Bodenspinne
-  [0.35, 2.44, 4.53].forEach((a) => {
-    const foot = new THREE.Vector3(Math.sin(a) * 0.64, 0.02, -0.04 + Math.cos(a) * 0.64);
-    const side = new THREE.Vector3(Math.cos(a), 0, -Math.sin(a)).multiplyScalar(0.022);
-    tube(top.clone().add(side), foot.clone().add(side), 0.013, m.alu);
-    tube(top.clone().sub(side), foot.clone().sub(side), 0.013, m.alu);
-    tube(top.clone().lerp(foot, 0.4), top.clone().lerp(foot, 0.47), 0.042, black);
-    tube(top.clone().lerp(foot, 0.04), top.clone().lerp(foot, 0.1), 0.042, black);
-    add(g, new THREE.SphereGeometry(0.03, 12, 8), rubber, foot.x, 0.02, foot.z);
-    tube(spider, top.clone().lerp(foot, 0.78), 0.008, m.alu);
+  add(g, new THREE.BoxGeometry(0.22, 0.04, 0.3), m.graphite, 0, H - 0.175, -0.04);                     // Platte
+  add(g, new THREE.CylinderGeometry(0.11, 0.13, 0.14, 28), m.silver, 0, H - 0.26, -0.04);              // Videokopf
+  rod(g, new THREE.Vector3(-0.05, H - 0.27, -0.1), new THREE.Vector3(-0.32, H - 0.42, -0.62), 0.016, m.silver);   // Schwenkarm
+  const top = new THREE.Vector3(0, H - 0.34, -0.04);
+  add(g, new THREE.CylinderGeometry(0.1, 0.08, 0.08, 24), m.silver, top.x, top.y, top.z);
+  rod(g, top, new THREE.Vector3(0, 0.55, -0.04), 0.022, m.silver);
+  const spider = new THREE.Vector3(0, 0.22, -0.04);
+  [0.55, 2.65, 4.75].forEach((a) => {
+    const foot = new THREE.Vector3(Math.sin(a) * 0.66, 0.02, -0.04 + Math.cos(a) * 0.66);
+    const side = new THREE.Vector3(Math.cos(a), 0, -Math.sin(a)).multiplyScalar(0.024);
+    rod(g, top.clone().add(side), foot.clone().add(side), 0.014, m.silver);
+    rod(g, top.clone().sub(side), foot.clone().sub(side), 0.014, m.silver);
+    rod(g, top.clone().lerp(foot, 0.42), top.clone().lerp(foot, 0.49), 0.04, m.silver);
+    rod(g, top.clone().lerp(foot, 0.03), top.clone().lerp(foot, 0.1), 0.042, m.silver);
+    add(g, new THREE.CylinderGeometry(0.035, 0.04, 0.05, 16), m.silver, foot.x, 0.025, foot.z);
+    rod(g, spider, top.clone().lerp(foot, 0.8), 0.009, m.silver);
   });
-  // Leitung vom Gehaeuse hinunter zum Boden, dort sitzt der Stecker
-  const drop = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.1, H - 0.08, -0.33), new THREE.Vector3(0.2, H - 0.3, -0.36), new THREE.Vector3(0.2, 0.4, -0.2),
-    new THREE.Vector3(0.14, 0.05, -0.08), new THREE.Vector3(0.1, 0.02, 0.0),
+  const drop = new THREE.CatmullRomCurve3([                                                   // Kabel vom Gehaeuse zum Boden
+    new THREE.Vector3(0.1, H - 0.08, -0.33), new THREE.Vector3(0.2, H - 0.3, -0.38), new THREE.Vector3(0.18, 0.4, -0.22),
+    new THREE.Vector3(0.12, 0.05, -0.08), new THREE.Vector3(0.08, 0.02, 0.0),
   ]);
-  add(g, new THREE.TubeGeometry(drop, 40, 0.011, 6), coral);
+  add(g, new THREE.TubeGeometry(drop, 40, 0.011, 6), m.white);
   addContactShadow(g, shadowTex, 1.8, 1.8);
-  root.userData.plug = new THREE.Vector3(0.1 * SC, 0.03, 0);
-  root.userData.label = new THREE.Vector3(0, (H + 0.52) * SC, 0);
+  root.userData.plug = new THREE.Vector3(0.08 * SC, 0.05, 0);
+  root.userData.label = new THREE.Vector3(0, (H + 0.5) * SC, 0);
   return root;
 }
 
-/**
- * Render-Rechner: ein silberner Kasten mit runder Grundflaeche, vorn zwei Buchsen, ein Kartenschlitz und eine
- * Reihe kleiner Leuchten (sie flackern, siehe pose). Steht fuer den Render-Server.
- * @returns {THREE.Group} ``userData.plugs`` (zwei Ansatzpunkte), ``userData.leds``, ``userData.blink``, ``userData.label``.
- */
-function buildRenderBox(shadowTex) {
+/** Studio-Bildschirm auf silbernem Fuss, Schnitt-Timeline aus dem Standbild auf der schwarzen Glasfront. */
+function buildDisplay(tex, shadowTex) {
   const g = new THREE.Group();
-  const m = deviceMaterials(null);
-  const W = 1.5, D = 1.5, H = 0.72, R = 0.22;
-  add(g, slab(W, D, H, R), m.alu, 0, H / 2 + 0.03, 0).rotation.x = -Math.PI / 2;
-  add(g, new THREE.CylinderGeometry(W * 0.36, W * 0.36, 0.03, 64), m.dark, 0, 0.015, 0).castShadow = false;
-  const F = D / 2 + 0.002;
-  for (const x of [-0.5, -0.38]) add(g, slab(0.07, 0.03, 0.01, 0.012), m.dark, x, 0.18, F).castShadow = false;
-  add(g, slab(0.2, 0.02, 0.01, 0.008), m.dark, -0.12, 0.18, F).castShadow = false;
-  // Luftschlitze unten am Rand, rundum angedeutet durch eine dunkle Fuge
-  add(g, new THREE.BoxGeometry(W - 0.5, 0.012, 0.004), m.dark, 0, 0.07, F).castShadow = false;
-  const leds = new THREE.InstancedMesh(new THREE.BoxGeometry(0.035, 0.012, 0.006), new THREE.MeshBasicMaterial(), 6);
-  const dummy = new THREE.Object3D(), col = new THREE.Color();
-  for (let i = 0; i < 6; i++) {
-    dummy.position.set(0.3 + i * 0.065, 0.18, F + 0.003);
-    dummy.updateMatrix();
-    leds.setMatrixAt(i, dummy.matrix);
-    leds.setColorAt(i, col.setHex(i % 3 ? 0x9c9c9c : ACCENT));
-  }
-  g.add(leds);
-  addContactShadow(g, shadowTex, 2.3, 2.3);
-  g.userData.leds = leds;
-  g.userData.blink = [0, 1, 2, 3, 4, 5];
-  g.userData.plugs = [new THREE.Vector3(-W / 2 - 0.01, 0.1, 0.36), new THREE.Vector3(-W / 2 - 0.01, 0.1, 0.12)];
-  g.userData.label = new THREE.Vector3(0, H + 0.42, 0);
+  const m = studio();
+  const W = 4.6, H = 2.59, Y = 2.75, T = 0.09;
+  add(g, slab(W + 0.1, H + 0.1, T, 0.09), m.silver, 0, Y, 0);
+  const front = add(g, picture(tex, W, H), null, 0, Y, T / 2 + 0.004);
+  front.castShadow = false;
+  add(g, glassSheen(W, H), null, 0, Y, T / 2 + 0.006).castShadow = false;
+  const arm = add(g, slab(0.95, 2.2, 0.07, 0.04), m.silver, 0, 1.1, -0.45);                // Standfuss-Arm
+  arm.rotation.x = 0.33;
+  add(g, slab(1.35, 1.3, 0.06, 0.14), m.silver, 0, 0.03, -0.38).rotation.x = -Math.PI / 2;  // Fussplatte
+  addContactShadow(g, shadowTex, 3.0, 2.2);
+  g.userData.plug = new THREE.Vector3(0.75, 0.05, -0.35);
+  g.userData.label = new THREE.Vector3(0, Y + H / 2 + 0.3, 0);
   return g;
 }
 
-/**
- * Grading-Pult: flaches Unterteil in Graphit, drei glaenzende Rollkugeln in silbernen Ringen, Drehregler und
- * Tasten, hinten ein schraeger Bildschirmstreifen mit Farbraedern und Waveform.
- * @returns {THREE.Group} ``userData.plug`` und ``userData.label``.
- */
-function buildGradePanel(screenMap, shadowTex) {
+/** Render-Rechner: silberweisser Kasten mit runden Ecken, vorn Buchsen und Kartenschlitz. */
+function buildRenderBox(shadowTex) {
   const g = new THREE.Group();
-  const m = deviceMaterials(screenMap);
-  const shell = new THREE.MeshStandardMaterial({ color: 0x3c3c3c, metalness: 0.4, roughness: 0.42 });
-  const deck = new THREE.MeshStandardMaterial({ color: 0x242424, metalness: 0.2, roughness: 0.6 });
-  const ball = new THREE.MeshPhysicalMaterial({ color: 0x0d0d0d, roughness: 0.12, clearcoat: 1, clearcoatRoughness: 0.08 });
-  const W = 2.0, D = 1.1;
-  add(g, slab(W, D, 0.12, 0.08), shell, 0, 0.06, 0).rotation.x = -Math.PI / 2;
-  add(g, slab(W, 0.42, 0.14, 0.06), shell, 0, 0.19, -D / 2 + 0.21).rotation.x = -Math.PI / 2;
-  const plate = add(g, new THREE.ShapeGeometry(roundedShape(W - 0.08, 0.62, 0.05)), deck, 0, 0.1206, 0.2);
-  plate.rotation.x = -Math.PI / 2;
-  plate.castShadow = false;
-  for (const x of [-0.6, 0, 0.6]) {
-    add(g, new THREE.TorusGeometry(0.2, 0.034, 14, 48), m.alu, x, 0.128, 0.2).rotation.x = Math.PI / 2;
-    add(g, new THREE.SphereGeometry(0.155, 32, 20), ball, x, 0.14, 0.2);
+  const m = studio();
+  const body = new THREE.MeshStandardMaterial({ color: 0xdcdcde, metalness: 0.6, roughness: 0.3 });
+  const W = 2.5, D = 2.5, H = 1.15, R = 0.36;
+  add(g, slab(W, D, H, R), body, 0, H / 2 + 0.04, 0).rotation.x = -Math.PI / 2;
+  add(g, new THREE.CylinderGeometry(W * 0.36, W * 0.36, 0.045, 64), m.pale, 0, 0.022, 0).castShadow = false;
+  const F = D / 2 + 0.003;
+  for (const x of [-0.72, -0.56]) add(g, slab(0.1, 0.045, 0.012, 0.02), m.black, x, 0.26, F).castShadow = false;
+  add(g, slab(0.32, 0.03, 0.012, 0.012), m.black, -0.22, 0.26, F).castShadow = false;
+  add(g, new THREE.CircleGeometry(0.018, 16), m.coral, 0.85, 0.26, F).castShadow = false;
+  addContactShadow(g, shadowTex, 3.2, 3.2);
+  // Anschluesse vorn rechts, dort gehen die Kabel ab (im Bild vier Stecker in Koralle)
+  g.userData.plugs = [0.35, 0.55, 0.75].map((x) => new THREE.Vector3(x, 0.12, D / 2 + 0.05));
+  g.userData.label = new THREE.Vector3(0, H + 0.5, 0);
+  return g;
+}
+
+/** Tablet flach auf dem Tisch, leicht angestellt, Storyboard aus dem Standbild; daneben der Stift. */
+function buildTablet(tex, shadowTex) {
+  const g = new THREE.Group();
+  const m = studio();
+  const W = 3.4, D = 2.5, T = 0.07;
+  const tilt = new THREE.Group();
+  tilt.position.set(0, 0.06, 0);
+  tilt.rotation.x = -Math.PI / 2 + 0.07;
+  add(tilt, slab(W, D, T, 0.17), m.silver, 0, 0, 0);
+  add(tilt, new THREE.ShapeGeometry(roundedShape(W - 0.05, D - 0.05, 0.15)), m.black, 0, 0, T / 2 + 0.002).castShadow = false;
+  const scr = add(tilt, picture(tex, W - 0.26, D - 0.26, 0xf4f4f2), null, 0, 0, T / 2 + 0.004);
+  scr.castShadow = false;
+  g.add(tilt);
+  const pen = new THREE.Group();                                                              // Stift
+  pen.position.set(W / 2 - 0.1, 0.05, D / 2 + 0.4);
+  pen.rotation.y = 0.12;
+  add(pen, new THREE.CylinderGeometry(0.045, 0.045, 1.6, 20), m.white, 0, 0, 0).rotation.z = Math.PI / 2;
+  add(pen, new THREE.ConeGeometry(0.045, 0.14, 20), m.white, -0.87, 0, 0).rotation.z = Math.PI / 2;
+  g.add(pen);
+  addContactShadow(g, shadowTex, 3.6, 2.8);
+  g.userData.plug = new THREE.Vector3(-W / 2 - 0.06, 0.06, 0.35);
+  g.userData.label = new THREE.Vector3(0, 0.6, 0);
+  return g;
+}
+
+/** Grading-Pult: graphitgrauer Keil mit silbernen Seiten, drei Rollkugeln, Reglern und der Glasleiste aus dem Bild. */
+function buildGradePanel(tex, shadowTex) {
+  const g = new THREE.Group();
+  const m = studio();
+  const W = 3.6, D = 2.3;
+  // Seitenprofil (x = -z der Welt, y = Hoehe), entlang der Breite ausgezogen
+  const prof = new THREE.Shape();
+  const P = [[-D / 2, 0], [-D / 2, 0.2], [-D / 2 + 0.08, 0.27], [0.1, 0.29], [D / 2 - 0.12, 0.66], [D / 2, 0.64], [D / 2, 0]];
+  prof.moveTo(P[0][0], P[0][1]);
+  P.slice(1).forEach(([x, y]) => prof.lineTo(x, y));
+  const body = new THREE.ExtrudeGeometry(prof, { depth: W - 0.12, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.02, bevelSegments: 2 });
+  body.translate(0, 0, -(W - 0.12) / 2);
+  add(g, body, m.graphite, 0, 0, 0).rotation.y = Math.PI / 2;
+  for (const x of [-W / 2 + 0.03, W / 2 - 0.03]) {                                             // silberne Seiten
+    const side = new THREE.ExtrudeGeometry(prof, { depth: 0.06, bevelEnabled: false });
+    side.translate(0, 0, -0.03);
+    const s_ = add(g, side, m.silver, x, 0, 0);
+    s_.rotation.y = Math.PI / 2;
+    s_.scale.set(1.01, 1.02, 1);
   }
+  // Glasleiste auf der Schraege
+  const len = Math.hypot(D / 2 - 0.12 - 0.1, 0.66 - 0.29), ang = Math.atan2(0.66 - 0.29, D / 2 - 0.12 - 0.1);
+  const strip = add(g, picture(tex, W - 0.3, len - 0.08), null, 0, (0.29 + 0.66) / 2 + 0.035, -((0.1 + D / 2 - 0.12) / 2) + 0.012);
+  strip.rotation.x = -(Math.PI / 2 - ang);
+  strip.castShadow = false;
+  // drei Rollkugeln vorn
+  for (const x of [-1.1, 0, 1.1]) {
+    const ring = add(g, new THREE.TorusGeometry(0.36, 0.06, 16, 48), m.black, x, 0.3, 0.6);
+    ring.rotation.x = Math.PI / 2;
+    add(g, new THREE.CylinderGeometry(0.33, 0.33, 0.03, 40), m.black, x, 0.29, 0.6).castShadow = false;
+    add(g, new THREE.SphereGeometry(0.25, 32, 20), m.gloss, x, 0.34, 0.6);
+  }
+  // Regler zwischen Kugeln und Schraege, Tasten rechts
   const dummy = new THREE.Object3D();
-  const knobs = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.034, 0.038, 0.05, 20), m.alu, 12);
-  for (let i = 0; i < 12; i++) { dummy.position.set(-0.88 + i * 0.16, 0.285, -0.22); dummy.updateMatrix(); knobs.setMatrixAt(i, dummy.matrix); }
+  const knobs = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.06, 0.068, 0.12, 20), m.black, 9);
+  for (let i = 0; i < 9; i++) { dummy.position.set(-1.45 + i * 0.36, 0.34, 0.02); dummy.updateMatrix(); knobs.setMatrixAt(i, dummy.matrix); }
   knobs.castShadow = true;
   g.add(knobs);
-  const keyMat = new THREE.MeshStandardMaterial({ color: 0x4c4c4c, roughness: 0.6 });
-  const keys = new THREE.InstancedMesh(new THREE.BoxGeometry(0.1, 0.02, 0.06), keyMat, 14);
-  for (let i = 0; i < 14; i++) { dummy.position.set(-0.84 + i * 0.13, 0.128, 0.47); dummy.updateMatrix(); keys.setMatrixAt(i, dummy.matrix); }
+  const keys = new THREE.InstancedMesh(new THREE.BoxGeometry(0.13, 0.03, 0.09), m.grey, 8);
+  for (let i = 0; i < 8; i++) { dummy.position.set(-1.5 + i * 0.42, 0.3, 1.0); dummy.updateMatrix(); keys.setMatrixAt(i, dummy.matrix); }
   g.add(keys);
-  add(g, new THREE.BoxGeometry(0.1, 0.022, 0.06), new THREE.MeshBasicMaterial({ color: ACCENT }), 0.98 - 0.14, 0.13, 0.47).castShadow = false;
-  const scr = new THREE.Group();
-  scr.position.set(0, 0.25, -0.45);
-  scr.rotation.x = -0.5;
-  add(scr, slab(1.24, 0.32, 0.04, 0.03), shell, 0, 0.16, 0);
-  add(scr, screenGeometry(1.16, 0.26, 0.015), m.screen, 0, 0.16, 0.021).castShadow = false;
-  add(scr, screenGeometry(1.16, 0.26, 0.015), m.sheen, 0, 0.16, 0.022).castShadow = false;
-  g.add(scr);
-  addContactShadow(g, shadowTex, 2.8, 1.8);
-  g.userData.plug = new THREE.Vector3(-W / 2 - 0.01, 0.06, -0.15);
-  g.userData.label = new THREE.Vector3(0, 0.85, -0.25);
+  addContactShadow(g, shadowTex, 4.4, 3.0);
+  g.userData.plug = new THREE.Vector3(-W / 2 - 0.06, 0.08, -0.35);
+  g.userData.label = new THREE.Vector3(0, 1.0, -0.4);
+  return g;
+}
+
+/** Filmklappe flach auf dem Tisch: weisse Tafel mit Feldern, schwarz-weisse Klappe, leicht geoeffnet. */
+function buildClapper(shadowTex) {
+  const g = new THREE.Group();
+  const m = studio();
+  const W = 1.75, D = 1.25;
+  const { c, g: cg } = canvas(512, 360);                    // Tafel: deckend weiss mit grauen Feldlinien
+  cg.fillStyle = '#fbfbfb'; cg.fillRect(0, 0, 512, 360);
+  cg.strokeStyle = '#4b4b4b'; cg.lineWidth = 3;
+  [[0, 120, 512, 120], [0, 240, 512, 240], [170, 0, 170, 120], [340, 0, 340, 120], [256, 120, 256, 240], [256, 240, 256, 360], [0, 300, 512, 300]]
+    .forEach(([a, b, x, y]) => { cg.beginPath(); cg.moveTo(a, b); cg.lineTo(x, y); cg.stroke(); });
+  cg.fillStyle = '#909090';
+  [[20, 20], [190, 20], [360, 20], [20, 140], [276, 140], [20, 255], [276, 255]].forEach(([x, y]) => cg.fillRect(x, y, 70, 12));
+  const board = toTexture(c);
+  add(g, slab(W, D, 0.05, 0.04), m.white, 0, 0.025, 0).rotation.x = -Math.PI / 2;
+  const face = add(g, new THREE.PlaneGeometry(W - 0.08, D - 0.08), new THREE.MeshStandardMaterial({ map: board, roughness: 0.6 }), 0, 0.052, 0);
+  face.rotation.x = -Math.PI / 2;
+  face.castShadow = false;
+  const { c: sc, g: sg } = canvas(512, 64);                  // Streifen der Klappe
+  sg.fillStyle = '#f4f4f4'; sg.fillRect(0, 0, 512, 64);
+  sg.fillStyle = '#4b4b4b';
+  for (let x = -64; x < 512; x += 96) { sg.beginPath(); sg.moveTo(x, 64); sg.lineTo(x + 48, 0); sg.lineTo(x + 96, 0); sg.lineTo(x + 48, 64); sg.fill(); }
+  const stripe = new THREE.MeshStandardMaterial({ map: toTexture(sc), roughness: 0.5 });
+  add(g, new THREE.BoxGeometry(W, 0.07, 0.22), stripe, 0, 0.04, -D / 2 - 0.11);
+  const hinge = new THREE.Group();
+  hinge.position.set(-W / 2, 0.11, -D / 2 - 0.11);
+  hinge.rotation.y = 0.2;
+  add(hinge, new THREE.BoxGeometry(W, 0.07, 0.22), stripe, W / 2, 0, -0.03);
+  g.add(hinge);
+  addContactShadow(g, shadowTex, 2.6, 2.2);
+  g.userData.plug = new THREE.Vector3(-W / 2 + 0.25, 0.05, -D / 2 - 0.3);
+  g.userData.label = new THREE.Vector3(0, 0.5, 0);
+  return g;
+}
+
+/** Weisse Over-Ear-Kopfhoerer, auf den Muscheln stehend, der Buegel nach oben. */
+function buildHeadphones(shadowTex) {
+  const g = new THREE.Group();
+  const m = studio();
+  const R = 0.62;
+  const band = add(g, new THREE.TorusGeometry(R, 0.07, 16, 48, Math.PI), m.white, 0, 0.44, 0);
+  band.scale.set(1, 1.06, 1.9);
+  for (const s_ of [-1, 1]) {
+    add(g, new THREE.CylinderGeometry(0.03, 0.03, 0.18, 12), m.silver, s_ * R, 0.5, 0);
+    const cup = add(g, new THREE.CylinderGeometry(0.36, 0.36, 0.26, 40), m.white, s_ * (R + 0.03), 0.36, 0);
+    cup.rotation.z = Math.PI / 2;
+    const pad = add(g, new THREE.TorusGeometry(0.25, 0.1, 14, 40), m.pale, s_ * (R - 0.14), 0.36, 0);
+    pad.rotation.y = Math.PI / 2;
+  }
+  addContactShadow(g, shadowTex, 2.0, 1.3);
+  g.userData.label = new THREE.Vector3(0, 1.3, 0);
+  return g;
+}
+
+/** Acrylstaender in drei Stufen mit Fotoabzuegen (Bilder aus dem Standbild). */
+function buildPrintStand(texWide, texTall, shadowTex) {
+  const g = new THREE.Group();
+  const m = studio();
+  const acryl = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff, roughness: 0.05, metalness: 0, transparent: true, opacity: 0.08, depthWrite: false, side: THREE.DoubleSide,
+  });
+  const W = 3.1;
+  const edgeMat = new THREE.LineBasicMaterial({ color: 0xbfc0c4, transparent: true, opacity: 0.8 });
+  const plate = (w, h, x, y, z, rx) => {
+    const p = add(g, new THREE.BoxGeometry(w, h, 0.035), acryl, x, y, z);
+    p.rotation.x = rx;
+    p.castShadow = false;
+    const e = new THREE.LineSegments(new THREE.EdgesGeometry(p.geometry), edgeMat);   // Kanten des Acryls, wie im Bild
+    e.position.copy(p.position);
+    e.rotation.copy(p.rotation);
+    g.add(e);
+    return p;
+  };
+  add(g, new THREE.BoxGeometry(W, 0.035, 1.9), acryl, 0, 0.018, -0.05).castShadow = false;       // Boden
+  plate(W, 2.1, 0, 1.02, -0.9, -0.2);                                                         // Rueckwand
+  plate(W, 0.55, 0, 0.3, -0.2, -0.08);                                                        // mittlere Lippe
+  plate(W, 0.45, 0, 0.24, 0.62, -0.05);                                                       // vordere Lippe
+  for (const x of [-W / 2, W / 2]) {                                                          // Seitenkanten
+    const sh = new THREE.Shape();
+    sh.moveTo(-0.95, 0); sh.lineTo(0.85, 0); sh.lineTo(0.85, 0.45); sh.lineTo(-0.05, 0.55); sh.lineTo(-0.7, 2.0); sh.lineTo(-1.0, 2.0); sh.lineTo(-0.95, 0);
+    const side = add(g, new THREE.ShapeGeometry(sh), acryl, x, 0, 0);
+    side.rotation.y = -Math.PI / 2;
+    side.castShadow = false;
+  }
+  const print = (tex, w, h, x, y, z, rx, flip) => {                                           // Abzug: weisser Karton + Bild
+    const p = new THREE.Group();
+    p.position.set(x, y, z);
+    p.rotation.x = rx;
+    add(p, new THREE.BoxGeometry(w, h, 0.03), m.white, 0, 0, 0);
+    const img = add(p, picture(tex, w - 0.1, h - 0.1, 0x4b4b4b), null, 0, 0, 0.017);
+    img.castShadow = false;
+    if (flip) img.scale.x = -1;
+    g.add(p);
+  };
+  print(texWide, 2.15, 1.35, -0.35, 1.05, -0.78, -0.2, false);
+  print(texTall, 0.95, 1.2, 1.05, 0.98, -0.62, -0.2, false);
+  print(texTall, 1.0, 1.3, 1.1, 0.72, -0.05, -0.14, true);
+  print(texTall, 1.0, 1.25, 0.05, 0.68, 0.5, -0.1, false);
+  print(texTall, 0.85, 1.05, -0.95, 0.58, 0.55, -0.1, true);
+  addContactShadow(g, shadowTex, 3.8, 2.6);
+  g.userData.plug = new THREE.Vector3(W / 2 + 0.06, 0.05, 0.3);
+  g.userData.label = new THREE.Vector3(0, 2.3, 0);
   return g;
 }
 
@@ -1035,27 +1104,22 @@ function buildRack(shadowTex, ventTex) {
  *     Werkstoffe, die mit dem Kern aufleuchten, und die Lichtsäule.
  */
 function buildDock(spotTex) {
-  // Hell: ein weisser Knoten mit Klarlack und leuchtendem Ring in Koralle, wie im Bild davor; daraus steigt
-  // eine schmale Lichtsaeule in den Kern.
+  // Weisser Knoten mit Klarlack und leuchtendem Ring in Koralle, wie im Bild.
   const group = new THREE.Group();
   const shell = new THREE.MeshPhysicalMaterial({ color: 0xfbfbfb, roughness: 0.3, clearcoat: 0.7, clearcoatRoughness: 0.2 });
-  const inner = new THREE.MeshStandardMaterial({ color: 0xe9eaec, roughness: 0.5 });
-  add(group, new THREE.CylinderGeometry(DOCK_R - 0.05, DOCK_R, 0.16, 96), shell, 0, 0.08, 0);
-  add(group, new THREE.TorusGeometry(DOCK_R - 0.06, 0.028, 12, 96), shell, 0, 0.158, 0).rotation.x = Math.PI / 2;
-  add(group, new THREE.CylinderGeometry(DOCK_R - 0.1, DOCK_R - 0.1, 0.01, 96), inner, 0, 0.165, 0).castShadow = false;
+  const inner = new THREE.MeshStandardMaterial({ color: 0xf0f0f1, roughness: 0.45 });
+  add(group, new THREE.CylinderGeometry(DOCK_R - 0.05, DOCK_R, 0.2, 96), shell, 0, 0.1, 0);
+  add(group, new THREE.TorusGeometry(DOCK_R - 0.06, 0.05, 14, 96), shell, 0, 0.2, 0).rotation.x = Math.PI / 2;
+  add(group, new THREE.CylinderGeometry(DOCK_R - 0.1, DOCK_R - 0.1, 0.012, 96), inner, 0, 0.22, 0).castShadow = false;
   const glowMat = new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true });
-  const ring = add(group, new THREE.TorusGeometry(DOCK_R - 0.34, 0.024, 10, 96), glowMat, 0, 0.172, 0);
+  const ring = add(group, new THREE.TorusGeometry(DOCK_R * 0.5, 0.035, 12, 96), glowMat, 0, 0.23, 0);
   ring.rotation.x = Math.PI / 2;
   ring.castShadow = false;
   const haloMat = new THREE.MeshBasicMaterial({ map: spotTex, color: ACCENT, transparent: true, opacity: 0.16, depthWrite: false });
-  const halo = add(group, new THREE.PlaneGeometry(1.9, 1.9), haloMat, 0, 0.176, 0);
+  const halo = add(group, new THREE.PlaneGeometry(DOCK_R * 1.7, DOCK_R * 1.7), haloMat, 0, 0.234, 0);
   halo.rotation.x = -Math.PI / 2;
   halo.castShadow = false;
-  const top = CORE_Y - CORE_R * CORE_SCALE * 0.9, bottom = 0.17;
-  const spineMat = new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true });
-  const spine = add(group, new THREE.CylinderGeometry(0.012, 0.018, top - bottom, 12), spineMat, 0, (top + bottom) / 2, 0);
-  spine.castShadow = false;
-  return { group, glow: [glowMat, spineMat, haloMat], spine };
+  return { group, glow: [glowMat, haloMat], spine: null };
 }
 
 /**
@@ -1102,7 +1166,6 @@ function buildLock() {
 function buildCore(spotTex) {
   const group = new THREE.Group();
   group.position.y = CORE_Y;
-  group.scale.setScalar(CORE_SCALE);
   const spin = new THREE.Group();       // trägt die Lagen und taumelt als Ganzes
   group.add(spin);
   const bright = new THREE.Color(ACCENT);
@@ -1122,7 +1185,7 @@ function buildCore(spotTex) {
     layer.position.y = y;
     const disc = new THREE.Mesh(
       new THREE.CylinderGeometry(r, r, 0.012, 96, 1),
-      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.55, side: THREE.DoubleSide, depthWrite: false }),
+      new THREE.MeshPhysicalMaterial({ color: 0x373737, roughness: 0.1, transparent: true, opacity: 0.12, side: THREE.DoubleSide, depthWrite: false }),
     );
     const rim = new THREE.Mesh(new THREE.TorusGeometry(r, 0.0105, 6, 160), new THREE.MeshBasicMaterial({ color: bright, transparent: true }));
     rim.rotation.x = Math.PI / 2;
@@ -1150,12 +1213,12 @@ function buildCore(spotTex) {
     const pg = new THREE.BufferGeometry();
     pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     const nodes = new THREE.Points(pg, new THREE.PointsMaterial({
-      map: spotTex, color: ACCENT, size: 0.1, transparent: true, depthWrite: false, blending: THREE.NormalBlending,
+      map: spotTex, color: 0xf3f3f3, size: 0.17, transparent: true, depthWrite: false, blending: THREE.NormalBlending,
     }));
     // Zwei Datenpakete, die auf dem Rand umlaufen
     const packets = new THREE.Group();
     for (let k = 0; k < 2; k++) {
-      const p = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.02, 0.028), new THREE.MeshBasicMaterial({ color: 0x4c4c4c, transparent: true }));
+      const p = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.02, 0.028), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true }));
       const a = k * Math.PI + i;
       p.position.set(r * Math.cos(a), 0, r * Math.sin(a));
       p.rotation.y = -a + Math.PI / 2;
@@ -1191,10 +1254,10 @@ function buildCore(spotTex) {
     const turn = new THREE.Group();
     const line = new THREE.Mesh(new THREE.TorusGeometry(r, 0.003, 4, 160), new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.32 }));
     line.rotation.x = Math.PI / 2;
-    const moon = new THREE.Mesh(new THREE.SphereGeometry(0.03, 12, 8), new THREE.MeshBasicMaterial({ color: 0x4c4c4c, transparent: true }));
+    const moon = new THREE.Mesh(new THREE.SphereGeometry(0.03, 12, 8), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true }));
     moon.position.x = r;
     const glint = new THREE.Sprite(new THREE.SpriteMaterial({
-      map: spotTex, color: ACCENT, transparent: true, opacity: 0, depthWrite: false, blending: THREE.NormalBlending,
+      map: spotTex, color: 0xf1f1f1, transparent: true, opacity: 0, depthWrite: false, blending: THREE.NormalBlending,
     }));
     glint.position.x = r;
     glint.scale.setScalar(0.3);
@@ -1204,9 +1267,9 @@ function buildCore(spotTex) {
     return { turn, line, moon, glint, speed };
   });
   // V3: Kernpunkt in der Mitte, drei Meridiane um die Kugel, Funken im Inneren
-  const nucleus = new THREE.Mesh(new THREE.SphereGeometry(0.07, 20, 14), new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true }));
+  const nucleus = new THREE.Mesh(new THREE.SphereGeometry(0.07, 20, 14), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true }));
   const nucleusGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: spotTex, color: ACCENT, transparent: true, opacity: 0, depthWrite: false, blending: THREE.NormalBlending,
+    map: spotTex, color: 0xf1f1f1, transparent: true, opacity: 0, depthWrite: false, blending: THREE.NormalBlending,
   }));
   group.add(nucleus, nucleusGlow);
   const meridians = [0, 60, 120].map((deg) => {
@@ -1223,7 +1286,7 @@ function buildCore(spotTex) {
   const sparkGeo = new THREE.BufferGeometry();
   sparkGeo.setAttribute('position', new THREE.BufferAttribute(sparkPos, 3));
   const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({
-    map: spotTex, color: ACCENT, size: 0.04, transparent: true, opacity: 0, depthWrite: false, blending: THREE.NormalBlending,
+    map: spotTex, color: 0xe9e9e9, size: 0.055, transparent: true, opacity: 0, depthWrite: false, blending: THREE.NormalBlending,
   }));
   spin.add(sparks);
   // Lichthof hinter dem Kern
@@ -1253,9 +1316,9 @@ function buildCore(spotTex) {
       L.layer.rotation.y = -phi[i];
       L.layer.scale.setScalar(mix(0.94, 1, a));
       L.layer.visible = a > 0.001;
-      L.disc.material.opacity = 0.55 * a;
+      L.disc.material.opacity = 0.12 * a;
       L.rim.material.opacity = a * Math.min(1, (0.6 + 0.4 * ((i % 2) ? 0.6 : 1)) * (1 + energy * 0.5));
-      L.band.material.opacity = a * (0.14 + energy * 0.12);
+      L.band.material.opacity = a * (0.3 + energy * 0.25);
       L.inner.material.opacity = 0.4 * a;
       L.spokeLines.material.opacity = 0.2 * a;
       L.scale.material.opacity = 0.34 * a;
@@ -1283,16 +1346,16 @@ function buildCore(spotTex) {
       ob.turn.rotation.y = t * ob.speed;
       ob.line.material.opacity = 0.32 * reveal;
       ob.moon.material.opacity = reveal;
-      ob.glint.material.opacity = reveal * 0.5;
+      ob.glint.material.opacity = reveal * 0.9;
     }
     nucleus.material.opacity = reveal;
     nucleus.scale.setScalar(1 + 0.1 * Math.sin(t * 2.1) + energy * 0.5);
-    nucleusGlow.material.opacity = reveal * Math.min(1, 0.3 + energy * 0.3);
+    nucleusGlow.material.opacity = reveal * Math.min(1, 0.6 + energy * 0.4);
     nucleusGlow.scale.setScalar(1.05 + 0.12 * Math.sin(t * 2.1) + energy * 0.6);
     for (const m of meridians) m.material.opacity = 0.17 * reveal;
-    sparks.material.opacity = 0.35 * reveal;
+    sparks.material.opacity = 0.6 * reveal;
     sparks.rotation.y = -t * 0.09;
-    halo.material.opacity = reveal * (0.08 + energy * 0.08);
+    halo.material.opacity = reveal * (0.22 + energy * 0.2);
   }
   return { group, update };
 }
@@ -1304,105 +1367,17 @@ function buildCore(spotTex) {
  *     eingeblendet werden, der Lichtsee unter dem Kern und die Welle, die nach außen läuft.
  */
 function buildFloor() {
-  // Hell: Studioboden in der Farbe des Bandes. In der Mitte ein Hauch heller, ein feines graues Raster, das
-  // weit vor dem Bildrand ausläuft, weiche Schatten, der Datenring in Koralle und Grau.
+  // Nahtloser Studiogrund wie im Bild: nur weiche Schatten, kein Raster, kein Ring.
   const group = new THREE.Group();
-  const marks = [];
-  const { c, g } = canvas(256, 256);
-  const grad = g.createRadialGradient(128, 128, 0, 128, 128, 128);
-  grad.addColorStop(0, 'rgba(255,255,255,0.9)');
-  grad.addColorStop(0.5, 'rgba(255,255,255,0.4)');
-  grad.addColorStop(1, 'rgba(255,255,255,0)');
-  g.fillStyle = grad;
-  g.fillRect(0, 0, 256, 256);
-  const plane = new THREE.Mesh(new THREE.CircleGeometry(8, 72), new THREE.MeshBasicMaterial({ map: toTexture(c), transparent: true, depthWrite: false }));
-  plane.rotation.x = -Math.PI / 2;
-  plane.renderOrder = -4;
-  group.add(plane);
-  const { c: gc, g: gg } = canvas(1024, 1024);
-  gg.strokeStyle = 'rgba(42,42,42,0.55)';
-  gg.lineWidth = 1.4;
-  for (let i = 0; i <= 16; i++) {
-    gg.beginPath(); gg.moveTo(i * 64, 0); gg.lineTo(i * 64, 1024); gg.stroke();
-    gg.beginPath(); gg.moveTo(0, i * 64); gg.lineTo(1024, i * 64); gg.stroke();
-  }
-  gg.strokeStyle = 'rgba(42,42,42,0.9)';
-  gg.lineWidth = 2;
-  for (let i = 0; i <= 16; i += 2) {
-    for (let j = 0; j <= 16; j += 2) {
-      gg.beginPath(); gg.moveTo(i * 64 - 7, j * 64); gg.lineTo(i * 64 + 7, j * 64); gg.moveTo(i * 64, j * 64 - 7); gg.lineTo(i * 64, j * 64 + 7); gg.stroke();
-    }
-  }
-  gg.globalCompositeOperation = 'destination-in';
-  const fadeGrad = gg.createRadialGradient(512, 512, 40, 512, 512, 330);
-  fadeGrad.addColorStop(0, 'rgba(0,0,0,0.5)');
-  fadeGrad.addColorStop(0.6, 'rgba(0,0,0,0.2)');
-  fadeGrad.addColorStop(1, 'rgba(0,0,0,0)');
-  gg.fillStyle = fadeGrad;
-  gg.fillRect(0, 0, 1024, 1024);
-  const gridMat = new THREE.MeshBasicMaterial({ map: toTexture(gc), transparent: true, depthWrite: false, opacity: 0.16 });
-  gridMat.userData.strength = 0.16;
-  marks.push(gridMat);
-  const grid = new THREE.Mesh(new THREE.PlaneGeometry(17, 17), gridMat);
-  grid.rotation.x = -Math.PI / 2;
-  grid.position.y = 0.002;
-  grid.renderOrder = -3;
-  group.add(grid);
-  const catcher = new THREE.Mesh(new THREE.PlaneGeometry(22, 22), new THREE.ShadowMaterial({ opacity: 0.16 }));
+  const catcher = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: 0.1 }));
   catcher.rotation.x = -Math.PI / 2;
   catcher.position.y = 0.004;
   catcher.receiveShadow = true;
   catcher.renderOrder = -2;
   group.add(catcher);
-  const ring = new THREE.Group();
-  ring.position.y = 0.012;
-  const flat = (geo, color, strength) => {
-    const mat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: strength, side: THREE.DoubleSide, depthWrite: false });
-    mat.userData.strength = strength;
-    marks.push(mat);
-    const m = new THREE.Mesh(geo, mat);
-    m.rotation.x = -Math.PI / 2;
-    return m;
-  };
-  for (const [start, len, strength] of [[0, 70, 1], [84, 34, 0.5], [130, 96, 1], [240, 22, 0.5], [272, 64, 0.8]]) {
-    ring.add(flat(new THREE.RingGeometry(1.86, 1.9, 96, 1, start * DEG, len * DEG), strength === 1 ? 0xb9bbc0 : ACCENT, 0.85 * strength));
-  }
-  ring.add(flat(new THREE.RingGeometry(1.62, 1.628, 128), ACCENT, 0.35));
-  group.add(ring);
-  const tickMat = new THREE.MeshBasicMaterial({ color: 0xa2a2a2, transparent: true, opacity: 0.5, depthWrite: false });
-  tickMat.userData.strength = 0.5;
-  marks.push(tickMat);
-  const ticks = new THREE.InstancedMesh(new THREE.BoxGeometry(0.008, 0.001, 0.09), tickMat, 120);
-  const dummy = new THREE.Object3D();
-  for (let i = 0; i < 120; i++) {
-    const a = (i / 120) * Math.PI * 2, long = i % 10 === 0;
-    dummy.position.set(Math.cos(a) * (2.1 + (long ? 0.04 : 0)), 0.012, Math.sin(a) * (2.1 + (long ? 0.04 : 0)));
-    dummy.rotation.y = -a + Math.PI / 2;
-    dummy.scale.z = long ? 1.9 : 1;
-    dummy.updateMatrix();
-    ticks.setMatrixAt(i, dummy.matrix);
-  }
-  group.add(ticks);
-  const { c: pc, g: pg2 } = canvas(256, 256);
-  const pool = pg2.createRadialGradient(128, 128, 0, 128, 128, 128);
-  pool.addColorStop(0, 'rgba(255,127,97,0.32)');
-  pool.addColorStop(0.4, 'rgba(255,127,97,0.1)');
-  pool.addColorStop(1, 'rgba(255,127,97,0)');
-  pg2.fillStyle = pool;
-  pg2.fillRect(0, 0, 256, 256);
-  const poolMat = new THREE.MeshBasicMaterial({ map: toTexture(pc), transparent: true, depthWrite: false, opacity: 0 });
-  const poolMesh = new THREE.Mesh(new THREE.CircleGeometry(2.6, 64), poolMat);
-  poolMesh.rotation.x = -Math.PI / 2;
-  poolMesh.position.y = 0.003;
-  poolMesh.renderOrder = -3;
-  group.add(poolMesh);
-  const pulseMat = new THREE.MeshBasicMaterial({ color: ACCENT, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false });
-  const pulse = new THREE.Mesh(new THREE.RingGeometry(0.985, 1, 128), pulseMat);
-  pulse.rotation.x = -Math.PI / 2;
-  pulse.position.y = 0.013;
-  pulse.visible = false;
-  group.add(pulse);
-  return { group, ring, marks, pool: poolMat, pulse };
+  // Platzhalter fuer den Ablauf (Datenring, Lichtsee und Welle von O&S gibt es hier nicht)
+  const pulse = new THREE.Mesh(new THREE.RingGeometry(0.98, 1, 8), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 }));
+  return { group, ring: new THREE.Group(), marks: [], pool: new THREE.MeshBasicMaterial(), pulse };
 }
 
 /**
@@ -1422,21 +1397,21 @@ function buildCable(parent, from, bend, kind) {
   const dir = new THREE.Vector3(Math.cos(a), 0, Math.sin(a));
   const perp = new THREE.Vector3(-dir.z, 0, dir.x);
   const dist = Math.hypot(from.x, from.z);
-  const y = kind === 'thin' ? 0.016 : 0.024;
+  const y = 0.045;
   const pts = [
     from.clone(),
     new THREE.Vector3(from.x, y, from.z).addScaledVector(dir, -0.32),
     dir.clone().multiplyScalar(dist * 0.58).addScaledVector(perp, bend).setY(y),
     dir.clone().multiplyScalar(1.7).addScaledVector(perp, bend * 0.3).setY(y),
-    dir.clone().multiplyScalar(DOCK_R + 0.02).setY(0.06),
+    dir.clone().multiplyScalar(DOCK_R + 0.04).setY(0.09),
   ];
   const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.5);
   const TUBULAR = 120, RADIAL = kind === 'thin' ? 5 : 8;
   const lit = kind === 'lit';
-  const geo = new THREE.TubeGeometry(curve, TUBULAR, lit ? 0.021 : kind === 'thin' ? 0.011 : 0.018, RADIAL, false);
+  const geo = new THREE.TubeGeometry(curve, TUBULAR, 0.04, RADIAL, false);
   const mat = lit
-    ? new THREE.MeshBasicMaterial({ color: ACCENT })
-    : new THREE.MeshStandardMaterial({ color: kind === 'thin' ? 0xd2d3d6 : 0xf0f0f2, roughness: 0.55, metalness: 0 });
+    ? new THREE.MeshStandardMaterial({ color: 0xf6f6f7, roughness: 0.5 })
+    : new THREE.MeshStandardMaterial({ color: 0xf6f6f7, roughness: 0.5 });   // weiss wie im Bild
   const mesh = new THREE.Mesh(geo, mat);
   mesh.castShadow = kind !== 'thin';
   geo.setDrawRange(0, 0);
@@ -1444,9 +1419,9 @@ function buildCable(parent, from, bend, kind) {
   const ends = [];
   if (kind !== 'thin') {
     const plugMat = new THREE.MeshBasicMaterial({ color: ACCENT });
-    const plug = add(parent, new THREE.BoxGeometry(0.07, 0.05, 0.1), plugMat, from.x, Math.max(0.03, from.y), from.z);
+    const plug = add(parent, new THREE.BoxGeometry(0.11, 0.09, 0.22), plugMat, from.x, Math.max(0.05, from.y), from.z);
     plug.rotation.y = -a;
-    const jack = add(parent, new THREE.BoxGeometry(0.1, 0.06, 0.08), plugMat, dir.x * (DOCK_R + 0.01), 0.05, dir.z * (DOCK_R + 0.01));
+    const jack = add(parent, new THREE.BoxGeometry(0.2, 0.1, 0.12), plugMat, dir.x * (DOCK_R + 0.04), 0.09, dir.z * (DOCK_R + 0.04));
     jack.rotation.y = -a + Math.PI / 2;
     ends.push(plug, jack);
   }
@@ -1533,7 +1508,7 @@ class System3D {
     this.wave = 2;                       // Stand der Bodenwelle: 0 beginnt, ab 1 ist sie verschwunden
     this.shadowAt = -1;                  // Aufbaustand, für den die Schatten zuletzt gerechnet wurden
     // Hochkant (Telefon) rückt die Runde enger zusammen, damit die Körper nicht winzig werden.
-    this.narrow = figure.clientWidth / Math.max(1, figure.clientHeight) < 1.6;   // Handy: Buehne kaum breiter als hoch
+    this.narrow = figure.clientWidth / Math.max(1, figure.clientHeight) < 1.6;
     this.handheld = window.matchMedia('(pointer: coarse)').matches;   // Telefon oder Tablet: leichtere Einstellungen
 
     const cv = document.createElement('canvas');
@@ -1556,8 +1531,7 @@ class System3D {
 
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(GROUND);
-    this.scene.fog = new THREE.Fog(GROUND, 16, 34);
-    this.camera = new THREE.PerspectiveCamera(30, 2, 0.1, 80);
+    this.camera = new THREE.PerspectiveCamera(24, 2, 0.1, 160);   // laengere Brennweite: ruhig wie das Bild
 
     this.ready = this.init().catch((err) => {
       // Grafikfehler mitten im Bau: Das Standbild bleibt stehen, die Seite ist vollständig.
@@ -1580,15 +1554,15 @@ class System3D {
     // Raumlicht für die Spiegelungen auf Metall und Glas
     const pmrem = new THREE.PMREMGenerator(this.renderer);
     this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    this.scene.environmentIntensity = 0.95;
+    this.scene.environmentIntensity = 0.6;
     pmrem.dispose();
     await rest();
 
     this.warmTarget = new THREE.WebGLRenderTarget(32, 32);
     await this.build();
 
-    // Hell (consulting): kein Lichtschein, keine Nachbearbeitung. Auf hellem Grund wuerde er alles milchig machen;
-    // die Kantenglaettung macht der Renderer selbst (antialias). Spart am Handy eine volle Zwischenflaeche.
+    // Hell: kein Lichtschein, keine Nachbearbeitung (auf hellem Grund wuerde alles milchig). Die Kantenglaettung
+    // macht der Renderer selbst (antialias). Spart am Handy eine volle Zwischenflaeche.
     this.composer = null;
     this.bloom = { enabled: false };
     this.resize();
@@ -1669,20 +1643,20 @@ class System3D {
   async build() {
     // Licht zuerst: Die Shader der Körper hängen an Zahl und Art der Lichter.
     // Weißes Führungslicht von vorn links oben (wirft die Schatten), blaues Licht aus dem Kern.
-    // Hell: Himmel-Boden-Licht als weiche Grundhelligkeit, dazu ein weisses Fuehrungslicht fuer die Schatten.
-    this.scene.add(new THREE.HemisphereLight(0xffffff, 0xd9dadd, 1.15));
-    const key = new THREE.DirectionalLight(0xffffff, 1.55);
-    key.position.set(-5, 11, 7);
+    // Weiches Studiolicht: Himmel-Boden-Licht als Grundhelligkeit, ein weisses Fuehrungslicht fuer die Schatten.
+    this.scene.add(new THREE.HemisphereLight(0xffffff, 0xb9babd, 0.5));
+    const key = new THREE.DirectionalLight(0xffffff, 0.8);
+    key.position.set(-2.5, 14, 4.5);
     key.castShadow = true;
     key.shadow.mapSize.setScalar(this.handheld ? 1024 : 2048);
-    Object.assign(key.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: 1, far: 30 });
+    Object.assign(key.shadow.camera, { left: -12, right: 12, top: 12, bottom: -12, near: 1, far: 40 });
     key.shadow.bias = -0.0004;
-    key.shadow.radius = 9;
+    key.shadow.radius = 14;
     this.scene.add(key);
-    const fill = new THREE.DirectionalLight(0xffffff, 0.45);   // hellt die Fronten auf, solange der Kern noch dunkel ist
+    const fill = new THREE.DirectionalLight(0xffffff, 0.22);   // hellt die Fronten auf, solange der Kern noch dunkel ist
     fill.position.set(3, 2.5, 9);
     this.scene.add(fill);
-    const rim = new THREE.DirectionalLight(0xffffff, 0.55);    // V3: kühles Gegenlicht von hinten rechts — helle Kanten an Gehäusen
+    const rim = new THREE.DirectionalLight(0xffffff, 0.45);    // V3: kühles Gegenlicht von hinten rechts — helle Kanten an Gehäusen
     rim.position.set(7, 5, -8);
     this.scene.add(rim);
     this.coreLight = new THREE.PointLight(ACCENT, 0, 12, 1.4);
@@ -1705,57 +1679,62 @@ class System3D {
 
     this.dock = buildDock(spot, vent);
     await this.prime(this.dock.group, true);
-    this.lock = buildLock();
-    await this.prime(this.lock.group, true);
-    this.gate = 0;                       // leuchtet kurz auf, wenn ein Lichtpunkt durch das Schloss geht
-    this.core = buildCore(spot);
-    await this.prime(this.core.group);
-
+    // Kein Schloss und kein Kern (das Bild hat nur den Knoten); Platzhalter fuer den Ablauf
+    this.lock = { group: new THREE.Group(), face: new THREE.Group(), glow: [] };
+    this.gate = 0;
+    this.core = { update() {} };
     // Am Handy sind die Bildschirme daumennagelgroß: halbe Texturgröße genügt und lädt schneller.
     const px = (n) => Math.round(n * (this.handheld ? 0.5 : 1));
     const screen = (w, h, kind, seed) => makeScreenTexture(px(w), px(h), kind, seed);
     // Geräte: [Bau, x, z, Drehung um die Senkrechte in Grad, Beginn im Ablauf, Schlüssel der Beschriftung]
     // Der Server steht hinten rechts: oben links bleibt Luft für Überschrift und Vorspann.
-    // Geraete: [Bau, x, z, Drehung um die Senkrechte in Grad, Beginn im Ablauf, Schluessel der Beschriftung]
-    // Wie im Bild davor: Kamera links, Schnittplatz hinten links, Render-Rechner hinten rechts, Tablet rechts,
-    // Grading-Pult vorn rechts, Telefon vorn links. Der Kern steht in der Mitte.
+    // Bilder aus dem alten Standbild (tex/, deckende JPG). Fehlt eines, bleibt die Flaeche dunkel.
+    const loader = new THREE.TextureLoader();
+    const tex = {};
+    await Promise.all(['schnitt', 'storyboard', 'grading', 'foto-quer', 'foto-hoch'].map((n) => loader.loadAsync(`${TEX_BASE}${n}_KJ_v001.jpg`)
+      .then((t) => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; tex[n] = t; }).catch(() => { tex[n] = null; })));
+    // Plaetze wie im Bild (Blick von vorn oben; alle Gegenstaende um gut 25 Grad nach rechts gedreht):
+    // [Bau, x, z, Drehung in Grad, Beginn im Ablauf]
+    const Y0 = 27;
     const placed = [
-      [() => buildCamera(screen(512, 320, 'grade', 3), shadow), -4.5, 0.7, 72, 0.0, 'camera'],
-      [() => buildWorkstation(screen(1280, 716, 'timeline', 7), shadow, spot), -2.4, -2.7, 18, 0.04, 'desk'],
-      [() => buildRenderBox(shadow), 2.35, -2.6, -22, 0.08, 'server'],
-      [() => { const o = buildHandheld(1.0, 1.34, 20, screen(900, 1208, 'board', 5), shadow, spot); o.userData.plug.set(-0.66, 0.03, -0.06); return o; }, 4.45, 0.45, -36, 0.11, 'tablet'],
-      [() => buildGradePanel(screen(1024, 230, 'scopes', 11), shadow), 2.55, 2.95, -18, 0.14, 'laptop'],
-      [() => buildHandheld(0.36, 0.74, 14, screen(450, 930, 'phone', 9), shadow, spot), -1.7, 3.35, 14, 0.17, 'phone'],
+      [() => buildCamera(shadow), -8.8, -1.6, Y0 + 92, 0.0, 1.15],
+      [() => buildDisplay(tex.schnitt, shadow), -3.3, -3.2, Y0, 0.04, 1.1],
+      [() => buildRenderBox(shadow), 3.1, -4.8, Y0, 0.08, 1.15],
+      [() => buildTablet(tex.storyboard, shadow), 6.3, -1.5, Y0, 0.11, 1.1],
+      [() => buildGradePanel(tex.grading, shadow), 4.3, 3.1, Y0, 0.14, 1.15],
+      [() => buildClapper(shadow), 1.6, 5.8, Y0 - 8, 0.17, 1.05],
+      [() => buildHeadphones(shadow), -1.0, 6.2, Y0 - 12, 0.19, 1.35],
+      [() => buildPrintStand(tex['foto-quer'], tex['foto-hoch'], shadow), -4.6, 4.7, Y0, 0.21, 1.2],
     ];
-    // Hochkant (Handy): die Runde in der Breite enger, damit die Geraete groesser werden
-    const sx = this.narrow ? 0.66 : 1, sz = this.narrow ? 0.95 : 1;
     this.devices = [];
-    for (const [make, x, z, rot, at, key_] of placed) {
+    for (const [make, x, z, rot, at, size] of placed) {
       const obj = make();
       compact(obj);
-      obj.position.set(x * sx, 0, z * sz);
+      obj.position.set(x, 0, z);
       obj.rotation.y = rot * DEG;
+      obj.scale.setScalar(size);
       obj.updateMatrixWorld(true);
-      this.devices.push({ obj, at, key: key_, anchor: obj.localToWorld(obj.userData.label.clone()) });
+      this.devices.push({ obj, at, size, key: '', anchor: obj.localToWorld(obj.userData.label.clone()) });
       await this.prime(obj, true);
     }
-    const [camera, desk, box, tablet, grade, phone] = this.devices.map((d) => d.obj);
-    this.rack = box;
+    const [camera, display, box, tablet, grade, clapper, , prints] = this.devices.map((d) => d.obj);
     // Die Beschriftung des Kerns sitzt rechts oben an der Kugel, nicht über ihr: dort steht der Vorspann.
-    this.coreAnchor = new THREE.Vector3(1.12 * CORE_SCALE, CORE_Y + CORE_R * CORE_SCALE * 0.72, 0);
+    this.coreAnchor = new THREE.Vector3(0, 1, 0);
 
     // Leitungen: jedes Gerät eine, der Server drei. Zwei leuchten blau, die übrigen sind grau;
     // jede hat eine dünne dunkle Begleitleitung.
     const world = (obj, v) => obj.localToWorld(v.clone());
     this.cableGroup = new THREE.Group();
     const plan = [
-      [world(camera, camera.userData.plug), 0.45, 'lit', 0.0],
-      [world(desk, desk.userData.plug), 0.5, 'grey', 0.07],
-      [world(box, box.userData.plugs[0]), -0.45, 'lit', 0.14],
-      [world(box, box.userData.plugs[1]), -0.15, 'grey', 0.2],
-      [world(tablet, tablet.userData.plug), -0.3, 'grey', 0.27],
-      [world(grade, grade.userData.plug), -0.4, 'lit', 0.34],
-      [world(phone, phone.userData.plug), 0.3, 'grey', 0.4],
+      [world(camera, camera.userData.plug), 0.6, 'grey', 0.0],
+      [world(display, display.userData.plug), 0.5, 'grey', 0.06],
+      [world(box, box.userData.plugs[0]), -0.25, 'grey', 0.12],
+      [world(box, box.userData.plugs[1]), -0.1, 'grey', 0.15],
+      [world(box, box.userData.plugs[2]), 0.05, 'grey', 0.18],
+      [world(tablet, tablet.userData.plug), -0.3, 'grey', 0.24],
+      [world(grade, grade.userData.plug), -0.4, 'grey', 0.3],
+      [world(clapper, clapper.userData.plug), 0.35, 'grey', 0.36],
+      [world(prints, prints.userData.plug), 0.4, 'grey', 0.42],
     ];
     this.cables = [];
     const lights = new THREE.Group();    // alle Lichtpunkte: Sprites auf den Leitungen und in der Säule
@@ -1768,18 +1747,14 @@ class System3D {
       // Lichtpunkt mit zwei Nachläufern
       cable.dots = [1, 0.5, 0.25].map((k) => {
         const s = new THREE.Sprite(new THREE.SpriteMaterial({
-          map: spot, color: cable.lit ? 0xffffff : ACCENT, transparent: true, opacity: 0, depthWrite: false, blending: THREE.NormalBlending,
+          map: spot, color: ACCENT, transparent: true, opacity: 0, depthWrite: false, blending: THREE.NormalBlending,
         }));
-        s.scale.setScalar((cable.lit ? 0.4 : 0.28) * (0.55 + 0.45 * k));
+        s.scale.setScalar(0.32 * (0.55 + 0.45 * k));
         s.userData.k = k;
         lights.add(s);
         return s;
       });
       this.cables.push(cable);
-      const mate = buildCable(this.cableGroup, from.clone().add(new THREE.Vector3(0.05, 0, 0.05)), bend * 0.72 + 0.1, 'thin');
-      mate.at = at + 0.03;
-      mate.dots = [];
-      this.cables.push(mate);
     });
     await this.prime(this.cableGroup);
     // Lichtpunkte, die in der Säule vom Sockel in den Kern steigen
@@ -1802,41 +1777,32 @@ class System3D {
     lights.add(this.dust);
     await this.prime(lights);
 
-    // Umriss fuer fit(): alle Koerper der Geraete (ohne die flachen Schattenflecken), eine Kugel um den Kern
-    // mit seinen Bahnen, der Sockel und die Punkte der Beschriftungen.
-    this.center = new THREE.Vector3(0, 1.2, 0);
+    // Umriss fuer fit(): alle Koerper der Gegenstaende (ohne die flachen Schattenflecken) und der Knoten.
+    this.center = new THREE.Vector3(0, 0.8, 0.8);
     this.bounds = [];
     const box3 = new THREE.Box3(), corner = new THREE.Vector3();
     for (const d of this.devices) {
       d.obj.updateMatrixWorld(true);
       d.obj.traverse((o) => {
-        if (!o.isMesh || o.isInstancedMesh || o.renderOrder === -1 || !o.geometry) return;
-        if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
-        box3.copy(o.geometry.boundingBox).applyMatrix4(o.matrixWorld);
+        if (!o.isMesh || o.renderOrder === -1 || !o.geometry) return;
+        if (o.isInstancedMesh) { o.computeBoundingBox(); box3.copy(o.boundingBox).applyMatrix4(o.matrixWorld); }
+        else { if (!o.geometry.boundingBox) o.geometry.computeBoundingBox(); box3.copy(o.geometry.boundingBox).applyMatrix4(o.matrixWorld); }
         for (let i = 0; i < 8; i++) {
           corner.set(i & 1 ? box3.max.x : box3.min.x, i & 2 ? box3.max.y : box3.min.y, i & 4 ? box3.max.z : box3.min.z);
           this.bounds.push({ p: corner.clone(), label: false });
         }
       });
-      if (d.key) this.bounds.push({ p: d.anchor.clone(), label: true });
     }
-    const R = 1.9 * CORE_SCALE;
-    for (let i = 0; i < 48; i++) {                       // Punkte auf einer Kugel (Fibonacci)
-      const y = 1 - (2 * (i + 0.5)) / 48, r = Math.sqrt(1 - y * y), a = i * 2.39996;
-      this.bounds.push({ p: new THREE.Vector3(Math.cos(a) * r * R, CORE_Y + y * R, Math.sin(a) * r * R), label: false });
+    for (let i = 0; i < 12; i++) {
+      const a = (i / 12) * Math.PI * 2;
+      this.bounds.push({ p: new THREE.Vector3(Math.cos(a) * DOCK_R, 0.25, Math.sin(a) * DOCK_R), label: false });
     }
-    for (let i = 0; i < 16; i++) {
-      const a = (i / 16) * Math.PI * 2;
-      this.bounds.push({ p: new THREE.Vector3(Math.cos(a) * 2.2, 0, Math.sin(a) * 2.2), label: false });   // Datenring
-    }
-    this.bounds.push({ p: this.coreAnchor.clone(), label: true });
   }
 
   /**
    * Rechnet fuer eine Blickrichtung den kleinsten Kameraabstand und die Verschiebung aus, bei denen jeder Punkt
    * des Umrisses mit Rand im Bild steht (Halbierungssuche ueber den Abstand; fuer einen festen Abstand ist die
-   * erlaubte Verschiebung je Achse ein Intervall, genommen wird seine Mitte). Beschriftungen brauchen oben und
-   * seitlich mehr Platz; am Handy sind sie ausgeblendet und zaehlen nicht.
+   * erlaubte Verschiebung je Achse ein Intervall, genommen wird seine Mitte).
    * @param {number} az Drehung um die Senkrechte (rad).
    * @param {number} el Hoehenwinkel (rad).
    * @returns {{d: number, target: THREE.Vector3, dir: THREE.Vector3}} Abstand, Blickpunkt, Richtung zur Kamera.
@@ -1847,27 +1813,25 @@ class System3D {
     const right = new THREE.Vector3().crossVectors(fwd, new THREE.Vector3(0, 1, 0)).normalize();
     const up = new THREE.Vector3().crossVectors(right, fwd);
     const tv = Math.tan((this.camera.fov * DEG) / 2), th = tv * this.camera.aspect;
-    const labels = this.labels.length > 0 && this.w > 760;
     const w = Math.max(1, this.w), h = Math.max(1, this.h);
-    const edge = Math.max(14, Math.min(w, h) * 0.035);   // Rand in Bildpunkten
+    const edge = Math.max(12, Math.min(w, h) * 0.04);     // Rand in Bildpunkten
+    const px = (2 * edge) / w, py = (2 * edge) / h;
     const P = [], v = new THREE.Vector3();
     for (const b of this.bounds) {
-      if (b.label && !labels) continue;
       v.copy(b.p).sub(this.center);
-      P.push([v.dot(right), v.dot(up), v.dot(fwd),
-        2 * (b.label ? 84 : edge) / w, 2 * (b.label ? 52 : edge) / h, 2 * (b.label ? 0 : edge) / h]);
+      P.push([v.dot(right), v.dot(up), v.dot(fwd)]);
     }
     const solve = (d) => {
       let xl = -Infinity, xh = Infinity, yl = -Infinity, yh = Infinity;
-      for (const [x, y, z, px, pt, pb] of P) {
+      for (const [x, y, z] of P) {
         const sx = (d + z) * th, sy = (d + z) * tv;
         xl = Math.max(xl, x - (1 - px) * sx); xh = Math.min(xh, x + (1 - px) * sx);
-        yl = Math.max(yl, y - (1 - pt) * sy); yh = Math.min(yh, y + (1 - pb) * sy);
+        yl = Math.max(yl, y - (1 - py) * sy); yh = Math.min(yh, y + (1 - py) * sy);
       }
       return [xl, xh, yl, yh];
     };
-    let lo = 2, hi = 120;
-    for (let i = 0; i < 30; i++) {
+    let lo = 2, hi = 200;
+    for (let i = 0; i < 32; i++) {
       const mid = (lo + hi) / 2, [xl, xh, yl, yh] = solve(mid);
       if (xl <= xh && yl <= yh) hi = mid; else lo = mid;
     }
@@ -1892,8 +1856,8 @@ class System3D {
       this.figure.appendChild(el);
       this.labels.push({ el, anchor, at });
     };
-    for (const d of this.devices) make(texts[d.key], d.anchor, d.at + 0.16);
-    make(texts.core, this.coreAnchor, 0.86);
+    // V5: keine Beschriftungen — das Bild davor hat keine, und Nicky wollte es ruhiger.
+    void make; void texts;
   }
 
   /** Passt Zeichenfläche und Kamera an die Größe der Bühne an. */
@@ -1983,7 +1947,7 @@ class System3D {
       const a = smooth(d.at, d.at + 0.16, p);
       fade(d.obj, a);
       d.obj.position.y = mix(-0.22, 0, a);
-      d.obj.scale.setScalar(mix(0.96, 1, a));
+      d.obj.scale.setScalar(mix(0.96, 1, a) * d.size);
     }
     // 2. Sockel, dann ziehen sich die Leitungen vom Gerät dorthin auf
     fade(this.dock.group, smooth(0.26, 0.42, p));
@@ -2013,50 +1977,44 @@ class System3D {
     // 3. Kern, Lichtsäule, Datenring
     const coreReveal = smooth(0.58, 0.92, p);
     this.core.update(t, coreReveal, this.energy);
-    this.coreLight.intensity = coreReveal * (3 + this.energy * 4);
-    for (const m of this.dock.glow) m.opacity = (m.map ? 0.16 : 1) * smooth(0.5, 0.75, p) * (m.map ? 1 + this.energy : 1);
+    this.coreLight.intensity = 0;
+    for (const m of this.dock.glow) m.opacity = (m.map ? 0.32 : 1) * smooth(0.3, 0.5, p) * (m.map ? 1 + this.energy * 1.5 : 1);
     for (const r of this.risers) {
       if (dt > 0 && r.userData.t < 1) r.userData.t += dt * 1.6;
       const k = r.userData.t;
-      r.visible = k < 1 && coreReveal > 0.5;
+      r.visible = false;                         // ohne Kern keine steigenden Lichtpunkte
       r.position.set(0, mix(0.2, CORE_Y - CORE_R * 0.6, k), 0);
       r.material.opacity = Math.sin(Math.PI * clamp01(k));
     }
     // Schloss: dreht sich zur Kamera, sein Schlüsselloch und sein Ring leuchten beim Durchgang auf
-    fade(this.lock.group, 0);                 // hell: ohne Schloss, wie im Bild davor
+    fade(this.lock.group, 0);
     this.gate *= Math.exp(-dt * 3);
     for (const m of this.lock.glow) m.color.setHex(ACCENT).multiplyScalar(1.15 + this.gate * 1.1);
     this.ring.rotation.y = t * 0.05;
     // Boden und Datenring stehen von Anfang an schwach da (V3): die Bühne ist nie leer.
     const marks = mix(0.4, 1, smooth(0.1, 0.6, p));
     for (const m of this.marks) m.opacity = m.userData.strength * marks;
-    this.pool.opacity = coreReveal * (0.7 + this.energy * 0.3);
+    this.pool.opacity = coreReveal * (0.36 + this.energy * 0.3);
     if (dt > 0 && this.wave < 1) this.wave += dt * 0.5;
     this.pulse.visible = this.wave < 1 && coreReveal > 0.5;
     this.pulse.scale.setScalar(mix(0.9, 5.2, this.wave));
     this.pulse.material.opacity = 0.55 * (1 - clamp01(this.wave)) ** 2;
     // Staub steigt langsam und beginnt unten wieder
-    this.dust.visible = false;                // hell: kein Staub
+    this.dust.visible = false;
     if (dt > 0) {
       const dp = this.dust.geometry.attributes.position;
       for (let i = 0; i < dp.count; i++) dp.setY(i, (dp.getY(i) + dt * (0.05 + (i % 7) * 0.012)) % 5.5);
       dp.needsUpdate = true;
     }
-    // Leuchten am Server: ein paar wechseln je Runde die Farbe
-    if (dt > 0 && Math.random() < dt * 14) {
-      const leds = this.rack.userData.leds, list = this.rack.userData.blink;
-      const i = list[Math.floor(Math.random() * list.length)];
-      leds.setColorAt(i, Math.random() < 0.6 ? new THREE.Color(ACCENT) : new THREE.Color(0x444444));
-      leds.instanceColor.needsUpdate = true;
-    }
 
-    // Kamera: faehrt beim Aufbau heran und um die Szene, danach ein ruhiges Pendeln. Der Abstand kommt in jedem
-    // Bild aus fit(): so nah wie moeglich, ohne dass etwas angeschnitten wird — am Handy wie am breiten Schirm.
+
+    // Kamera: Blick von vorn oben wie im Bild (gut 35 Grad), beim Aufbau ein wenig hoeher und seitlich, danach
+    // ein kaum merkliches Pendeln. Der Abstand kommt in jedem Bild aus fit(): nichts wird angeschnitten.
     const k = smooth(0, 1, p);
-    const az = (mix(-18, 3, k) + 3 * Math.sin(t * 0.12) * k + this.pointer.sx * 3) * DEG;
-    const el = (mix(40, this.narrow ? 46 : 25, k) - this.pointer.sy * 1.4) * DEG;
+    const az = (mix(-7, 0, k) + 1.5 * Math.sin(t * 0.12) * k + this.pointer.sx * 2) * DEG;
+    const el = (mix(42, 35, k) - this.pointer.sy * 1.2) * DEG;
     const view = this.fit(az, el);
-    this.camera.position.copy(view.target).addScaledVector(view.dir, view.d * mix(1.12, 1, k));
+    this.camera.position.copy(view.target).addScaledVector(view.dir, view.d * mix(1.08, 1, k));
     this.camera.lookAt(view.target);
     this.camera.updateMatrixWorld();
     this.lock.face.rotation.y = az;
