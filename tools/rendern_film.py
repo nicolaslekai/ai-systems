@@ -215,6 +215,35 @@ GPU_RUSTIKAL = {
 for _i, (_n, _ort) in enumerate(GPU_RUSTIKAL.items()):
     JOBS[_n] = (GPU_RUSTIKAL_KARTE + _ort + "47 degree lens (50mm), f/5.6. " + FILM + " 16:9.", "16:9", "2K", 9951 + _i, [LOGO_KORALLE])
 
+# Automatisierungs-Kachel, drei Alternativen (Nicky 24.11.2026: "give me 3 other options instead of this image").
+# Bild 1 traegt nur den Look der KI-OS-Kachel, damit die drei Kacheln eine Reihe bilden.
+AUTO_KOPF = ("Image 1 carries the look only: the pale light grey seamless studio surface, the thick frosted-glass objects, the "
+             "soft daylight from the window on the left, the open soft shadows, the white, silver and graphite details. The "
+             "objects are new.\n\n")
+AUTO_FUSS = ("\n\nOne small coral (#ff7f61) detail, nothing else coloured. Every label is a soft grey bar. 63 degree lens "
+             "(32mm). " + STUDIO + " Subject centred, calm empty space around it. 3:2.")
+for _n, _motiv, _seed in [
+    ("auto-formate", "One clip, every format: a long frosted-glass film strip with small grey frames runs in from the LEFT "
+     "and enters a rounded frosted-glass cube in the CENTRE. Out of the cube on the RIGHT comes a neat fanned stack of "
+     "finished glass panels in three shapes: tall 9:16, square 1:1 and wide 16:9, each showing the same soft grey "
+     "landscape thumbnail. A small coral status dot glows on the cube.", 9961),
+    ("auto-sortieren", "Media sorted automatically: on the LEFT a loose pile of small camera memory cards in white and "
+     "graphite. They travel on a slim frosted-glass rail through three shallow glass trays in the CENTRE and arrive on "
+     "the RIGHT in tidy labelled rows inside a glass case, every card aligned. One card on the rail carries a small coral "
+     "dot.", 9962),
+    ("auto-knoten", "A workflow built as a physical object: seven rounded frosted-glass blocks float above the studio "
+     "surface in a clean left-to-right graph, joined by thin white glass tubes. The first block holds a tiny film-frame "
+     "thumbnail, the middle blocks hold simple glyphs (a waveform, a crop frame, a text line, a colour swatch), the last "
+     "block holds a stack of finished posters. One connector carries a small coral pulse.", 9963),
+]:
+    JOBS[_n] = (AUTO_KOPF + _motiv + AUTO_FUSS, "3:2", "2K", _seed, ["@bau-ki-koralle"])
+
+# Gewaehlte Hero-Karte "Tisch": Kodak-Filmdose markenfrei
+JOBS["gpu-tisch-clean"] = ("Image 1 is the photograph: keep every object, the graphics card with its coral logo and lettering, the "
+  "table, the window, the brick, the light, the grain and the framing exactly as they are. One change: the small roll of 35mm "
+  "film next to the cup is a plain unbranded film canister in matte black with a plain cream label, no lettering at all. 16:9.",
+  "16:9", "2K", 9971, ["@gpu-tisch"])
+
 
 def post(wf):
     body = json.dumps({"prompt": wf, "extra_data": {"api_key_comfy_org": KEY}}).encode()
