@@ -1,0 +1,12 @@
+/* Farbthema KORALLE + SAND · consulting.nicolaslekai.com (Entwurf 24.11.2026)
+   Nicky: "i also liked the coral one". Koralle #ff7f61 (Kimi Jimmy) als einziger Akzent, helle Baender in warmem
+   Sand statt Grau. Kein dunkles Orange: auf hellem Grund ist der Ueberschrift-Schlussteil Tinte, Koralle bleibt
+   auf den Knoepfen (mit dunkler Schrift). Wird NACH style.css und nl.css geladen. */
+:root{--akzent-hell:#ff7f61;--akzent-dunkel:#ff7f61;--akzent-zwei:#e9edf1;--akzent-ink:#1c1c1e}
+.tile.dark .eyebrow,.hero-bild .eyebrow{color:#e9edf1}
+.tile.light{background:#f3ede4}
+.tile.light h1 em,.tile.light h2 em{color:#1d1d1f}
+.btn.primary,.btn.primary:hover,.light .btn.primary,.light .btn.primary:hover,
+.kontakt .daten a.btn.primary,.kontakt .daten a.btn.primary:hover{color:#1c1c1e}
+.bau .mehr,.card .mehr{color:#ff9a82}
+.film-wrap{--a:#ff7f61}

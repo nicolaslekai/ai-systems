@@ -229,7 +229,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
 <link rel="stylesheet" href="{a}style.css?v=nl1">
 <link rel="stylesheet" href="{a}nl.css?v=nl2">{f'''
-<link rel="stylesheet" href="{a}{thema}.css?v=s1">''' if thema else ""}
+<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s2">
+<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s2';}})();</script>''' if thema else ""}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
