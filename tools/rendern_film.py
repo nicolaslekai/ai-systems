@@ -323,5 +323,26 @@ def main():
             print(r, flush=True)
 
 
+# 24.11.2026 Nicky: "i love the image but make it in 4k, it looks too much like AI right now"
+# Dasselbe Foto als Referenz, neu "fotografiert" als echtes Analog-Reportagebild in 4K: Haut, Stoff, Staub, Korn.
+ECHT_4K = ("Image 1 is the photograph. Keep every person, face, pose, expression, hand, piece of clothing, the room, "
+  "the window light and the framing exactly as they are. Re-photograph it as a real documentary photo with full 4K "
+  "detail: Leica M6, 35mm Summicron at f/2.8, Kodak Portra 400 scanned at full resolution. Visible film grain across "
+  "the whole frame. Skin with pores, fine lines, slight redness and flyaway hairs. Fabric with real weave, pilling "
+  "and creases. Brick with chips and mortar dust, dust and fingerprints on the laptop, a mug with a coffee ring. "
+  "Natural lens vignetting, slightly soft corners, the bright window gently blooming, colours a little faded and "
+  "warm. Daylight from the tall windows on the LEFT, natural shadow on the right side of each face. 16:9.")
+JOBS["begleitung-runde-4k-a"] = (ECHT_4K, "16:9", "4K", 9441, ["@begleitung-runde-plakat"])
+JOBS["begleitung-runde-4k-b"] = (ECHT_4K, "16:9", "4K", 9442, ["@begleitung-runde-plakat"])
+
+# Hochkant-Fassung fuers Handy aus der GPT-4K-Fassung (24.11.2026)
+ECHT_HOCH = ("Image 1 is the photograph: the same loft, the same daylight, the same four people with the same faces, "
+  "hair and clothes, the same wall screen and the same film grain. The camera has stepped to the right and closer for a "
+  "vertical frame. GEOMETRY: the laughing woman with the braids and the guy with the beanie stand in the MIDDLE, upper "
+  "bodies filling the upper two thirds. Behind them the wall screen with the edit timeline. FOREGROUND LEFT, soft, the "
+  "cardigan shoulder and coffee cup of the woman with the glasses. The walnut table runs along the bottom third with the "
+  "open laptop on it. 47 degree lens (50mm). Real documentary photo: skin with pores and flyaway hairs, fabric weave, "
+  "Kodak Portra 400 grain across the whole frame. 4:5.")
+
 if __name__ == "__main__":
     main()
