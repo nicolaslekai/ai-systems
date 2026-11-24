@@ -321,8 +321,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   <figure class="s3d">
     <div class="s3d-buehne" data-system3d data-src="{a}system3d/system3d.js?v={s3d_stand("system3d.js")}" data-marken="{marken}">
       <picture>
-        <source media="(max-width:760px)" srcset="{a}system3d/systembild-hoch_KJ_v009.webp" width="1170" height="690">
-        <img src="{a}system3d/systembild_KJ_v009.webp" width="2400" height="1060" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
+        <source media="(max-width:760px)" srcset="{a}system3d/systembild-hoch_KJ_v010.webp" width="1170" height="690">
+        <img src="{a}system3d/systembild_KJ_v010.webp" width="2400" height="1060" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
       </picture>
     </div>
   </figure>
@@ -425,7 +425,7 @@ if __name__ == "__main__":
             shutil.copytree(PREV / "assets" / d, ROOT / "assets" / d, dirs_exist_ok=True)
         # 3D-Systembild: nur was die Seite laedt (gepackte Szene, Lader, Standbilder), nicht Quelle und Packskript
         (ROOT / "assets/system3d").mkdir(parents=True, exist_ok=True)
-        for f in ["system3d.js", "laden.js", "systembild_KJ_v009.webp", "systembild-hoch_KJ_v009.webp"]:
+        for f in ["system3d.js", "laden.js", "systembild_KJ_v010.webp", "systembild-hoch_KJ_v010.webp"]:
             shutil.copy(PREV / "assets/system3d" / f, ROOT / "assets/system3d" / f)
         shutil.copytree(PREV / "assets/system3d/tex", ROOT / "assets/system3d/tex", dirs_exist_ok=True)   # Bilder fuer Bildschirme und Fotos
         for f in ["style.css", "nl.css", "logo-mark-coral.webp", "koralle-grau.css", "hero-luefter.js", "hero-film.js"]:

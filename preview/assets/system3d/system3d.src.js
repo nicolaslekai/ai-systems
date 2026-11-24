@@ -59,11 +59,11 @@ const ACCENT = 0xff7f61;               // Koralle, wie --akzent-hell in koralle-
 const TEX_BASE = (() => {
   try { return new URL('tex/', document.currentScript.src).href; } catch (err) { return 'assets/system3d/tex/'; }
 })();
-const GROUND = 0xcccad1;               // Boden: Lila-Grau des Standbilds, 25.11. eine Stufe dunkler (Nicky: "a little bit more grey, it's too bright"); wie .nl-system in koralle-grau.css
+const GROUND = 0xc3c1c8;               // Boden: Lila-Grau des Standbilds, 25.11. eine Stufe dunkler (Nicky: "a little bit more grey, it's too bright"); wie .nl-system in koralle-grau.css
 // Farben aus dem alten Standbild gemessen (24.11.2026, system-koralle_KJ_v001.png): Puck oben #e1dce5,
 // Kabel #dcdbe3, Stecker im Mittel #f79b99 (Schatten #e66e73, Licht #feb7b0), Leuchtring #f4aba2.
 // Die Grundfarben unten sind so gewaehlt, dass das beleuchtete Ergebnis diese Werte trifft.
-const HUB_WHITE = 0xd2ced8, CABLE_WHITE = 0xc4c2cb, PLUG_CORAL = 0xe8817f;   // Weiss ~7 % dunkler, Koralle gleich hell
+const HUB_WHITE = 0xaaa6b0, CABLE_WHITE = 0xaba9b1, PLUG_CORAL = 0xe8817f;   // Weiss ~7 % dunkler, Koralle gleich hell
 const RING_CORE = 0xf3837f, RING_GLOW = 0xf6aaa2, RING_HOT = 0xffc9bf;
 const PLUG_W = 0.2, PLUG_H = 0.17, PLUG_LEN = 0.44;   // Stecker wie im Bild: kurze rechteckige Tuelle
 const TUMBLE = [0.071, 0.13, 0.041];   // Raten des Kerns in rad/s, wie in brain.js (unrunde Verhältnisse)
@@ -646,9 +646,9 @@ function buildHandheld(w, h, lean, screenMap, shadowTex, glowTex) {
  */
 function studio() {
   return {
-    silver: new THREE.MeshPhysicalMaterial({ color: 0xc7c4cd, metalness: 0.9, roughness: 0.3, clearcoat: 0.2, clearcoatRoughness: 0.3 }),   // Aluminium
-    white: new THREE.MeshPhysicalMaterial({ color: 0xbfbcc6, roughness: 0.48, clearcoat: 0.35, clearcoatRoughness: 0.25, sheen: 0.15, sheenColor: 0xffffff }),   // satinierter Kunststoff
-    pale: new THREE.MeshPhysicalMaterial({ color: 0xc9c8ce, roughness: 0.8, sheen: 0.5, sheenColor: 0xffffff }),   // Polster
+    silver: new THREE.MeshPhysicalMaterial({ color: 0xadaab3, metalness: 0.9, roughness: 0.3, clearcoat: 0.2, clearcoatRoughness: 0.3 }),   // Aluminium
+    white: new THREE.MeshPhysicalMaterial({ color: 0xa6a3ad, roughness: 0.5, clearcoat: 0.25, clearcoatRoughness: 0.25, sheen: 0.15, sheenColor: 0xffffff }),   // satinierter Kunststoff
+    pale: new THREE.MeshPhysicalMaterial({ color: 0xafaeb4, roughness: 0.8, sheen: 0.5, sheenColor: 0xffffff }),   // Polster
     grey: new THREE.MeshStandardMaterial({ color: 0x5c5e63, metalness: 0.3, roughness: 0.5 }),
     graphite: new THREE.MeshStandardMaterial({ color: 0x46444b, metalness: 0.35, roughness: 0.4 }),
     black: new THREE.MeshStandardMaterial({ color: 0x151517, metalness: 0.3, roughness: 0.38 }),
@@ -769,7 +769,7 @@ function buildDisplay(tex, shadowTex) {
 function buildRenderBox(shadowTex) {
   const g = new THREE.Group();
   const m = studio();
-  const body = new THREE.MeshPhysicalMaterial({ color: 0xbfbec6, metalness: 0.9, roughness: 0.3, clearcoat: 0.15 });   // gestrahltes Aluminium
+  const body = new THREE.MeshPhysicalMaterial({ color: 0x9a99a1, metalness: 0.9, roughness: 0.3, clearcoat: 0.15 });   // gestrahltes Aluminium
   const W = 2.5, D = 2.5, H = 1.15, R = 0.36;
   add(g, slab(W, D, H, R), body, 0, H / 2 + 0.04, 0).rotation.x = -Math.PI / 2;
   add(g, new THREE.CylinderGeometry(W * 0.36, W * 0.36, 0.045, 64), m.pale, 0, 0.022, 0).castShadow = false;
@@ -870,14 +870,14 @@ function buildClapper(shadowTex) {
   [[20, 20], [190, 20], [360, 20], [20, 140], [276, 140], [20, 255], [276, 255]].forEach(([x, y]) => cg.fillRect(x, y, 70, 12));
   const board = toTexture(c);
   add(g, slab(W, D, 0.05, 0.04), m.white, 0, 0.025, 0).rotation.x = -Math.PI / 2;
-  const face = add(g, new THREE.PlaneGeometry(W - 0.08, D - 0.08), new THREE.MeshStandardMaterial({ map: board, roughness: 0.6 }), 0, 0.052, 0);
+  const face = add(g, new THREE.PlaneGeometry(W - 0.08, D - 0.08), new THREE.MeshStandardMaterial({ map: board, color: 0xb9b7be, roughness: 0.6 }), 0, 0.052, 0);
   face.rotation.x = -Math.PI / 2;
   face.castShadow = false;
   const { c: sc, g: sg } = canvas(512, 64);                  // Streifen der Klappe
   sg.fillStyle = '#f4f4f4'; sg.fillRect(0, 0, 512, 64);
   sg.fillStyle = '#4a4b4f';
   for (let x = -64; x < 512; x += 96) { sg.beginPath(); sg.moveTo(x, 64); sg.lineTo(x + 48, 0); sg.lineTo(x + 96, 0); sg.lineTo(x + 48, 64); sg.fill(); }
-  const stripe = new THREE.MeshStandardMaterial({ map: toTexture(sc), roughness: 0.5 });
+  const stripe = new THREE.MeshStandardMaterial({ map: toTexture(sc), color: 0xb9b7be, roughness: 0.5 });
   add(g, new THREE.BoxGeometry(W, 0.07, 0.22), stripe, 0, 0.04, -D / 2 - 0.11);
   const hinge = new THREE.Group();
   hinge.position.set(-W / 2, 0.11, -D / 2 - 0.11);
@@ -1130,7 +1130,7 @@ function buildDock(spotTex) {
   const pts = [new THREE.Vector2(0, 0), new THREE.Vector2(R - 0.1, 0), new THREE.Vector2(R - 0.03, 0.025), new THREE.Vector2(R, 0.08), new THREE.Vector2(R, H - E)];
   for (let i = 1; i <= 10; i++) { const a = (i / 10) * Math.PI / 2; pts.push(new THREE.Vector2(R - E + Math.cos(a) * E, H - E + Math.sin(a) * E)); }
   pts.push(new THREE.Vector2(0, H));
-  const shell = new THREE.MeshPhysicalMaterial({ color: HUB_WHITE, roughness: 0.42, clearcoat: 1, clearcoatRoughness: 0.16, sheen: 0.4, sheenColor: 0xffffff });
+  const shell = new THREE.MeshPhysicalMaterial({ color: HUB_WHITE, roughness: 0.45, clearcoat: 0.6, clearcoatRoughness: 0.22, sheen: 0.4, sheenColor: 0xffffff });
   add(group, new THREE.LatheGeometry(pts, 128), shell, 0, 0, 0);
   // Weiche Lichtbaender mit Vertex-Alpha: Farbe fest, Deckkraft je Punkt (keine Textur, daher iOS-sicher)
   const band = (geo, alphaAt) => {
@@ -1622,7 +1622,7 @@ class System3D {
     // Raumlicht für die Spiegelungen auf Metall und Glas
     const pmrem = new THREE.PMREMGenerator(this.renderer);
     this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    this.scene.environmentIntensity = 0.65;
+    this.scene.environmentIntensity = 0.55;
     pmrem.dispose();
     await rest();
 
@@ -1714,7 +1714,7 @@ class System3D {
     // Weiches Studiolicht: Himmel-Boden-Licht als Grundhelligkeit, ein weisses Fuehrungslicht fuer die Schatten.
     // V5.2 (Nicky: whites "look too much like a solid shader"): klare Lichtrichtung von vorn links oben, dunklere
     // Unterseiten ueber ein dunkleres Bodenlicht -> Oberseiten hell, Fronten mittel, Seiten dunkler, wie im Standbild.
-    this.scene.add(new THREE.HemisphereLight(0xffffff, 0x8e8d95, 0.34));
+    this.scene.add(new THREE.HemisphereLight(0xffffff, 0x8e8d95, 0.3));
     const key = new THREE.DirectionalLight(0xffffff, 1.25);
     key.position.set(-6, 11, 7);
     key.castShadow = true;
