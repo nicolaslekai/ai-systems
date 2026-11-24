@@ -42,9 +42,10 @@
 
 /* Systembild in 3D, hell (Nicky 24.11.2026 zum flachen Bild: "I don't like how it's cut off, can we attempt to
    build this as a 3D model … like in the Otter und Stein website"). Szene: assets/system3d/ (tools/system3d_film.py).
-   Das Band hat den Grund der Szene (#dedce4 = GROUND in system3d.src.js, Boden im Standbild gemessen), deshalb keine Randblende wie bei O&S.
+   Das Band hat den Grund der Szene (#cccad1 = GROUND in system3d.src.js; Lila-Grau des Standbilds, eine Stufe dunkler), deshalb keine Randblende wie bei O&S.
    Die Kamera der Szene passt sich an die Buehne an; Standbilder per object-fit:contain, also ebenfalls ganz. */
-.tile.light.nl-system{background:#dedce4;padding-bottom:0}
+.tile.light.nl-system{background:#cccad1;padding-bottom:0}
+.tile.light.nl-system::after{display:none}   /* der Lichtschein der hellen Baender machte eine Kante ueber der Szene */
 .nl-system .s3d{margin:clamp(12px,2vw,28px) 0 0}
 .nl-system .s3d-buehne{height:clamp(400px,44vw,700px)}
 .nl-system .s3d-buehne img,.nl-system .s3d-buehne canvas{-webkit-mask-image:none;mask-image:none}

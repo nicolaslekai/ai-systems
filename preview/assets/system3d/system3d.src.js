@@ -59,11 +59,11 @@ const ACCENT = 0xff7f61;               // Koralle, wie --akzent-hell in koralle-
 const TEX_BASE = (() => {
   try { return new URL('tex/', document.currentScript.src).href; } catch (err) { return 'assets/system3d/tex/'; }
 })();
-const GROUND = 0xdedce4;               // Boden im Standbild gemessen (kuehles helles Lila-Grau), wie .nl-system in koralle-grau.css
+const GROUND = 0xcccad1;               // Boden: Lila-Grau des Standbilds, 25.11. eine Stufe dunkler (Nicky: "a little bit more grey, it's too bright"); wie .nl-system in koralle-grau.css
 // Farben aus dem alten Standbild gemessen (24.11.2026, system-koralle_KJ_v001.png): Puck oben #e1dce5,
 // Kabel #dcdbe3, Stecker im Mittel #f79b99 (Schatten #e66e73, Licht #feb7b0), Leuchtring #f4aba2.
 // Die Grundfarben unten sind so gewaehlt, dass das beleuchtete Ergebnis diese Werte trifft.
-const HUB_WHITE = 0xe9e5ee, CABLE_WHITE = 0xe4e2ea, PLUG_CORAL = 0xe57f7d;
+const HUB_WHITE = 0xd2ced8, CABLE_WHITE = 0xc4c2cb, PLUG_CORAL = 0xe8817f;   // Weiss ~7 % dunkler, Koralle gleich hell
 const RING_CORE = 0xf3837f, RING_GLOW = 0xf6aaa2, RING_HOT = 0xffc9bf;
 const PLUG_W = 0.2, PLUG_H = 0.17, PLUG_LEN = 0.44;   // Stecker wie im Bild: kurze rechteckige Tuelle
 const TUMBLE = [0.071, 0.13, 0.041];   // Raten des Kerns in rad/s, wie in brain.js (unrunde Verhältnisse)
@@ -339,9 +339,9 @@ function makeScreenTexture(w, h, kind, seed) {
  * @returns {THREE.ExtrudeGeometry} Die Geometrie der Platte.
  */
 function slab(w, h, d, r) {
-  const bevel = Math.min(0.008, d * 0.2);
+  const bevel = Math.min(0.04, d * 0.24, Math.min(w, h) * 0.08);   // V5.2: rundere Kanten, dort sitzt das Glanzlicht
   const geo = new THREE.ExtrudeGeometry(roundedShape(w, h, r), {
-    depth: d - bevel * 2, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 2, curveSegments: 8,
+    depth: d - bevel * 2, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 4, curveSegments: 10,
   });
   geo.translate(0, 0, -(d - bevel * 2) / 2);
   return geo;
@@ -435,7 +435,7 @@ function deviceMaterials(screenMap) {
 function addContactShadow(group, tex, w, d) {
   const m = new THREE.Mesh(
     new THREE.PlaneGeometry(w, d),
-    new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, opacity: 0.32 }),
+    new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, opacity: 0.45 }),
   );
   m.rotation.x = -Math.PI / 2;
   m.position.y = 0.007;
@@ -646,9 +646,9 @@ function buildHandheld(w, h, lean, screenMap, shadowTex, glowTex) {
  */
 function studio() {
   return {
-    silver: new THREE.MeshStandardMaterial({ color: 0xd6d3dd, metalness: 0.65, roughness: 0.28 }),
-    white: new THREE.MeshPhysicalMaterial({ color: 0xdedae4, roughness: 0.4, clearcoat: 0.6, clearcoatRoughness: 0.25 }),
-    pale: new THREE.MeshStandardMaterial({ color: 0xe6e7e9, roughness: 0.75 }),
+    silver: new THREE.MeshPhysicalMaterial({ color: 0xc7c4cd, metalness: 0.9, roughness: 0.3, clearcoat: 0.2, clearcoatRoughness: 0.3 }),   // Aluminium
+    white: new THREE.MeshPhysicalMaterial({ color: 0xbfbcc6, roughness: 0.48, clearcoat: 0.35, clearcoatRoughness: 0.25, sheen: 0.15, sheenColor: 0xffffff }),   // satinierter Kunststoff
+    pale: new THREE.MeshPhysicalMaterial({ color: 0xc9c8ce, roughness: 0.8, sheen: 0.5, sheenColor: 0xffffff }),   // Polster
     grey: new THREE.MeshStandardMaterial({ color: 0x5c5e63, metalness: 0.3, roughness: 0.5 }),
     graphite: new THREE.MeshStandardMaterial({ color: 0x46444b, metalness: 0.35, roughness: 0.4 }),
     black: new THREE.MeshStandardMaterial({ color: 0x151517, metalness: 0.3, roughness: 0.38 }),
@@ -769,7 +769,7 @@ function buildDisplay(tex, shadowTex) {
 function buildRenderBox(shadowTex) {
   const g = new THREE.Group();
   const m = studio();
-  const body = new THREE.MeshStandardMaterial({ color: 0xdcdcde, metalness: 0.6, roughness: 0.3 });
+  const body = new THREE.MeshPhysicalMaterial({ color: 0xbfbec6, metalness: 0.9, roughness: 0.3, clearcoat: 0.15 });   // gestrahltes Aluminium
   const W = 2.5, D = 2.5, H = 1.15, R = 0.36;
   add(g, slab(W, D, H, R), body, 0, H / 2 + 0.04, 0).rotation.x = -Math.PI / 2;
   add(g, new THREE.CylinderGeometry(W * 0.36, W * 0.36, 0.045, 64), m.pale, 0, 0.022, 0).castShadow = false;
@@ -1622,7 +1622,7 @@ class System3D {
     // Raumlicht für die Spiegelungen auf Metall und Glas
     const pmrem = new THREE.PMREMGenerator(this.renderer);
     this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    this.scene.environmentIntensity = 0.6;
+    this.scene.environmentIntensity = 0.65;
     pmrem.dispose();
     await rest();
 
@@ -1712,19 +1712,21 @@ class System3D {
     // Licht zuerst: Die Shader der Körper hängen an Zahl und Art der Lichter.
     // Weißes Führungslicht von vorn links oben (wirft die Schatten), blaues Licht aus dem Kern.
     // Weiches Studiolicht: Himmel-Boden-Licht als Grundhelligkeit, ein weisses Fuehrungslicht fuer die Schatten.
-    this.scene.add(new THREE.HemisphereLight(0xffffff, 0xb9babd, 0.5));
-    const key = new THREE.DirectionalLight(0xffffff, 0.8);
-    key.position.set(-2.5, 14, 4.5);
+    // V5.2 (Nicky: whites "look too much like a solid shader"): klare Lichtrichtung von vorn links oben, dunklere
+    // Unterseiten ueber ein dunkleres Bodenlicht -> Oberseiten hell, Fronten mittel, Seiten dunkler, wie im Standbild.
+    this.scene.add(new THREE.HemisphereLight(0xffffff, 0x8e8d95, 0.34));
+    const key = new THREE.DirectionalLight(0xffffff, 1.25);
+    key.position.set(-6, 11, 7);
     key.castShadow = true;
     key.shadow.mapSize.setScalar(this.handheld ? 1024 : 2048);
     Object.assign(key.shadow.camera, { left: -12, right: 12, top: 12, bottom: -12, near: 1, far: 40 });
     key.shadow.bias = -0.0004;
     key.shadow.radius = 14;
     this.scene.add(key);
-    const fill = new THREE.DirectionalLight(0xffffff, 0.22);   // hellt die Fronten auf, solange der Kern noch dunkel ist
+    const fill = new THREE.DirectionalLight(0xffffff, 0.12);   // hellt die Fronten auf, solange der Kern noch dunkel ist
     fill.position.set(3, 2.5, 9);
     this.scene.add(fill);
-    const rim = new THREE.DirectionalLight(0xffffff, 0.45);    // V3: kühles Gegenlicht von hinten rechts — helle Kanten an Gehäusen
+    const rim = new THREE.DirectionalLight(0xffffff, 0.4);    // V3: kühles Gegenlicht von hinten rechts — helle Kanten an Gehäusen
     rim.position.set(7, 5, -8);
     this.scene.add(rim);
     this.coreLight = new THREE.PointLight(ACCENT, 0, 12, 1.4);
