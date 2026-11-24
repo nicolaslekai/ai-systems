@@ -1,0 +1,14 @@
+/* consulting.nicolaslekai.com V3 · Nicolas' Marke auf dem O&S-Aufbau (24.11.2026)
+   Orange #f4933b ist der Akzent (style.css --akzent-hell), Koralle #ff7f61 nur als Zweitfarbe
+   fuer die kleinen Labels ueber den Ueberschriften auf dunklen Baendern. */
+.nl-brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:.14em}
+.nl-brand .nl-mark{height:20px;width:auto;flex:none}
+.fuss-marke .nl-brand{font-size:17px}
+.fuss-marke .nl-brand .nl-mark{height:24px}
+.tile.dark .eyebrow{color:var(--akzent-zwei)}
+@media(min-width:761px){.cards.team.nl-zwei{grid-template-columns:repeat(2,minmax(0,1fr));max-width:900px}}
+.card.person .mehr{color:var(--a);text-decoration:none;font-weight:700}
+/* System-Bild als helles Diorama statt 3D (Nicky 24.11.2026: "brighter images", "apple design style vibes") */
+.nl-system .nl-system-bild{margin:clamp(28px,4vw,48px) auto 0;max-width:1400px}
+.nl-system .nl-system-bild img{width:100%;height:auto;display:block}
+.nl-system figcaption{font-size:16px;color:var(--soft-l);margin-top:14px}
