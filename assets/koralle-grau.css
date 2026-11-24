@@ -1,0 +1,77 @@
+/* Farbthema KORALLE · GRAU · consulting.nicolaslekai.com (24.11.2026, ersetzt koralle-silber)
+   Nicky: "Remove all orange on the website. No orange, just gray and coral. And also remove the silver effect."
+   Koralle #ff7f61 ist der einzige Farbton: Hauptknoepfe, Ueberschrift-Schlussteile auf Dunkel, Links auf Dunkel.
+   Alles andere ist Grau. Kein Metall-Verlauf, kein Glanz, keine Aluminium-Knoepfe.
+   Wird NACH style.css und nl.css geladen. */
+
+:root{
+  --akzent-hell:#ff7f61;      /* Koralle auf Dunkel, 6,9:1 */
+  --akzent-dunkel:#ff7f61;    /* Koralle auch auf Weiss (Nicky 24.11.2026: "use the coral across the whole page") */
+  --akzent-zwei:#c7cacf;
+  --akzent-ink:#1c1c1e;
+  --light:#ffffff;
+}
+.tile.light{background:#ffffff}
+
+/* Ueberschrift-Schlussteil: ueberall Koralle (Nicky: "how it gets to you … make it coral") */
+.tile.dark h1 em,.tile.dark h2 em,.hero-bild h1 em{color:#ff7f61}
+.tile.light h1 em,.tile.light h2 em{color:#ff7f61}
+
+/* Labels ueber den Ueberschriften: Grau */
+.tile.dark .eyebrow,.hero-bild .eyebrow{color:#c7cacf}
+.tile.light .eyebrow{color:#6e7378}
+
+/* Hauptknopf Koralle mit dunkler Schrift, ueberall gleich */
+.btn.primary,.btn.primary:hover,.light .btn.primary,.light .btn.primary:hover,
+.kontakt .daten a.btn.primary,.kontakt .daten a.btn.primary:hover{background:#ff7f61;color:#1c1c1e;-webkit-text-fill-color:#1c1c1e}
+.btn.primary:hover{filter:brightness(1.05)}
+
+/* Zweitknopf: schlichtes Grau, flach */
+.btn.ghost{background:rgba(255,255,255,.1);color:#f0efec;border:1px solid rgba(255,255,255,.28);box-shadow:none}
+.btn.ghost:hover{background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.4)}
+.light .btn.ghost{background:#eceded;color:#1c1c1e;border-color:#d4d6d9}
+.light .btn.ghost:hover{background:#e2e3e5;color:#1c1c1e;border-color:#c4c7cb}
+
+/* Links auf dunklen Karten */
+.bau .mehr,.card .mehr{color:#ff7f61}
+.film-wrap{--a:#ff7f61}
+
+/* Keine automatische Abdunklung durch den Browser (Nickys Handy machte die weissen Baender dunkel
+   und die zweite Ueberschriftzeile unsichtbar). Die Seite bringt ihre dunklen Baender selbst mit. */
+:root{color-scheme:only light}
+
+/* System-Bild ueber die ganze Breite, ohne Bildunterschrift (Nicky 24.11.2026) */
+.nl-system{padding-bottom:0}
+.nl-system .nl-system-bild{max-width:none;width:100vw;margin:clamp(28px,4vw,48px) 0 0 calc(50% - 50vw)}
+.nl-system .nl-system-bild img{width:100%;height:auto;display:block}
+
+/* Team-Band schlanker (Nicky 24.11.2026: "make this section slimmer"): niedrigeres Bild, Text frueher */
+#team{--bh:min(36vw,calc(80svh - 57px))}
+#team img{object-position:50% 30%}
+#team>.wrap{padding-top:calc(var(--bh) * .42)}
+#team.tile{padding-bottom:clamp(48px,6vw,80px)}
+#team .team-kopf h2{margin-bottom:6px}
+#team .cards{margin-top:20px}
+@media(max-width:760px){#team{--bh:100vw} #team>.wrap{padding-top:calc(var(--bh) * .55)}}
+
+/* Team: nur noch die Architekten-Karte */
+#team .cards.team{grid-template-columns:minmax(0,560px)}
+
+/* Regie-Band ganz unten, anderer Look: hell, offen, ohne Karte (Nicky 24.11.2026) */
+.regie-band{padding:clamp(56px,7vw,96px) 0}
+.regie{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:clamp(24px,5vw,72px);align-items:start;
+  border-top:1px solid #d4d6d9;padding-top:clamp(28px,3vw,40px)}
+.regie-band h2{margin:8px 0 0;font-size:clamp(30px,3.6vw,48px)}
+.regie-text p{font-size:clamp(17px,1.4vw,20px);line-height:1.55;color:#3a3d42;margin:0 0 20px;max-width:36em}
+@media(max-width:760px){.regie{grid-template-columns:1fr}}
+
+/* Hero: drehende Luefter (assets/hero-luefter.js) liegen exakt ueber dem Bild, unter dem Schleier */
+.hero-bild{overflow:hidden}
+.hero-bild .hg{will-change:transform}
+.tile.dark.bild-hinter>.hero-luefter{position:absolute;z-index:0;pointer-events:none;will-change:transform}
+.hero-luefter canvas{position:absolute;display:block}
+.hero-bild>.wrap{will-change:transform,opacity}
+.hero-luefter canvas{animation:luefter-ein .9s ease-out both}
+@keyframes luefter-ein{from{opacity:0}}
+
+.tile.light{--a:#ff7f61}

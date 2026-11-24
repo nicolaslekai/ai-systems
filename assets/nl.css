@@ -1,5 +1,5 @@
 /* consulting.nicolaslekai.com V3 · Nicolas' Marke auf dem O&S-Aufbau (24.11.2026)
-   Orange #f4933b ist der Akzent (style.css --akzent-hell), Koralle #ff7f61 nur als Zweitfarbe
+   Koralle #ff7f61 ist der Akzent (style.css --akzent-hell), Grau traegt den Rest (Nicky 24.11.2026: kein Orange)
    fuer die kleinen Labels ueber den Ueberschriften auf dunklen Baendern. */
 .nl-brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:.14em}
 .nl-brand .nl-mark{height:20px;width:auto;flex:none}

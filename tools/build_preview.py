@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PREV = ROOT / "preview"
 SPRITE = (PREV / "_sprite.svg.html").read_text().strip()
 MAIL = "nicolaslekai@gmail.com"
+WA = "491716269660"; WA_SHOW = "+49 171 6269660"   # Nicky 24.11.2026: "add my whatsapp also"
 SITE = "https://consulting.nicolaslekai.com/"
 
 # Nicolas' Marke: der isometrische offene Rahmen in Orange (assets/logo-mark-orange.png) + Wortmarke
@@ -30,16 +31,16 @@ T = {
  "en": dict(
   lang="en", other="de", other_label="DE", other_long="Deutsch", other_title="Deutsche Fassung",
   title="Nicolas Lekai — AI Systems Architect · your own AI operating system",
-  desc="I build companies their own AI operating system, web apps and AI automation: all models and tools under one roof, costs in view, a human approves what goes out. Munich · Melbourne.",
+  desc="I build companies their own AI operating system, web apps and AI automation: all models and tools under one roof, costs in view, a human approves what goes out. Munich · London.",
   nav=[("#themen", "What I build"), ("#arbeitsweise", "How I work"), ("#team", "About")],
   cta="Start a project", also="Also",
   hero_alt="A graphics card on a worn walnut table by a steel-frame window in a brick loft; on its silver plate the open-frame logo mark and RENDER CORE · 48 GB in coral, beside it a light meter, a film canister and a stoneware cup",
-  eyebrow="AI Systems Architect · Munich · Melbourne",
+  eyebrow="AI Systems Architect · Munich · London",
   h1="Your own AI operating system <em>for your business.</em>",
   lead="I build your company its own AI operating system, web apps and automation for whatever repeats every week. A human approves anything that goes out. You work directly with the person who builds it.",
   ghost="What I build",
   film_label="Watch the film · 2:22", film_name="Explainer film: your own AI operating system",
-  film_src="nlos_film_en_v031.mp4", film_poster="nlos_film_poster_en_v031.jpg", film_close="Close film",
+  film_src="nlos_film_en_v031.mp4", film_poster="nlos_film_poster_en_coral_KJ_v001.jpg", film_close="Close film",
   themen_h2="What I build <em>and how it gets to you.</em>",
   themen_lead="Whatever I build takes the same route: from the first conversation to something that runs in your business.",
   bauten=[
@@ -47,7 +48,7 @@ T = {
     "Your own AI operating system", "All models and tools under one roof, costs in view, a small assistant for every role — and an approval before anything goes out."),
    ("bau-apps.webp", "Illustrative image: a film-production app built from frosted-glass panes: a shot list with thumbnails, one row highlighted, the same list on a phone-sized pane, an audio waveform behind",
     "Web apps and custom software", "Web applications, desktop apps, interfaces and data pipelines — for processes standard software doesn’t cover. You own the source code."),
-   ("bau-automatisierung.webp", "Illustrative image: a row of silver film cans that continues without a gap as a row of graphics cards in a bright studio",
+   ("bau-automatisierung.webp", "Illustrative image: a film strip runs into a small frosted-glass box with a coral light, and out the other side come the same frames as stacked formats, portrait, square and landscape, in a bright white studio",
     "Automate workflows with AI", "Sort what comes in, read documents, prepare drafts, reconcile data. The AI prepares, a human approves."),
   ],
   bau_mehr="Talk to me →",
@@ -78,21 +79,21 @@ T = {
   g_eyebrow="Company memory", g_h2="A memory <em>that keeps learning.</em>",
   g_lead="At the core of every AI operating system is a company memory: decisions, solutions and facts as a linked store that every assistant in the team queries.",
   g_p="My own studio runs on one every day: what gets decided, fixed or corrected in a project goes in, and every assistant knows it the next morning. That is the system I build for you.",
-  g_brain="Team memory", g_alt="Data ring with the team memory as a sphere at its centre: threads connecting knowledge nodes into a network",
-  g_cap="Schematic view: the team memory at the core, the data ring around it",
+  g_brain="Team memory", g_alt="Segmented data ring with fine threads across it: signals travel from one side to the other and light up the ring where they arrive",
+  g_cap="Schematic view: signals travel across the data ring",
   w_alt="An edit suite in a bright loft: two editors seen from behind at a walnut desk with a grading panel and a camera, a young woman in a denim jacket leans over the monitor and points at the timeline",
-  w_eyebrow="Munich · Melbourne", w_h2="Built <em>by me.</em>",
+  w_eyebrow="Munich · London", w_h2="Built <em>by me.</em>",
   w_lead="No handing off to third parties, no layer in between: you talk to the person who writes the code — from the first conversation into day-to-day operation.",
   t_alt="A broadcast video patch bay in a rack, black coax cables with silver BNC plugs, one cable glowing coral",
-  t_h2="You talk to the person <em>who builds.</em>", t_lead="One person, two crafts.",
-  t_cards=[("File 01 · AI Systems Architect", "Nicolas Lekai", "Builds AI operating systems, control centres and production pipelines for companies. Comes from web development and visual effects and still builds the systems behind the images.", None),
-           ("File 02 · Director — Film · AI · VFX", "The director side", "Films, VFX, post- and audio production. The explainer film on this page comes out of my own pipeline.", ("https://nicolaslekai.com/", "nicolaslekai.com →"))],
+  t_h2="You talk to the person <em>who builds.</em>", t_lead="One person, two crafts, twenty years in film and music.",
+  t_cards=[("File 01 · AI Systems Architect", "Nicolas Lekai", "Builds AI operating systems, control centres and production pipelines for companies. Twenty years in the film and music industry: from the recording studio through web development to visual effects. Along the way, web technology developer for the IFC and the World Bank in Washington DC. He still builds the systems behind the images.", None),
+           ("File 02 · VFX Director — Film · AI", "The director side", "VFX director. In London he went from Nuke compositor to senior artist at INK on automotive and commercial films. Today he directs from Germany with his own studio: films, VFX, post- and audio production. The explainer film on this page comes out of that pipeline.", ("https://nicolaslekai.com/", "nicolaslekai.com →"))],
   faq_h2="Frequently asked <em>questions.</em>",
   faq=[("What is an AI operating system?", "Your own system in which all the AI models and tools you pay for run under one roof: a hub with the costs per model, a small assistant for every role and approval before anything is sent."),
        ("Where does our data run?", "Wherever you want. Where client data must not leave the building, the models run on your server or your computer. No obligation to use the cloud."),
        ("How do we start?", "With an audit: five days in which I look at how work really runs at your company. Then I build in weekly steps (4–8 weeks) and train your people."),
        ("Who owns the source code?", "You do. For web apps and software I hand over source code, documentation and instructions.")],
-  k_h2="What would you like to build <em>or automate?</em>", k_ort="Munich · Melbourne",
+  k_h2="What would you like to build <em>or automate?</em>", k_ort="Munich · London",
   k_btn="Write to me", k_subject="Project%20enquiry",
   k_h3="For a first conversation, this is enough:",
   k_li=["What should work better? One sentence is enough.", "Which tools do you use today (email, accounting, CAD, shop)?", "What would be a good result for you in three months?"],
@@ -101,16 +102,16 @@ T = {
  "de": dict(
   lang="de", other="en", other_label="EN", other_long="English", other_title="English version",
   title="Nicolas Lekai — AI Systems Architect · Ihr eigenes KI-Betriebssystem",
-  desc="Ich baue Betrieben ein eigenes KI-Betriebssystem, Web-Anwendungen und KI-Automatisierung: alle Modelle und Werkzeuge unter einer Haube, die Kosten im Blick, Freigabe durch einen Menschen. München · Melbourne.",
+  desc="Ich baue Betrieben ein eigenes KI-Betriebssystem, Web-Anwendungen und KI-Automatisierung: alle Modelle und Werkzeuge unter einer Haube, die Kosten im Blick, Freigabe durch einen Menschen. München · London.",
   nav=[("#themen", "Was ich baue"), ("#arbeitsweise", "Wie ich arbeite"), ("#team", "Über mich")],
   cta="Projekt anfragen", also="Außerdem",
   hero_alt="Eine Grafikkarte auf einem alten Nussholztisch am Stahlfenster in einem Backstein-Loft; auf der silbernen Platte das offene Rahmen-Logo und RENDER CORE · 48 GB in Koralle, daneben ein Belichtungsmesser, eine Filmdose und eine Steinguttasse",
-  eyebrow="AI Systems Architect · München · Melbourne",
+  eyebrow="AI Systems Architect · München · London",
   h1="Ihr eigenes KI-Betriebssystem <em>für Ihren Betrieb.</em>",
   lead="Ich baue Ihrem Betrieb ein eigenes KI-Betriebssystem, Web-Anwendungen und Automatisierung für alles, was sich jede Woche wiederholt. Was nach außen geht, gibt ein Mensch frei. Sie arbeiten direkt mit dem, der es baut.",
   ghost="Was ich baue",
   film_label="Film ansehen · 2:15", film_name="Erklärfilm: Ihr eigenes KI-Betriebssystem",
-  film_src="nlos_film_de_v030.mp4", film_poster="nlos_film_poster_de_v030b.jpg", film_close="Film schließen",
+  film_src="nlos_film_de_v030.mp4", film_poster="nlos_film_poster_de_coral_KJ_v001.jpg", film_close="Film schließen",
   themen_h2="Was ich baue <em>und wie es zu Ihnen kommt.</em>",
   themen_lead="Was ich baue, geht immer denselben Weg: vom ersten Gespräch bis zu etwas, das bei Ihnen läuft.",
   bauten=[
@@ -118,7 +119,7 @@ T = {
     "Ihr eigenes KI-Betriebssystem", "Alle Modelle und Werkzeuge unter einer Haube, die Kosten im Blick, ein kleiner Assistent für jede Rolle — und eine Freigabe, bevor etwas nach außen geht."),
    ("bau-apps.webp", "Symbolbild: eine Produktions-App aus Milchglasscheiben: eine Shotliste mit Vorschaubildern, eine Zeile hervorgehoben, dieselbe Liste auf einer Handy-Scheibe, dahinter eine Tonspur",
     "Web-Apps und Software nach Maß", "Web-Anwendungen, Desktop-Apps, Schnittstellen und Datenpipelines — für Abläufe, die Standardsoftware nicht abdeckt. Der Quellcode gehört Ihnen."),
-   ("bau-automatisierung.webp", "Symbolbild: eine Reihe silberner Filmdosen, die ohne Lücke in eine Reihe Grafikkarten übergeht, im hellen Studio",
+   ("bau-automatisierung.webp", "Symbolbild: ein Filmstreifen läuft in einen kleinen Milchglas-Kasten mit korallenem Licht, auf der anderen Seite kommen dieselben Bilder als gestapelte Formate heraus, hochkant, quadratisch und quer, im hellen weißen Studio",
     "Abläufe mit KI automatisieren", "Eingänge sortieren, Dokumente auslesen, Entwürfe vorbereiten, Daten abgleichen. Die KI bereitet vor, ein Mensch gibt frei."),
   ],
   bau_mehr="Sprechen Sie mich an →",
@@ -149,21 +150,21 @@ T = {
   g_eyebrow="Firmengedächtnis", g_h2="Ein Gedächtnis, <em>das mitlernt.</em>",
   g_lead="Im Kern jedes KI-Betriebssystems steht ein Firmengedächtnis: Entscheidungen, Lösungen und Fakten als vernetzter Speicher, den jeder Assistent im Team abfragt.",
   g_p="Mein eigenes Studio läuft jeden Tag darauf: Was in einem Projekt entschieden, gelöst oder korrigiert wird, landet dort, und am nächsten Morgen weiß es jeder Assistent. Genau dieses System baue ich für Sie.",
-  g_brain="Team-Speicher", g_alt="Datenring mit dem Team-Speicher als Kugel in der Mitte: Fäden verbinden Wissensknoten zu einem Netz",
-  g_cap="Schematische Darstellung: der Team-Speicher im Kern, außen der Datenring",
+  g_brain="Team-Speicher", g_alt="Segmentierter Datenring mit feinen Fäden quer hindurch: Signale laufen von einer Seite zur anderen und lassen den Ring dort aufleuchten, wo sie ankommen",
+  g_cap="Schematische Darstellung: Signale laufen quer durch den Datenring",
   w_alt="Ein Schnittraum in einem hellen Loft: zwei Cutter von hinten an einem Nussholztisch mit Grading-Pult und Kamera, eine junge Frau in Jeansjacke beugt sich über den Monitor und zeigt auf die Timeline",
-  w_eyebrow="München · Melbourne", w_h2="Gebaut <em>von mir.</em>",
+  w_eyebrow="München · London", w_h2="Gebaut <em>von mir.</em>",
   w_lead="Keine Weitergabe an Dritte, keine Zwischenschicht: Sie sprechen mit dem, der den Code schreibt — vom ersten Gespräch bis in den laufenden Betrieb.",
   t_alt="Ein Video-Steckfeld im Rack, schwarze Koaxkabel mit silbernen BNC-Steckern, ein Kabel leuchtet korallenrot",
-  t_h2="Sie sprechen mit dem, <em>der baut.</em>", t_lead="Ein Mensch, zwei Handwerke.",
-  t_cards=[("File 01 · AI Systems Architect", "Nicolas Lekai", "Baut KI-Betriebssysteme, Leitstände und Produktions-Pipelines für Betriebe. Kommt aus der Webentwicklung und den Visual Effects und baut bis heute die Systeme hinter den Bildern.", None),
-           ("File 02 · Director — Film · KI · VFX", "Die Regie-Seite", "Filme, VFX, Post- und Tonproduktion. Der Erklärfilm auf dieser Seite kommt aus meiner eigenen Pipeline.", ("https://nicolaslekai.com/", "nicolaslekai.com →"))],
+  t_h2="Sie sprechen mit dem, <em>der baut.</em>", t_lead="Ein Mensch, zwei Handwerke, zwanzig Jahre Film und Musik.",
+  t_cards=[("File 01 · AI Systems Architect", "Nicolas Lekai", "Baut KI-Betriebssysteme, Leitstände und Produktions-Pipelines für Betriebe. Zwanzig Jahre in der Film- und Musikbranche: vom Tonstudio über die Webentwicklung zu den Visual Effects. Dazwischen Web-Technologie-Entwickler für die IFC und die Weltbank in Washington DC. Er baut bis heute die Systeme hinter den Bildern.", None),
+           ("File 02 · VFX Director — Film · KI", "Die Regie-Seite", "VFX Director. In London vom Nuke-Compositor zum Senior Artist bei INK, für Automobil- und Werbefilme. Heute führt er Regie aus Deutschland mit eigenem Studio: Filme, VFX, Post- und Tonproduktion. Der Erklärfilm auf dieser Seite kommt aus dieser Pipeline.", ("https://nicolaslekai.com/", "nicolaslekai.com →"))],
   faq_h2="Häufige <em>Fragen.</em>",
   faq=[("Was ist ein KI-Betriebssystem?", "Ein eigenes System, in dem alle KI-Modelle und Werkzeuge, für die Sie zahlen, unter einer Haube laufen: eine Zentrale mit den Kosten je Modell, ein kleiner Assistent für jede Rolle und Freigabe vor jedem Versand."),
        ("Wo laufen unsere Daten?", "Wo Sie es wollen. Wo Kundendaten das Haus nicht verlassen dürfen, laufen die Modelle auf Ihrem Server oder Ihrem Rechner. Kein Cloud-Zwang."),
        ("Wie fangen wir an?", "Mit einem Audit: fünf Tage, in denen ich sehe, wie die Arbeit bei Ihnen wirklich läuft. Danach baue ich in wöchentlichen Schritten (4–8 Wochen) und schule Ihre Leute."),
        ("Wem gehört der Quellcode?", "Ihnen. Bei Web-Apps und Software übergebe ich Quellcode, Doku und Anleitung.")],
-  k_h2="Was möchten Sie bauen <em>oder automatisieren?</em>", k_ort="München · Melbourne",
+  k_h2="Was möchten Sie bauen <em>oder automatisieren?</em>", k_ort="München · London",
   k_btn="Mail schreiben", k_subject="Projektanfrage",
   k_h3="Fürs Erstgespräch reicht:",
   k_li=["Was soll besser laufen? Ein Satz genügt.", "Welche Werkzeuge nutzen Sie heute (Mail, Buchhaltung, CAD, Shop)?", "Was wäre für Sie ein gutes Ergebnis in drei Monaten?"],
@@ -186,7 +187,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
          "worksFor": {"@id": SITE + "#practice"}},
         {"@type": "ProfessionalService", "@id": SITE + "#practice", "name": "Nicolas Lekai — AI Systems Architect",
          "url": SITE, "email": "mailto:" + MAIL, "founder": {"@id": SITE + "#nicolas"},
-         "areaServed": ["DE", "AT", "CH", "AU"], "description": t["desc"]},
+         "areaServed": ["DE", "AT", "CH", "GB"], "description": t["desc"]},
         {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": x}} for q, x in t["faq"]]}]}
     nav = "".join(f'<a href="{h}">{l}</a>' for h, l in t["nav"])
     bauten = "".join(f'''
@@ -201,7 +202,13 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     beg = "".join(f'\n    <div class="card"><div class="was">{ico(i)}{w}</div><h3>{h}</h3><p>{p}</p></div>' for i, w, h, p in t["beg"])
     cards = "".join(f'\n    <div class="card person"><div class="rolle">{ro}</div><h3>{n}</h3><p>{p}</p>'
                     + (f'<p><a class="mehr" href="{l[0]}" target="_blank" rel="noopener">{l[1]}</a></p>' if l else "") + '</div>'
-                    for ro, n, p, l in t["t_cards"])
+                    for ro, n, p, l in t["t_cards"][:1])
+    # Regie-Karte (Nicky 24.11.2026: "remove this … put it at the bottom … in a different look"): eigenes helles Band ueber dem Fuss
+    ro2, n2, p2, l2 = t["t_cards"][1]
+    regie = (f'<section class="tile light regie-band" id="regie"><div class="wrap regie">\n'
+             f'  <div class="regie-kopf"><div class="eyebrow">{ro2}</div><h2>{n2}</h2></div>\n'
+             f'  <div class="regie-text"><p>{p2}</p><p><a class="btn ghost" href="{l2[0]}" target="_blank" rel="noopener">{l2[1]}</a></p></div>\n'
+             f'</div></section>\n')
     faq = "".join(f"\n    <details><summary>{q}</summary><p>{x}</p></details>" for q, x in t["faq"])
     li = "".join(f"<li>{x}</li>" for x in t["k_li"])
     marken = esc(json.dumps(t["sys_marken"], ensure_ascii=False))
@@ -210,6 +217,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="only light">
 <title>{esc(t["title"])}</title>
 <meta name="description" content="{esc(t["desc"])}">
 <meta name="robots" content="{robots}">
@@ -227,10 +235,10 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <link rel="alternate" hreflang="de" href="{SITE}de/">
 <link rel="icon" type="image/png" sizes="32x32" href="{root}favicon-32x32.png">
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
-<link rel="stylesheet" href="{a}style.css?v=nl3">
-<link rel="stylesheet" href="{a}nl.css?v=nl3">{f'''
-<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s3">
-<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s3';}})();</script>''' if thema else ""}
+<link rel="stylesheet" href="{a}style.css?v=nl4">
+<link rel="stylesheet" href="{a}nl.css?v=nl4">{f'''
+<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s4">
+<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s4';}})();</script>''' if thema else ""}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -304,7 +312,6 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   </div>
   <figure class="nl-system-bild">
     <img src="{b}system-film.webp" width="2400" height="1340" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
-    <figcaption class="wrap">{t["sys_cap"]}</figcaption>
   </figure>
 </section>
 <section class="tile light bildband next gross">
@@ -323,10 +330,10 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     <p>{t["g_p"]}</p>
   </div>
   <figure class="g-bild" data-brain="{t["g_brain"]}">
-    <img src="{a}brain/brain-doppelring_KJ_v003.webp" width="900" height="900" alt="{esc(t["g_alt"])}" loading="lazy">
+    <img src="{a}brain/brain-ring_KJ_v004.webp" width="900" height="900" alt="{esc(t["g_alt"])}" loading="lazy">
     <figcaption>{t["g_cap"]}</figcaption>
   </figure>
-  <script src="{a}brain/brain.js?v=nl1" defer></script>
+  <script src="{a}brain/brain.js?v=nl2" defer></script>
 </div></section>
 <section class="tile dark bild-hinter">
   <img class="hg" src="{b}werkstatt-team.webp" width="1800" height="1005" alt="{esc(t["w_alt"])}" loading="lazy" decoding="async">
@@ -361,13 +368,14 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   <div class="box">
     <div class="daten">
       <div>{ico("i-mail")}<a href="mailto:{MAIL}">{MAIL}</a></div>
+      <div>{ico("i-whatsapp")}<a href="https://wa.me/{WA}" target="_blank" rel="noopener">WhatsApp {WA_SHOW}</a></div>
       <div class="soft">{ico("i-ort")}<span>{t["k_ort"]}</span></div>
-      <p class="knoepfe"><a class="btn primary" href="mailto:{MAIL}?subject={t["k_subject"]}">{t["k_btn"]}</a></p>
+      <p class="knoepfe"><a class="btn primary" href="mailto:{MAIL}?subject={t["k_subject"]}">{t["k_btn"]}</a> <a class="btn ghost" href="https://wa.me/{WA}" target="_blank" rel="noopener">WhatsApp</a></p>
     </div>
     <div><h3>{t["k_h3"]}</h3><ul>{li}</ul></div>
   </div>
 </div></section>
-<footer class="tile dark next"><div class="wrap">
+{regie}<footer class="tile dark"><div class="wrap">
   <a class="brand fuss-marke" href="./" aria-label="Nicolas Lekai">{brand(a)}</a>
   <div class="foot">
     <span>© 2026 Nicolas Lekai · {t["k_ort"]}</span>
@@ -391,6 +399,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     document.addEventListener('click', function (ev) {{ if (mn.open && (!mn.contains(ev.target) || ev.target.closest('a'))) mn.open = false; }});
   }}
 </script>
+<script src="{a}hero-luefter.js?v=3" defer></script>
 </body></html>
 '''
 
@@ -400,11 +409,11 @@ if __name__ == "__main__":
         # Live: Seite an die Wurzel, die Vorschau-Assets nach /assets (keine Namenskollisionen mit dem Altbestand)
         for d in ["bilder", "brain"]:
             shutil.copytree(PREV / "assets" / d, ROOT / "assets" / d, dirs_exist_ok=True)
-        for f in ["style.css", "nl.css", "logo-mark-coral.webp", "koralle-silber.css"]:
+        for f in ["style.css", "nl.css", "logo-mark-coral.webp", "koralle-grau.css", "hero-luefter.js"]:
             shutil.copy(PREV / "assets" / f, ROOT / "assets" / f)
-        (ROOT / "index.html").write_text(page(T["en"], "", "", "de/", "index,follow", thema="koralle-silber"))
+        (ROOT / "index.html").write_text(page(T["en"], "", "", "de/", "index,follow", thema="koralle-grau"))
         (ROOT / "de").mkdir(exist_ok=True)
-        (ROOT / "de/index.html").write_text(page(T["de"], "../", "../", "../", "index,follow", thema="koralle-silber"))
+        (ROOT / "de/index.html").write_text(page(T["de"], "../", "../", "../", "index,follow", thema="koralle-grau"))
         print("LIVE: index.html + de/index.html + assets/")
     else:
         thema = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--thema=")), None)
