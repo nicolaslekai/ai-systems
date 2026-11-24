@@ -12,3 +12,7 @@
 .nl-system .nl-system-bild{margin:clamp(28px,4vw,48px) auto 0;max-width:1400px}
 .nl-system .nl-system-bild img{width:100%;height:auto;display:block}
 .nl-system figcaption{font-size:16px;color:var(--soft-l);margin-top:14px}
+/* Fix 24.11.2026 (Nicky, iPhone-Bildschirmfoto: leerer orangener Knopf im Kontakt): ".kontakt .daten a:hover"
+   faerbte auch den Knopf selbst orange — Schrift orange auf orange. iOS haelt :hover nach dem Tippen fest. */
+.kontakt .daten a.btn.primary,.kontakt .daten a.btn.primary:hover{color:var(--akzent-ink)}
+@media (hover:none){.kontakt .daten a:hover{color:inherit}.kontakt .daten a.btn.primary:hover{color:var(--akzent-ink)}}

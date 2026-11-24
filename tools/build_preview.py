@@ -228,7 +228,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow"):
 <link rel="icon" type="image/png" sizes="32x32" href="{root}favicon-32x32.png">
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
 <link rel="stylesheet" href="{a}style.css?v=nl1">
-<link rel="stylesheet" href="{a}nl.css?v=nl1">
+<link rel="stylesheet" href="{a}nl.css?v=nl2">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
