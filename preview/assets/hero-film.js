@@ -19,7 +19,8 @@
   const LEERLAUF = 0;        // Nicky 25.11. 10:37: "we only want the blades to move when i scroll" -> kein Grunddrehen mehr
   const PRO_PX = 0.22;       // Bilder pro gescrolltem Pixel
   const handy = window.matchMedia('(max-width: 900px)');
-  const basis = (img.getAttribute('src') || '').replace(/[^/]*$/, '') + 'hero-film/';
+  const basis = (img.getAttribute('src') || '').replace(/[?#].*$/, '').replace(/[^/]*$/, '') + 'hero-film/';
+  const STAND = '?v=2';   // 25.11.: Karte neu beschriftet (LOCAL GPU), alte Bilder nicht aus dem Cache
   const schleier = sec.querySelector('.schleier');
 
   const cv = document.createElement('canvas');
@@ -44,7 +45,7 @@
       b.decoding = 'async';
       b.onload = () => { if (art === meins) { bilder[i] = b; if (gezeigt < 0) zeichnen(true); } weiter(); };
       b.onerror = weiter;
-      b.src = `${basis}${a}/f${String(i).padStart(3, '0')}.webp`;
+      b.src = `${basis}${a}/f${String(i).padStart(3, '0')}.webp${STAND}`;
     }
     for (let k = 0; k < 4; k++) weiter();
   }

@@ -34,7 +34,7 @@ T = {
   desc="We build companies their own AI operating system, web apps and AI automation: all models and tools under one roof, costs in view, a human approves what goes out. Munich · London.",
   nav=[("#themen", "What we build"), ("#arbeitsweise", "How we work"), ("#team", "About")],
   cta="Start a project", also="Also",
-  hero_alt="A graphics card on a worn walnut table by a steel-frame window in a brick loft; on its silver plate the open-frame logo mark and RENDER CORE · 48 GB in coral, beside it a light meter, a film canister and a stoneware cup",
+  hero_alt="A graphics card on a worn walnut table by a steel-frame window in a brick loft; on its silver plate the open-frame logo mark and LOCAL GPU · 48 GB in coral, beside it a light meter, a film canister and a stoneware cup",
   eyebrow="AI operating systems · Munich · London",
   h1="Your own AI operating system <em>for your business.</em>",
   lead="We build your company its own AI operating system, web apps and automation for whatever repeats every week. A human approves anything that goes out. You work directly with the people who build it.",
@@ -106,7 +106,7 @@ T = {
   desc="Wir bauen Betrieben ein eigenes KI-Betriebssystem, Web-Anwendungen und KI-Automatisierung: alle Modelle und Werkzeuge unter einer Haube, die Kosten im Blick, Freigabe durch einen Menschen. München · London.",
   nav=[("#themen", "Was wir bauen"), ("#arbeitsweise", "Wie wir arbeiten"), ("#team", "Über uns")],
   cta="Projekt anfragen", also="Außerdem",
-  hero_alt="Eine Grafikkarte auf einem alten Nussholztisch am Stahlfenster in einem Backstein-Loft; auf der silbernen Platte das offene Rahmen-Logo und RENDER CORE · 48 GB in Koralle, daneben ein Belichtungsmesser, eine Filmdose und eine Steinguttasse",
+  hero_alt="Eine Grafikkarte auf einem alten Nussholztisch am Stahlfenster in einem Backstein-Loft; auf der silbernen Platte das offene Rahmen-Logo und LOCAL GPU · 48 GB in Koralle, daneben ein Belichtungsmesser, eine Filmdose und eine Steinguttasse",
   eyebrow="KI-Betriebssysteme · München · London",
   h1="Ihr eigenes KI-Betriebssystem <em>für Ihren Betrieb.</em>",
   lead="Wir bauen Ihrem Betrieb ein eigenes KI-Betriebssystem, Web-Anwendungen und Automatisierung für alles, was sich jede Woche wiederholt. Was nach außen geht, gibt ein Mensch frei. Sie arbeiten direkt mit denen, die es bauen.",
@@ -265,7 +265,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 </div></header>
 
 <section class="tile dark hero bild-hinter hero-bild mit-hoch">
-  <picture><source media="(max-width: 900px)" srcset="{b}hero-film-handy.webp" width="900" height="900"><img class="hg" src="{b}hero-film-breit.webp" width="1600" height="900" alt="{esc(t["hero_alt"])}" fetchpriority="high" decoding="async"></picture>
+  <picture><source media="(max-width: 900px)" srcset="{b}hero-film-handy.webp?v=2" width="900" height="900"><img class="hg" src="{b}hero-film-breit.webp?v=2" width="1600" height="900" alt="{esc(t["hero_alt"])}" fetchpriority="high" decoding="async"></picture>
   <span class="schleier" aria-hidden="true"></span>
   <div class="wrap"><div class="hero-gitter">
   <div class="text">
@@ -413,7 +413,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     document.addEventListener('click', function (ev) {{ if (mn.open && (!mn.contains(ev.target) || ev.target.closest('a'))) mn.open = false; }});
   }}
 </script>
-<script src="{a}hero-film.js?v=4" defer></script>
+<script src="{a}hero-film.js?v=5" defer></script>
 </body></html>
 '''
 

@@ -7,6 +7,8 @@ Bild 0 wird zusaetzlich als Standbild (Poster) abgelegt: hero-film-breit.webp / 
 import subprocess, sys, shutil, tempfile
 from pathlib import Path
 from PIL import Image
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from karte_beschriftung import fix as beschriften   # LOCAL GPU + echtes Zeichen (Nicky 25.11.2026)
 ROOT = Path(__file__).resolve().parent.parent
 ZIEL = ROOT / "preview/assets/bilder/hero-film"
 N = 72
@@ -26,6 +28,7 @@ def zerlege(mp4, art):
             im = im.resize((round(im.width * s), round(im.height * s)), Image.LANCZOS)
             x, y = (im.width - w) // 2, (im.height - h) // 2
             im = im.crop((x, y, x + w, y + h))
+            im = beschriften(im, art)
             im.save(out / f"f{k:03d}.webp", quality=72, method=6)
             if k == 0: im.save(ZIEL.parent / f"hero-film-{art}.webp", quality=85, method=6)
         print(art, len(alle), "Quellbilder ->", N, sum(f.stat().st_size for f in out.iterdir()) // 1024, "KB")
