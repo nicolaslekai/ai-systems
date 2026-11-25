@@ -80,7 +80,7 @@ T = {
    ("i-uebergabe", "ablauf-uebergabe.webp", "A sand-coloured manual with a coral elastic band, a portable SSD and a key on top, a tattooed hand sliding it across the table",
     "Handover", "with source code", "Source code, documentation, instructions. You don’t depend on us — but we stay within reach."),
   ],
-  beg_alt="Four young creatives laugh around a walnut table in a brick loft; one points at a laptop, behind them a large screen shows an edit suite with a drinks commercial: a glass of coral spritz with ice on a marble bar",
+  beg_alt="In a brick loft a man in a CORALROOMS t-shirt shows four people something on an iPad; they lean in laughing, a woman with long braids points at the screen",
   beg_h2="After the handover <em>we stay with you.</em>",
   beg_lead="A system has only arrived once your people like working with it. We run the rollout together with you: with staff, management and the board — step by step, while the business keeps running.",
   beg=[("i-schulung", "Training", "Your people learn on their own work", "We train on the real tasks of your business, in small groups and tailored to each role. The written guide stays with you."),
@@ -169,7 +169,7 @@ T = {
    ("i-uebergabe", "ablauf-uebergabe.webp", "Eine sandfarbene Anleitung mit korallenem Gummiband, darauf eine SSD und ein Schlüssel, eine tätowierte Hand schiebt sie über den Tisch",
     "Übergabe", "mit Quellcode", "Quellcode, Doku, Anleitung. Sie sind nicht von uns abhängig — aber wir bleiben erreichbar."),
   ],
-  beg_alt="Vier junge Kreative lachen um einen Nussholztisch in einem Backstein-Loft; einer zeigt auf einen Laptop, dahinter zeigt ein großer Bildschirm einen Schnittplatz mit einem Drinks-Spot: ein Glas Koralle-Spritz mit Eis auf einer Marmorbar",
+  beg_alt="In einem Backstein-Loft zeigt ein Mann im CORALROOMS-T-Shirt vier Menschen etwas auf einem iPad; sie beugen sich lachend vor, eine Frau mit langen Zöpfen zeigt auf den Bildschirm",
   beg_h2="Nach der Übergabe <em>bleiben wir dabei.</em>",
   beg_lead="Ein System ist erst angekommen, wenn Ihre Leute gern damit arbeiten. Die Einführung machen wir gemeinsam mit Ihnen: mit der Belegschaft, mit der Geschäftsleitung, mit dem Vorstand — Schritt für Schritt, im laufenden Betrieb.",
   beg=[("i-schulung", "Schulung", "Ihre Leute lernen an der eigenen Arbeit", "Wir schulen an den echten Aufgaben Ihres Betriebs, in kleinen Runden und passend zur jeweiligen Rolle. Die Anleitung zum Nachschlagen bleibt bei Ihnen."),
@@ -440,8 +440,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 </div></section>
 {zulu_suche(t, a, b)}<section class="tile dark team-bild begleit" id="begleitung">
   <picture>
-    <source media="(max-width:760px)" srcset="{b}begleitung-runde-hoch.webp" width="1100" height="1375">
-    <img src="{b}begleitung-runde.webp" width="2400" height="1340" alt="{esc(t["beg_alt"])}" loading="lazy" decoding="async">
+    <source media="(max-width:760px)" srcset="{b}handover-hoch_KJ_v001.webp" width="1100" height="1375">
+    <img src="{b}handover-breit_KJ_v002.webp" width="2400" height="1350" alt="{esc(t["beg_alt"])}" loading="lazy" decoding="async">
   </picture>
   <span class="tb-schleier" aria-hidden="true"></span>
   <div class="wrap">
