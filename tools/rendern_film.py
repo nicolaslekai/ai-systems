@@ -498,5 +498,30 @@ for _i in range(3):
     JOBS[f"gpu-lokal-szene2-{chr(97 + _i)}"] = (GPU_LOKAL_SZENE2 + FILM + " 16:9.", "16:9", "4K", 10021 + _i * 13, [LOGO_KORALLE, "@hero-szene"])
 
 
+
+# Nicky 25.11.2026: "The logo is not accurate. It's too few lines. … grab the logo from the website and plug it in as a
+# reference image into the ChatGPT 2.5 Pro". Image 1 = die freigegebene neue Szene, Image 2 = Logo-Datei der Website.
+GPU_LOGO_GPT = ("Image 1 is the photograph: keep the graphics card, its angle, fans and fins, the table, the cup, the film "
+  "canister, the brick wall, the window, the light, the grain and the framing exactly as they are, and keep the lettering "
+  "\"LOCAL GPU · 48 GB\" exactly as it is. Image 2 is the company logo mark: copy it line for line, with every line "
+  "it has: the outer outline, the inner outline, the edges that show the frame's thickness, the short vertical lines at "
+  "the corners and the open notch on the left, in the same proportions. On the brushed silver side plate, in front of the "
+  "lettering, the logo mark from Image 2 printed flat in coral (#ff7f61), lying on the plate in its perspective, lines as "
+  "thin as the letter strokes, as tall as the capital letters. The logo and the lettering are the only marking.")
+
+
+
+# Runde 2 GPT: Image 1 = Szene mit dem echten Logo als Layout-Vorlage auf dem Blech (gpu-logo-vorlage), Image 2 = Logo-Datei.
+GPU_LOGO_GPT2 = ("Image 1 is the photograph with the logo already placed on the brushed silver side plate. Photograph it again "
+  "as one real, finished photo: same graphics card, angle, fans, fins, table, cup, film canister, brick wall, window, light, "
+  "grain and framing, and the lettering \"LOCAL GPU · 48 GB\" exactly as it is. Image 2 is the logo file. The logo on "
+  "the plate matches Image 2 line for line: a wide, flat isometric square ring, about one and a half times as wide as it is "
+  "tall, with three nested outlines at the top, a thickness band with short vertical edges at the left, right and front "
+  "corners, a double line along the lower edges, and the middle outline open at the left like a notch. Same size, position "
+  "and proportions as in Image 1. Printed flat in coral (#ff7f61) on the plate, lines as thin as the letter strokes, the same "
+  "print finish as the lettering, catching the same brushed-metal sheen. The logo and the lettering are the only marking; "
+  "the rest of the plate is clean brushed metal.")
+
+
 if __name__ == "__main__":
     main()

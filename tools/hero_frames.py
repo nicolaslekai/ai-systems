@@ -2,7 +2,7 @@
 """Zerlegt die Hero-Filme in Einzelbilder fuer assets/hero-film.js (Scroll-Scrub).
     python3 tools/hero_frames.py <breit.mp4> <hoch.mp4>
 Je 72 Bilder einer nahtlosen Schleife (letztes Quellbild = erstes, faellt weg); breit 1600x900, handy 900x900, WebP q72.
-Seit 25.11.2026 Quelle: hero-film-lokal-*_KJ_v001.mp4 (neu gerendert, LOCAL GPU). Bild 0 wird zusaetzlich als Standbild (Poster) abgelegt: hero-film-breit.webp / hero-film-hoch.webp.
+Seit 25.11.2026 Quelle: hero-film-lokal-*_KJ_v002.mp4 (Standbild GPT-Logo-Fassung, LOCAL GPU). Bild 0 wird zusaetzlich als Standbild (Poster) abgelegt: hero-film-breit.webp / hero-film-hoch.webp.
 """
 import subprocess, sys, shutil, tempfile
 from pathlib import Path

@@ -54,8 +54,8 @@ BILDER["steht-handy"] = ("hero-still-handy_KJ_v001.png", "hero-still-handy_KJ_v0
 # V3 (Nicky 25.11.2026: "call it local GPU" — "please do from scratch not edit"): neues Standbild von Grund auf
 # (rendern_film.py gpu-lokal-szene2-b), Karte traegt das echte Zeichen + LOCAL GPU · 48 GB. Handy = Quadrat x 636 von 5504.
 PROMPTS["lokal-breit"] = PROMPTS["lokal-handy"] = STEHT.replace("RENDER CORE · 48 GB", "LOCAL GPU · 48 GB")
-BILDER["lokal-breit"] = ("hero-erst-breit_KJ_v002.png", "hero-erst-breit_KJ_v002.png")
-BILDER["lokal-handy"] = ("hero-still-handy_KJ_v002.png", "hero-still-handy_KJ_v002.png")
+BILDER["lokal-breit"] = ("hero-erst-breit_KJ_v003.png", "hero-erst-breit_KJ_v003.png")   # 25.11. GPT-Logo-Fassung (gpu-logo-gpt2 v003)
+BILDER["lokal-handy"] = ("hero-still-handy_KJ_v003.png", "hero-still-handy_KJ_v003.png")   # Quadrat x 444 von 3840
 
 
 def ziel(name):

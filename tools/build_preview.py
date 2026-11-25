@@ -265,7 +265,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 </div></header>
 
 <section class="tile dark hero bild-hinter hero-bild mit-hoch">
-  <picture><source media="(max-width: 900px)" srcset="{b}hero-film-handy.webp?v=3" width="900" height="900"><img class="hg" src="{b}hero-film-breit.webp?v=3" width="1600" height="900" alt="{esc(t["hero_alt"])}" fetchpriority="high" decoding="async"></picture>
+  <picture><source media="(max-width: 900px)" srcset="{b}hero-film-handy.webp?v=4" width="900" height="900"><img class="hg" src="{b}hero-film-breit.webp?v=4" width="1600" height="900" alt="{esc(t["hero_alt"])}" fetchpriority="high" decoding="async"></picture>
   <span class="schleier" aria-hidden="true"></span>
   <div class="wrap"><div class="hero-gitter">
   <div class="text">
@@ -413,7 +413,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     document.addEventListener('click', function (ev) {{ if (mn.open && (!mn.contains(ev.target) || ev.target.closest('a'))) mn.open = false; }});
   }}
 </script>
-<script src="{a}hero-film.js?v=6" defer></script>
+<script src="{a}hero-film.js?v=7" defer></script>
 </body></html>
 '''
 

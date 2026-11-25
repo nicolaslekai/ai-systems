@@ -1,4 +1,5 @@
-"""GPT Image 2.5 (sunburst) ueber ComfyUI :8188 fuer consulting.nicolaslekai.com — Nicky 24.11.2026: "use chat gpt image 2.5 pro".
+"""GPT Image 2.5 (ref-name darf mehrere Namen mit Komma enthalten: Image 1, Image 2, ...)
+ (sunburst) ueber ComfyUI :8188 fuer consulting.nicolaslekai.com — Nicky 24.11.2026: "use chat gpt image 2.5 pro".
 Nutzt Plumbing und Prompts aus rendern_film.py. Aufruf: python3 tools/rendern_gpt.py <name> <prompt-name> <ref-name> [n] [quality]"""
 import sys, shutil
 from PIL import Image
@@ -7,14 +8,15 @@ import rendern_film as R
 
 def rendere(name, prompt, ref, n=2, quality="high", w=3840, h=2160):
     wf = {}
-    if ref:
-        datei = f"nl_gpt_{ref}_ref.png"
-        Image.open(R.neuestes(ref)).convert("RGB").save(R.COMFY / "input" / datei)
-        wf["1"] = {"class_type": "LoadImage", "inputs": {"image": datei}}
+    refs = [r for r in (ref.split(",") if isinstance(ref, str) else (ref or [])) if r]   # mehrere Referenzen: "a,b"
+    for k, r in enumerate(refs):
+        datei = f"nl_gpt_{r}_ref.png"
+        Image.open(R.neuestes(r)).convert("RGB").save(R.COMFY / "input" / datei)
+        wf[f"1{k}"] = {"class_type": "LoadImage", "inputs": {"image": datei}}
     wf |= {"2": {"class_type": "OpenAIGPTImageNodeV2", "inputs": {
               "prompt": prompt, "model": "gpt-image-2.5-sunburst", "model.size": (f"{w}x{h}" if f"{w}x{h}" in ("1024x1024", "1024x1536", "1536x1024", "2048x2048", "2048x1152", "1152x2048", "3840x2160", "2160x3840") else "Custom"),
               "model.custom_width": w, "model.custom_height": h, "model.background": "opaque",
-              "model.quality": quality, **({"model.images.image_1": ["1", 0]} if ref else {}), "n": n, "seed": 0}},
+              "model.quality": quality, **{f"model.images.image_{k + 1}": [f"1{k}", 0] for k in range(len(refs))}, "n": n, "seed": 0}},
           "3": {"class_type": "SaveImage", "inputs": {"images": ["2", 0], "filename_prefix": f"nl_architect/{name}_KJ_"}}}
     pid = R.post(wf)
     import json, time, urllib.request

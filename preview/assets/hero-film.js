@@ -20,7 +20,7 @@
   const PRO_PX = 0.22;       // Bilder pro gescrolltem Pixel
   const handy = window.matchMedia('(max-width: 900px)');
   const basis = (img.getAttribute('src') || '').replace(/[?#].*$/, '').replace(/[^/]*$/, '') + 'hero-film/';
-  const STAND = '?v=3';   // 25.11.: Film neu gerendert (LOCAL GPU, echtes Zeichen), alte Bilder nicht aus dem Cache
+  const STAND = '?v=4';   // 25.11.: Film neu gerendert (LOCAL GPU, echtes Zeichen), alte Bilder nicht aus dem Cache
   const schleier = sec.querySelector('.schleier');
 
   const cv = document.createElement('canvas');
