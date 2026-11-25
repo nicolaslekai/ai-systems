@@ -60,14 +60,7 @@ T = {
    app="Footage library", stand="20.4 TB · 1,284 shoots · 418,560 clips indexed", treffer="clips", fertig="found in",
    hinweis="Zulu is an invented brand. The search works like the systems we build.",
    alt="Still from the Zulu footage library",
-   clips=[("strand", "Summer 24 · Beach", "03:14:22", ["peach iced tea", "laughing", "golden hour", "beach"]),
-          ("skatepark", "City 23 · Skatepark", "01:02:47", ["cola", "skateboard", "Berlin", "overcast"]),
-          ("giessen", "Product 24 · Pour", "00:00:41", ["lemon iced tea", "pour", "ice", "macro"]),
-          ("packshot", "Product 24 · Packshot", "00:12:08", ["all four cans", "ice", "splash", "studio"]),
-          ("festival", "Summer 23 · Festival", "02:41:10", ["orange", "crowd", "dusk", "confetti"]),
-          ("dach", "Night 24 · Rooftop", "04:20:33", ["all four cans", "ice", "night", "party"]),
-          ("kuehlschrank", "Morning 24 · Kitchen", "00:47:15", ["peach iced tea", "fridge", "morning sun", "kitchen"]),
-          ("spaeti", "City 24 · Corner shop", "02:05:59", ["orange", "cola", "Berlin", "evening"])],
+   wand="Showing 18 of 418,560 clips · newest first",
    fragen=["people having fun", "ice cold drink close-up", "sunset", "skateboarding"]),
   weg_h3="The route is always the same.", weg_p="A prototype in days, not months.",
   weg=[
@@ -149,14 +142,7 @@ T = {
    app="Footage-Archiv", stand="20,4 TB · 1.284 Drehs · 418.560 Clips erfasst", treffer="Clips", fertig="gefunden in",
    hinweis="Zulu ist eine erfundene Marke. Die Suche funktioniert wie die Systeme, die wir bauen.",
    alt="Standbild aus dem Zulu-Footage-Archiv",
-   clips=[("strand", "Sommer 24 · Strand", "03:14:22", ["Pfirsich-Eistee", "Lachen", "goldenes Licht", "Strand"]),
-          ("skatepark", "Stadt 23 · Skatepark", "01:02:47", ["Cola", "Skateboard", "Berlin", "bewölkt"]),
-          ("giessen", "Produkt 24 · Eingießen", "00:00:41", ["Zitronen-Eistee", "Eingießen", "Eis", "Makro"]),
-          ("packshot", "Produkt 24 · Packshot", "00:12:08", ["alle vier Dosen", "Eis", "Spritzer", "Studio"]),
-          ("festival", "Sommer 23 · Festival", "02:41:10", ["Orange", "Menge", "Dämmerung", "Konfetti"]),
-          ("dach", "Nacht 24 · Dachterrasse", "04:20:33", ["alle vier Dosen", "Eis", "Nacht", "Party"]),
-          ("kuehlschrank", "Morgen 24 · Küche", "00:47:15", ["Pfirsich-Eistee", "Kühlschrank", "Morgensonne", "Küche"]),
-          ("spaeti", "Stadt 24 · Späti", "02:05:59", ["Orange", "Cola", "Berlin", "Abend"])],
+   wand="18 von 418.560 Clips · neueste zuerst",
    fragen=["Leute haben Spaß", "eiskaltes Getränk, Nahaufnahme", "Sonnenuntergang", "Skateboard"]),
   weg_h3="Der Weg ist immer derselbe.", weg_p="Prototyp in Tagen, nicht Monaten.",
   weg=[
@@ -222,12 +208,37 @@ def s3d_stand(name):
 
 # Nicky 25.11.2026: "make sure that whatever we're searching for isn't too specific … people having fun or ice cold drink
 # close-up … has to be simple searches" -> kurze Suchen, wie man sie wirklich tippt
-ZS_TREFFER = [
-    {"strand": (96, [1]), "festival": (93, [1]), "dach": (90, [3])},
-    {"giessen": (95, [2, 3]), "packshot": (92, [1]), "kuehlschrank": (84, [1])},
-    {"strand": (95, [2]), "festival": (91, [2]), "spaeti": (86, [3])},
-    {"skatepark": (97, [1])},
+# Nicky 25.11.2026 abends: "on the desktop version its not doing the many more thumbnails thing" (wie im Film):
+# eine Wand aus 18 Clips, sortiert nach Datum; jede Suche raeumt die Wand und die Treffer sortieren sich nach
+# Trefferquote neu ein. Die Treffer stehen nicht schon in der Wand (Nicky zum Film: "aren't there from the beginning").
+ZS_CLIPS = {  # id: Timecode, (EN-Titel, EN-Merkmale), (DE-Titel, DE-Merkmale)
+  "strand": ("03:14:22", ("Summer 24 · Beach", ["laughing", "golden hour", "peach iced tea"]), ("Sommer 24 · Strand", ["Lachen", "goldene Stunde", "Pfirsich-Eistee"])),
+  "picknick": ("01:38:12", ("Summer 25 · Park", ["friends", "picnic", "golden hour"]), ("Sommer 25 · Park", ["Freunde", "Picknick", "goldene Stunde"])),
+  "festival": ("02:41:10", ("Summer 23 · Festival", ["crowd", "cheering", "dusk"]), ("Sommer 23 · Festival", ["Menge", "Jubel", "Dämmerung"])),
+  "steg": ("00:22:41", ("Summer 25 · Lake", ["jumping", "friends", "lake"]), ("Sommer 25 · See", ["Springen", "Freunde", "See"])),
+  "dach": ("04:20:33", ("Night 24 · Rooftop", ["party", "night", "all four cans"]), ("Nacht 24 · Dachterrasse", ["Party", "Nacht", "alle vier Dosen"])),
+  "tischtennis": ("02:09:57", ("Summer 25 · Backyard", ["cheering", "golden hour", "ping-pong"]), ("Sommer 25 · Garten", ["Jubel", "goldene Stunde", "Tischtennis"])),
+  "tropfen": ("00:03:12", ("Product 25 · Droplets", ["ice cold", "macro", "orange"]), ("Produkt 25 · Tropfen", ["eiskalt", "Makro", "Orange"])),
+  "giessen": ("00:00:41", ("Product 24 · Pour", ["ice", "close-up", "lemon iced tea"]), ("Produkt 24 · Eingießen", ["Eis", "Nahaufnahme", "Zitronen-Eistee"])),
+  "eiskuebel": ("00:14:36", ("Product 25 · Ice bucket", ["ice", "close-up", "all four cans"]), ("Produkt 25 · Eiskübel", ["Eis", "Nahaufnahme", "alle vier Dosen"])),
+  "oeffnen": ("00:01:55", ("Product 25 · Opening", ["ice cold", "spray", "macro"]), ("Produkt 25 · Öffnen", ["eiskalt", "Sprühnebel", "Makro"])),
+  "packshot": ("00:12:08", ("Product 24 · Packshot", ["ice", "splash", "all four cans"]), ("Produkt 24 · Packshot", ["Eis", "Spritzer", "alle vier Dosen"])),
+  "yoga": ("05:12:44", ("Summer 25 · Rooftop yoga", ["sunset", "skyline", "lemon iced tea"]), ("Sommer 25 · Yoga auf dem Dach", ["Sonnenuntergang", "Skyline", "Zitronen-Eistee"])),
+  "roadtrip": ("00:19:33", ("Summer 24 · Road trip", ["low sun", "desert", "orange"]), ("Sommer 24 · Roadtrip", ["tiefe Sonne", "Wüste", "Orange"])),
+  "dach-abend": ("03:51:08", ("Dusk 24 · Rooftop", ["dusk", "skyline", "cola"]), ("Abend 24 · Dach", ["Dämmerung", "Skyline", "Cola"])),
+  "skatepark": ("01:02:47", ("City 23 · Skatepark", ["skateboard", "cola", "Berlin"]), ("Stadt 23 · Skatepark", ["Skateboard", "Cola", "Berlin"])),
+  "skatebowl": ("02:27:16", ("City 25 · Skate session", ["skateboarding", "cola", "overcast"]), ("Stadt 25 · Skate-Session", ["Skaten", "Cola", "bewölkt"])),
+}
+ZS_SUCHEN = [  # je Suche: (Clip, Trefferquote, hervorgehobene Merkmale), nach Quote sortiert
+  [("strand", 96, [0]), ("picknick", 95, [0]), ("festival", 93, [1]), ("steg", 92, [0]), ("dach", 90, [0]), ("tischtennis", 88, [0])],
+  [("tropfen", 97, [0, 1]), ("giessen", 95, [0, 1]), ("eiskuebel", 93, [0, 1]), ("oeffnen", 91, [0, 2]), ("packshot", 90, [0])],
+  [("yoga", 96, [0]), ("roadtrip", 94, [0]), ("strand", 92, [1]), ("dach-abend", 90, [0]), ("tischtennis", 87, [1]), ("festival", 85, [2])],
+  [("skatepark", 97, [0]), ("skatebowl", 95, [0])],
 ]
+ZS_WAND = [("lager", "00:41:07"), ("supermarkt", "01:12:30"), ("fahrrad", "02:20:11"), ("regen", "00:08:54"), ("set", "03:33:02"),
+           ("kiosk", "00:52:19"), ("labor", "02:58:05"), ("skilift", "01:26:48"), ("kuehlschrank", "00:47:15"), ("kueste", "03:02:17"),
+           ("buero", "00:33:51"), ("markt", "02:44:09"), ("tram", "01:05:22"), ("sofa", "04:11:26"), ("spaeti", "02:05:59"),
+           ("klappe", "00:12:40"), ("lichttest", "01:51:03"), ("strand-wind", "03:27:36")]
 # Zulu-Wortmarke wie auf den Dosen: Sonne + ZULU in runden, fetten Grossbuchstaben (Nicky: "brand the window … with the zulu logo")
 ZULU_LOGO = ('<svg class="zs-logo" viewBox="0 0 104 28" role="img" aria-label="ZULU"><g fill="none" stroke="currentColor" '
   'stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M25 5h12L25 23h12"/><path d="M44 5v11a6.5 6.5 0 0 0 13 0V5"/>'
@@ -302,14 +313,24 @@ def apps_band(t, b):
 
 
 def zulu_suche(t, a, b):
-    z = t["zs"]
-    fragen = json.dumps([{"q": q, "t": {k: [v[0], v[1]] for k, v in tr.items()}} for q, tr in zip(z["fragen"], ZS_TREFFER)], ensure_ascii=False)
-    clips = "".join(f'''
-        <li class="zs-clip" data-id="{cid}">
-          <span class="zs-bild"><img src="{b}zulu/zulu-{cid}_KJ_v001.webp" width="640" height="360" alt="{esc(z["alt"])}: {esc(", ".join(tags))}" loading="lazy" decoding="async"><span class="zs-tc">{tc}</span><span class="zs-score"></span></span>
-          <span class="zs-dreh">{dreh}</span>
-          <span class="zs-tags">{"".join(f'<span>{esc(x)}</span>' for x in tags)}</span>
-        </li>''' for cid, dreh, tc, tags in z["clips"])
+    z = t["zs"]; de = t["lang"] == "de"
+    fragen = json.dumps([{"q": q, "n": len(su)} for q, su in zip(z["fragen"], ZS_SUCHEN)], ensure_ascii=False)
+    dreh = "Dreh" if de else "Shoot"
+    wand = "".join(f'<li class="zs-w" style="--k:{(i * 7) % 11}"><span class="zs-bild"><img src="{b}zulu/zulu-{cid}_KJ_v001.webp" width="400" height="225" alt="" loading="lazy" decoding="async"><span class="zs-tc">{tc}</span></span>'
+                   f'<span class="zs-wn">{dreh} {2025 - i // 6} · #{1284 - i * 4 - (i * 7) % 3}</span></li>'
+                   for i, (cid, tc) in enumerate(ZS_WAND))
+    def satz(nr, su):
+        h = ""
+        for i, (cid, pct, an) in enumerate(su):
+            tc, en, dd = ZS_CLIPS[cid]; titel, tags = dd if de else en
+            h += f'''
+        <li class="zs-clip" style="--i:{i}">
+          <span class="zs-bild"><img src="{b}zulu/zulu-{cid}_KJ_v001.webp" width="640" height="360" alt="{esc(z["alt"])}: {esc(titel)}, {esc(", ".join(tags))}" loading="lazy" decoding="async"><span class="zs-rang">#{i + 1}</span><span class="zs-tc">{tc}</span><span class="zs-score">{pct} %</span></span>
+          <span class="zs-dreh">{esc(titel)}</span>
+          <span class="zs-tags">{"".join(f'<span{" class=an" if j in an else ""}>{esc(x)}</span>' for j, x in enumerate(tags))}</span>
+        </li>'''
+        return f'<ul class="zs-satz{" an" if nr == 0 else ""}" data-nr="{nr}">{h}\n      </ul>'
+    saetze = "\n      ".join(satz(n, su) for n, su in enumerate(ZS_SUCHEN))
     punkte = "".join(f"<li>{x}</li>" for x in z["punkte"])
     return f'''<section class="tile dark zs" id="beispiel"><div class="wrap">
   <div class="zs-kopf">
@@ -321,12 +342,14 @@ def zulu_suche(t, a, b):
   <figure class="zs-app" data-fragen="{esc(fragen)}" data-treffer="{esc(z["treffer"])}" data-fertig="{esc(z["fertig"])}">
     <div class="zs-leiste"><span class="zs-punkte3" aria-hidden="true"><i></i><i></i><i></i></span>{ZULU_LOGO}<span class="zs-titel">{z["app"]}</span><span class="zs-stand">{z["stand"]}</span></div>
     <div class="zs-such"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><span class="zs-eingabe" aria-live="polite">{esc(z["fragen"][0])}</span><span class="zs-cursor" aria-hidden="true"></span><span class="zs-zahl"></span></div>
-    <ul class="zs-raster">{clips}
-    </ul>
+    <div class="zs-buehne suche">
+      <div class="zs-wand" aria-hidden="true"><ul>{wand}</ul><p class="zs-wzahl"><span class="zs-wz-g">{z["wand"]}</span><span class="zs-wz-k">{z["wand"].replace("18", "12", 1)}</span></p></div>
+      {saetze}
+    </div>
     <figcaption>{z["hinweis"]}</figcaption>
   </figure>
 </div></section>
-<script src="{a}zulu-suche.js?v=1" defer></script>
+<script src="{a}zulu-suche.js?v=2" defer></script>
 '''
 
 

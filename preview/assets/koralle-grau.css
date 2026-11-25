@@ -128,24 +128,40 @@
 .zs-zahl{margin-left:auto;flex:none;font-size:13px;color:var(--soft-d);opacity:0;transition:opacity .3s;font-variant-numeric:tabular-nums}
 .zs-zahl.da{opacity:1}
 .zs-app.sucht .zs-such{border-color:rgba(255,127,97,.6)}
-.zs-raster{list-style:none;margin:0;padding:18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 14px}
-.zs-clip{transition:opacity .45s ease,filter .45s ease}
-.zs-bild{position:relative;display:block;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:#3a3a3c;
-  outline:2px solid transparent;outline-offset:2px;transition:outline-color .3s}
+/* v2 (Nicky 25.11. abends): Archiv-Wand aus 18 Clips; die Suche raeumt die Wand, die Treffer sortieren sich nach Quote ein.
+   Wand und Treffer-Saetze liegen im selben Rasterfeld, die Buehne ist so hoch wie der groesste davon: kein Springen */
+.zs-buehne{display:grid;padding:18px}
+.zs-buehne>*{grid-area:1/1;min-width:0}
+.zs-wand ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px 10px}
+.zs-w{transition:opacity .3s ease,transform .35s ease;transition-delay:calc(var(--k) * 22ms)}
+.zs-w .zs-bild{border-radius:8px}
+.zs-w .zs-tc{font-size:10px;left:5px;bottom:5px;padding:2px 5px}
+.zs-wn{display:block;margin-top:6px;font-size:11.5px;color:var(--soft-d);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.zs-wzahl{margin:16px 0 0;font-size:13px;color:var(--soft-d);transition:opacity .3s}
+.zs-buehne.suche .zs-w{opacity:0;transform:translateY(14px) scale(.86)}
+.zs-buehne.suche .zs-wzahl{opacity:0}
+.zs-wz-k{display:none}
+.zs-satz{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 14px;align-content:start;pointer-events:none}
+.zs-satz.an{pointer-events:auto}
+.zs-satz .zs-clip{opacity:0;transform:translateY(36px) scale(.82);transition:opacity .22s ease,transform .22s ease}
+.zs-satz.an .zs-clip{opacity:1;transform:none;
+  transition:opacity .35s ease calc(var(--i) * 90ms + .3s),transform .5s cubic-bezier(.34,1.45,.64,1) calc(var(--i) * 90ms + .3s)}
+.zs-bild{position:relative;display:block;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:#3a3a3c}
+.zs-satz .zs-bild{outline:2px solid #ff7f61;outline-offset:2px}
 .zs-bild img{width:100%;height:100%;object-fit:cover;display:block}
-.zs-tc,.zs-score{position:absolute;bottom:6px;font-size:11px;font-weight:700;padding:3px 6px;border-radius:5px;font-variant-numeric:tabular-nums}
+.zs-tc,.zs-score,.zs-rang{position:absolute;bottom:6px;font-size:11px;font-weight:700;padding:3px 6px;border-radius:5px;font-variant-numeric:tabular-nums}
 .zs-tc{left:6px;background:rgba(0,0,0,.62);color:#fff;font-family:ui-monospace,Menlo,monospace;font-weight:500}
-.zs-score{right:6px;background:#ff7f61;color:#1c1c1e;opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
+.zs-score{right:6px;background:#ff7f61;color:#1c1c1e}
+.zs-rang{top:6px;bottom:auto;left:6px;background:rgba(0,0,0,.66);color:#fff}
 .zs-dreh{display:block;margin-top:9px;font-size:13px;font-weight:600;color:var(--ink-d)}
 .zs-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
-.zs-tags span{font-size:11.5px;line-height:1;padding:5px 7px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--soft-d);transition:background .3s,color .3s}
+.zs-tags span{font-size:11.5px;line-height:1;padding:5px 7px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--soft-d)}
 .zs-tags span.an{background:rgba(255,127,97,.18);color:#ff9d85}
-.zs-clip.treffer .zs-bild{outline-color:#ff7f61}
-.zs-clip.treffer .zs-score{opacity:1;transform:none}
-.zs-clip.aus{opacity:.32;filter:grayscale(.7)}
 .zs-app figcaption{padding:0 18px 16px;font-size:13px;color:var(--soft-d)}
-@media(max-width:900px){.zs-raster{grid-template-columns:repeat(2,minmax(0,1fr))}.zs-punkte{grid-template-columns:1fr}.zs-stand{display:none}}
-@media(max-width:520px){.zs-eingabe{white-space:normal;line-height:1.35}.zs-raster{padding:14px;gap:14px 10px}.zs-such{margin:14px 14px 0;padding:12px 14px}.zs-zahl{display:none}
+@media(max-width:900px){.zs-satz{grid-template-columns:repeat(2,minmax(0,1fr))}.zs-wand ul{grid-template-columns:repeat(4,minmax(0,1fr))}.zs-punkte{grid-template-columns:1fr}.zs-stand{display:none}}
+@media(max-width:520px){.zs-eingabe{white-space:normal;line-height:1.35}.zs-buehne{padding:14px}.zs-satz{gap:14px 10px}
+  .zs-wand ul{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 6px}.zs-w .zs-tc{display:none}.zs-wn{font-size:10.5px}
+  .zs-satz .zs-clip:nth-child(n+5){display:none}.zs-w:nth-child(n+13){display:none}.zs-wz-g{display:none}.zs-wz-k{display:inline}.zs-such{margin:14px 14px 0;padding:12px 14px}.zs-zahl{display:none}
   .zs-tags span:nth-child(n+4){display:none}}
 
 /* Apps-Band (Nicky 25.11.2026): fuenf Apps + die sechste "Ihre" mit Audit, Beispielmarken ZULU und NORROW */
