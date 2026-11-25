@@ -455,5 +455,48 @@ JOBS["system-weit"] = ("Image 1 is the photograph with an empty pale grey margin
   "Everything already in the photograph stays exactly as it is: every device, cable, coral plug, the hub and the light. "
   "Clean product diorama photograph, soft shadows, calm space above the devices, 3:2.", "3:2", "4K", 9981, ["@system-pad"])
 
+
+# Hero neu von Grund auf (Nicky 25.11.2026: "the logo on the card is wrong", "dont call it render core", "call it local GPU",
+# zur Pixel-Retusche: "perspective of font and logo look weird, logo lines too thick" — "please do from scratch not edit").
+GPU_LOKAL = ("Image 1 is the logo mark: an isometric open square frame drawn in one fine coral line. A high-end graphics card "
+  "with a brushed silver side plate, graphite shroud, two fans and dense heat-sink fins. On the side plate, printed in coral "
+  "(#ff7f61) and following the plate's perspective exactly: the logo mark from Image 1 as a fine hairline drawing, small, "
+  "followed by the lettering \"LOCAL GPU · 48 GB\" in a light, slightly condensed DIN-style sans-serif with thin strokes. "
+  "That is the only marking. The card sits in the RIGHT two thirds of the frame, crisp and sharp in every detail; the LEFT "
+  "third is calm and slightly darker. It lies on a worn walnut table in a loft studio by a tall steel-frame window and an "
+  "exposed brick wall, beside a light meter, a plain matte black film canister with a cream label, and a stoneware espresso "
+  "cup. 47 degree lens (50mm), f/5.6. ")
+for _i in range(4):
+    JOBS[f"gpu-lokal-{chr(97 + _i)}"] = (GPU_LOKAL + FILM + " 16:9.", "16:9", "4K", 9981 + _i * 7, [LOGO_KORALLE])
+
+
+
+# Zweiter Weg: dieselbe freigegebene Szene als Referenz, komplett neu gerendert (nicht retuschiert), nur die Beschriftung neu.
+GPU_LOKAL_SZENE = ("Image 1 is the logo mark: an isometric open square frame in one fine coral line. Image 2 is the scene: "
+  "the same graphics card, same angle, framing, fans, fins, table, cup, film canister, brick wall, window and light. "
+  "Photograph this scene again. On the brushed silver side plate, printed in coral (#ff7f61) and lying flat on the plate, "
+  "following its perspective and the curve of its surface: the logo mark from Image 1 as a fine hairline drawing, the "
+  "height of the capital letters, followed by \"LOCAL GPU · 48 GB\" in a light, slightly condensed DIN-style sans-serif "
+  "with thin strokes, the same size and position as the lettering in Image 2. That is the only marking. ")
+for _i in range(3):
+    JOBS[f"gpu-lokal-szene-{chr(97 + _i)}"] = (GPU_LOKAL_SZENE + FILM + " 16:9.", "16:9", "4K", 9991 + _i * 11, [LOGO_KORALLE, "@hero-szene"])
+
+
+
+# Runde 2: Zeichen genauer beschrieben (das Modell zeichnete eine hohe Raute statt des flachen isometrischen Rahmens),
+# Bildausschnitt wie Image 2 (Karte laeuft rechts aus dem Bild, zweiter Luefter angeschnitten).
+GPU_LOKAL_SZENE2 = ("Image 1 is the logo mark, copy its exact geometry: a square picture frame lying flat, drawn in isometric "
+  "view as one thin coral line. It is a wide flat diamond, one and a half times as wide as it is tall, with a second "
+  "smaller diamond inside it; the frame's thickness shows as a narrow band along its two lower edges, and the inner "
+  "outline is open on the left side like a notch. Image 2 is the scene: the same graphics card, same angle and framing "
+  "with the card running out of the frame on the RIGHT and its second fan cut by the edge, same fans, fins, table, cup, "
+  "film canister, brick wall, window and light. Photograph this scene again. On the brushed silver side plate, printed "
+  "flat in coral (#ff7f61) and following the plate's perspective: the logo mark from Image 1 in a hairline as thin as the "
+  "letter strokes, the height of the capitals, followed by \"LOCAL GPU · 48 GB\" in a light, slightly condensed "
+  "DIN-style sans-serif with thin strokes, same size and position as the lettering in Image 2. That is the only marking. ")
+for _i in range(3):
+    JOBS[f"gpu-lokal-szene2-{chr(97 + _i)}"] = (GPU_LOKAL_SZENE2 + FILM + " 16:9.", "16:9", "4K", 10021 + _i * 13, [LOGO_KORALLE, "@hero-szene"])
+
+
 if __name__ == "__main__":
     main()
