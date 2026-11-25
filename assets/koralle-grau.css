@@ -107,3 +107,63 @@
     mask-image:linear-gradient(90deg,transparent 0%,#000 38%),linear-gradient(to top,transparent 0%,#000 34%);
     mask-composite:intersect}
 }
+
+/* Beispiel Footage-Suche "Zulu" (Nicky 25.11.2026): App-Fenster mit Suchfeld, Treffer in Koralle, der Rest tritt zurueck */
+.zs .zs-kopf{max-width:880px}
+.zs-punkte{list-style:none;margin:26px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 28px}
+.zs-punkte li{font-size:16px;line-height:1.45;color:var(--soft-d);padding-top:12px;border-top:1px solid rgba(255,255,255,.14)}
+.zs-app{margin:clamp(32px,4vw,56px) 0 0;background:var(--card-d);border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.zs-leiste{display:flex;align-items:center;gap:14px;padding:12px 18px;background:#232325;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+.zs-punkte3{display:flex;gap:7px}.zs-punkte3 i{width:11px;height:11px;border-radius:50%;background:#48484a}
+.zs-titel{font-weight:700;color:var(--ink-d)}
+.zs-stand{margin-left:auto;color:var(--soft-d);font-variant-numeric:tabular-nums}
+.zs-such{display:flex;align-items:center;gap:12px;margin:18px 18px 0;padding:14px 18px;border-radius:12px;background:#1c1c1e;
+  border:1px solid rgba(255,255,255,.12);font-size:clamp(16px,1.5vw,19px);color:var(--ink-d);min-height:56px}
+.zs-such svg{width:20px;height:20px;flex:none;fill:none;stroke:#ff7f61;stroke-width:2.2;stroke-linecap:round}
+.zs-eingabe{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.zs-cursor{width:2px;height:1.2em;background:#ff7f61;flex:none;margin-left:-10px;opacity:0}
+.zs-app.lebt .zs-cursor{animation:zs-blink 1s steps(1) infinite}
+@keyframes zs-blink{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+.zs-zahl{margin-left:auto;flex:none;font-size:13px;color:var(--soft-d);opacity:0;transition:opacity .3s;font-variant-numeric:tabular-nums}
+.zs-zahl.da{opacity:1}
+.zs-app.sucht .zs-such{border-color:rgba(255,127,97,.6)}
+.zs-raster{list-style:none;margin:0;padding:18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 14px}
+.zs-clip{transition:opacity .45s ease,filter .45s ease}
+.zs-bild{position:relative;display:block;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:#3a3a3c;
+  outline:2px solid transparent;outline-offset:2px;transition:outline-color .3s}
+.zs-bild img{width:100%;height:100%;object-fit:cover;display:block}
+.zs-tc,.zs-score{position:absolute;bottom:6px;font-size:11px;font-weight:700;padding:3px 6px;border-radius:5px;font-variant-numeric:tabular-nums}
+.zs-tc{left:6px;background:rgba(0,0,0,.62);color:#fff;font-family:ui-monospace,Menlo,monospace;font-weight:500}
+.zs-score{right:6px;background:#ff7f61;color:#1c1c1e;opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
+.zs-dreh{display:block;margin-top:9px;font-size:13px;font-weight:600;color:var(--ink-d)}
+.zs-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.zs-tags span{font-size:11.5px;line-height:1;padding:5px 7px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--soft-d);transition:background .3s,color .3s}
+.zs-tags span.an{background:rgba(255,127,97,.18);color:#ff9d85}
+.zs-clip.treffer .zs-bild{outline-color:#ff7f61}
+.zs-clip.treffer .zs-score{opacity:1;transform:none}
+.zs-clip.aus{opacity:.32;filter:grayscale(.7)}
+.zs-app figcaption{padding:0 18px 16px;font-size:13px;color:var(--soft-d)}
+@media(max-width:900px){.zs-raster{grid-template-columns:repeat(2,minmax(0,1fr))}.zs-punkte{grid-template-columns:1fr}.zs-stand{display:none}}
+@media(max-width:520px){.zs-eingabe{white-space:normal;line-height:1.35}.zs-raster{padding:14px;gap:14px 10px}.zs-such{margin:14px 14px 0;padding:12px 14px}.zs-zahl{display:none}
+  .zs-tags span:nth-child(n+4){display:none}}
+
+/* Apps-Band (Nicky 25.11.2026): fuenf Apps + die sechste "Ihre" mit Audit, Beispielmarken ZULU und NORROW */
+.apps .lead{max-width:760px}
+.app-raster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px);margin-top:clamp(28px,3.4vw,48px)}
+.app-karte{display:flex;flex-direction:column;background:#f3f3f4;border-radius:var(--r,18px);overflow:hidden}
+.app-karte img{width:100%;height:auto;max-height:none;aspect-ratio:3/2;object-fit:cover;display:block;flex:none}
+.app-text{display:flex;flex-direction:column;gap:8px;padding:clamp(18px,2vw,26px)}
+.app-name{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6e7378}
+.app-name b{color:#ff7f61;margin-right:4px}
+.app-karte h3{font-size:clamp(20px,1.7vw,24px);line-height:1.16;letter-spacing:-.02em;margin:0}
+.app-karte p{font-size:16px;line-height:1.45;color:#3a3d42;margin:0}
+.app-karte .mehr{font-size:16px;font-weight:700;color:#e8603f;margin-top:4px;text-decoration:none}
+.app-karte .mehr:hover{text-decoration:underline}
+.app-sechs{background:#1c1c1e;color:#f0efec}
+.app-sechs .app-name{color:#c7cacf}
+.app-sechs h3 em{color:#ff7f61;font-style:normal}
+.app-sechs p{color:#c7cacf}
+.app-sechs .mehr{color:#ff7f61}
+@media(max-width:980px){.app-raster{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.app-raster{grid-template-columns:1fr}}

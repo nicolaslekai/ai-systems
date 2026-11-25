@@ -98,10 +98,10 @@ T = {
   g_p="Our own studio runs on one every day: what gets decided, fixed or corrected in a project goes in, and every assistant knows it the next morning. That is the system we build for you.",
   g_brain="Team memory", g_alt="Segmented data ring with fine threads across it: signals travel from one side to the other and light up the ring where they arrive",
   g_cap="Schematic view: signals travel across the data ring",
-  w_alt="An edit suite in a bright loft: two editors seen from behind at a walnut desk with a grading panel and a camera, a young woman in a denim jacket leans over the monitor and points at the timeline",
+  w_alt="Five people laugh in a creative meeting in a bright agency loft: a man in a red beanie leans back, a woman points at pinned posters, a young man holds a storyboard over his head, printed layouts and a bowl of oranges on the long table",
   w_eyebrow="Munich · London", w_h2="Built <em>by us.</em>",
   w_lead="No handing off to third parties, no layer in between: you talk to the people who write the code — from the first conversation into day-to-day operation.",
-  t_alt="A broadcast video patch bay in a rack, black coax cables with silver BNC plugs, one cable glowing coral",
+  t_alt="A long oak table after a meeting in a sunlit loft: printed campaign layouts, a storyboard sheet, rows of sticky notes, markers, coffee cups and a peeled orange, poster prints pinned to the brick wall behind",
   t_h2="You talk to the people <em>who build.</em>", t_lead="Two people, forty years between them in film, music and post-production.",
   t_cards=[("File 01 · AI Systems Architect", "Nicolas Lekai", "Builds custom apps, control centres and production pipelines for companies. Twenty years in the film and music industry: from the recording studio through web development to visual effects. Along the way, web technology developer for the IFC and the World Bank in Washington DC. He still builds the systems behind the images.", None),
            ("File 02 · Producer — Post · VFX", "Mirko Hampel", "Twenty years in post-production: VFX producer, managing director and head of post. He advises and looks after clients from the first call to the final delivery, keeps budget and schedule honest, and is simply a great person to work with.", None),
@@ -187,10 +187,10 @@ T = {
   g_p="Unser eigenes Studio läuft jeden Tag darauf: Was in einem Projekt entschieden, gelöst oder korrigiert wird, landet dort, und am nächsten Morgen weiß es jeder Assistent. Genau dieses System bauen wir für Sie.",
   g_brain="Team-Speicher", g_alt="Segmentierter Datenring mit feinen Fäden quer hindurch: Signale laufen von einer Seite zur anderen und lassen den Ring dort aufleuchten, wo sie ankommen",
   g_cap="Schematische Darstellung: Signale laufen quer durch den Datenring",
-  w_alt="Ein Schnittraum in einem hellen Loft: zwei Cutter von hinten an einem Nussholztisch mit Grading-Pult und Kamera, eine junge Frau in Jeansjacke beugt sich über den Monitor und zeigt auf die Timeline",
+  w_alt="Fünf Menschen lachen in einem Kreativmeeting in einem hellen Agentur-Loft: ein Mann mit roter Mütze lehnt sich zurück, eine Frau zeigt auf angepinnte Plakate, ein junger Mann hält ein Storyboard über den Kopf, auf dem langen Tisch Layouts und eine Schale Orangen",
   w_eyebrow="München · London", w_h2="Gebaut <em>von uns.</em>",
   w_lead="Keine Weitergabe an Dritte, keine Zwischenschicht: Sie sprechen mit denen, die den Code schreiben — vom ersten Gespräch bis in den laufenden Betrieb.",
-  t_alt="Ein Video-Steckfeld im Rack, schwarze Koaxkabel mit silbernen BNC-Steckern, ein Kabel leuchtet korallenrot",
+  t_alt="Ein langer Eichentisch nach einem Meeting in einem sonnigen Loft: gedruckte Kampagnenlayouts, ein Storyboard, Reihen von Klebezetteln, Stifte, Kaffeebecher und eine geschälte Orange, dahinter Plakatentwürfe an der Backsteinwand",
   t_h2="Sie sprechen mit denen, <em>die bauen.</em>", t_lead="Zwei Menschen, zusammen vierzig Jahre Film, Musik und Postproduktion.",
   t_cards=[("File 01 · AI Systems Architect", "Nicolas Lekai", "Baut Apps nach Maß, Leitstände und Produktions-Pipelines für Betriebe. Zwanzig Jahre in der Film- und Musikbranche: vom Tonstudio über die Webentwicklung zu den Visual Effects. Dazwischen Web-Technologie-Entwickler für die IFC und die Weltbank in Washington DC. Er baut bis heute die Systeme hinter den Bildern.", None),
            ("File 02 · Producer — Post · VFX", "Mirko Hampel", "Zwanzig Jahre Postproduktion: VFX Producer, Geschäftsführer und Head of Postproduktion. Er berät und betreut Kunden vom ersten Gespräch bis zur Abgabe, hält Budget und Zeitplan im Blick und ist einfach ein toller Typ.", None),
@@ -379,8 +379,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
 <link rel="stylesheet" href="{a}style.css?v=nl4">
 <link rel="stylesheet" href="{a}nl.css?v=nl4">{f'''
-<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s16">
-<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s16';}})();</script>''' if thema else ""}
+<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s17">
+<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s17';}})();</script>''' if thema else ""}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -466,7 +466,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   <script src="{a}brain/brain.js?v=nl2" defer></script>
 </div></section>
 <section class="tile dark bild-hinter">
-  <img class="hg" src="{b}werkstatt-team.webp" width="1800" height="1005" alt="{esc(t["w_alt"])}" loading="lazy" decoding="async">
+  <img class="hg" src="{b}werkstatt-agentur_KJ_v001.webp" width="2400" height="1340" alt="{esc(t["w_alt"])}" loading="lazy" decoding="async">
   <span class="schleier" aria-hidden="true"></span>
   <div class="wrap"><div class="bh-text">
     <div class="eyebrow">{t["w_eyebrow"]}</div>
@@ -476,8 +476,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 </section>
 <section class="tile dark next team-bild" id="team">
   <picture>
-    <source media="(max-width:760px)" srcset="{b}patchfeld-rack-hoch.webp" width="1100" height="1956">
-    <img src="{b}patchfeld-rack.webp" width="2400" height="1340" alt="{esc(t["t_alt"])}" loading="lazy" decoding="async">
+    <source media="(max-width:760px)" srcset="{b}team-tisch-hoch_KJ_v001.webp" width="1080" height="1920">
+    <img src="{b}team-tisch_KJ_v001.webp" width="2400" height="1340" alt="{esc(t["t_alt"])}" loading="lazy" decoding="async">
   </picture>
   <span class="tb-schleier" aria-hidden="true"></span>
   <div class="wrap">
