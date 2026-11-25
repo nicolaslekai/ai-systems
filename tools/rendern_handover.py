@@ -33,9 +33,19 @@ HOCH = ("Image 1 is the photograph: keep the room, the light and all five people
   "vertical 4:5 frame closer on the group: the man in the CORALROOMS t-shirt with the iPad in the centre, the others "
   "around him, faces in the upper half. " + LOOK + " 4:5.")
 
+# Nicky 25.11.: "showing one of our zulu products on the ipad?" + "make sure the coral rooms dudes tshirt is a bit more crumpled"
+IPAD = ("Image 1 is the photograph: keep the room, the light, all five people, their faces, poses, clothes and the "
+  "CORALROOMS t-shirt. Image 2 is the logo on the t-shirt, matching line for line. Image 3 shows the ZULU drink "
+  "cans. The t-shirt is soft, well-worn cotton, visibly crumpled with natural creases across the chest and belly, the "
+  "print following the folds. The iPad screen shows a media library app with an orange title bar and the word ZULU, below it a "
+  "grid of six bright photos: the four ZULU cans on ice, a peach ZULU can on a sunny beach, friends at a festival "
+  "holding orange ZULU cans, a ZULU can pouring into a glass of ice. The cans on screen match Image 3. " + LOOK + " 16:9.")
+
 if __name__ == "__main__":
     art = sys.argv[1]
     if art == "breit":
         print(G.rendere("handover-breit", BREIT, "begleit-quelle,coralrooms-marke", n=2, w=3840, h=2160))
+    elif art == "ipad":
+        print(G.rendere("handover-ipad", IPAD, "handover-breit,coralrooms-marke,zulu-dosen", n=2, w=3840, h=2160))
     else:
         print(G.rendere("handover-hoch", HOCH, "handover-breit,coralrooms-marke", n=2, w=1728, h=2160))
