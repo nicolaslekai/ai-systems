@@ -378,7 +378,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <meta property="og:title" content="{esc(t["title"])}">
 <meta property="og:description" content="{esc(t["desc"])}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{SITE}assets/og-architect-1200x630.jpg">
+<meta property="og:image" content="{SITE}assets/og-coralrooms_KJ_v001.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
