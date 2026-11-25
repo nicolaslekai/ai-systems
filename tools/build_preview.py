@@ -39,8 +39,8 @@ T = {
   h1="Custom apps <em>to simplify your company's processes.</em>",
   lead="We build apps for the way your company works and automate whatever repeats every week. A human approves anything that goes out. You work directly with the people who build it.",
   ghost="What we build",
-  film_label="Watch the film · 2:22", film_name="Explainer film: your own AI operating system",
-  film_src="nlos_film_en_v031.mp4", film_poster="nlos_film_poster_en_coral_KJ_v001.jpg", film_close="Close film",
+  film_label="Watch the film · 1:12", film_name="Film: five apps we build for your social media team",
+  film_src="coralrooms-apps-film_KJ_v004.mp4", film_poster="coralrooms-apps-film-poster_KJ_v004.jpg", film_close="Close film",
   themen_h2="How an app <em>gets to you.</em>",
   themen_lead="Whatever we build takes the same route: from the first conversation to something that runs in your business.",
   bauten=[
@@ -129,8 +129,8 @@ T = {
   h1="Maßgeschneiderte Apps, <em>die die Abläufe in Ihrem Betrieb vereinfachen.</em>",
   lead="Wir bauen Apps für die Abläufe in Ihrem Betrieb und automatisieren, was sich jede Woche wiederholt. Was nach außen geht, gibt ein Mensch frei. Sie arbeiten direkt mit denen, die es bauen.",
   ghost="Was wir bauen",
-  film_label="Film ansehen · 2:15", film_name="Erklärfilm: Ihr eigenes KI-Betriebssystem",
-  film_src="nlos_film_de_v030.mp4", film_poster="nlos_film_poster_de_coral_KJ_v001.jpg", film_close="Film schließen",
+  film_label="Film ansehen · 1:12", film_name="Film: fünf Apps, die wir für Ihr Social-Media-Team bauen",
+  film_src="coralrooms-apps-film_KJ_v004.mp4", film_poster="coralrooms-apps-film-poster_KJ_v004.jpg", film_close="Film schließen",
   themen_h2="Wie eine App <em>zu Ihnen kommt.</em>",
   themen_lead="Was wir bauen, geht immer denselben Weg: vom ersten Gespräch bis zu etwas, das bei Ihnen läuft.",
   bauten=[
@@ -245,7 +245,7 @@ APPS = {
   karten=[
    ("archiv", "Footage Library", "Every shot you own, found in seconds.", "Jev tags every photo and every frame: product, people, place, light, mood. Then you search the way you talk: “fruity, outdoors, water”.", ("#beispiel", "See it working →"),
     "A monitor in a dark post suite shows a media library searched for fruity, outdoors, water: summer photos by a lake and the sea with ZULU cans, a can of ZULU peach iced tea on the desk"),
-   ("plakat", "Poster Studio", "Out-of-home posters, on brand every time.", "Type the line, pick a photo, and every format comes out ready: bus shelter, billboard, digital screen.", None,
+   ("plakat", "Poster Studio", "Out-of-home posters, on brand every time.", "Your brand identity is hard-coded: logo, fonts, colours and layout rules are built in. Type the line, pick a photo, and every format comes out ready: bus shelter, billboard, digital screen.", None,
     "A bus shelter and a large digital billboard on a wet street at blue hour, both showing a runner and a ZULU orange can under the line Run on orange"),
    ("social", "Social Autopilot", "One campaign, a month of posts.", "Cut-downs, captions in every language and a weekly plan, ready for a person to approve.", None,
     "Five phones in a row on a pale table, each showing a different vertical post from one ZULU summer campaign, a ZULU can and a NORROW running shoe above them"),
@@ -262,7 +262,7 @@ APPS = {
   karten=[
    ("archiv", "Footage-Archiv", "Jede Aufnahme, die Sie haben, in Sekunden gefunden.", "Jev verschlagwortet jedes Foto und jedes Filmbild: Produkt, Menschen, Ort, Licht, Stimmung. Dann suchen Sie, wie Sie sprechen: „fruchtig, draußen, Wasser“.", ("#beispiel", "So sieht es aus →"),
     "Ein Monitor in einem dunklen Schnittraum zeigt ein Medienarchiv mit der Suche fruchtig, draußen, Wasser: Sommerfotos am See und am Meer mit ZULU-Dosen, auf dem Tisch eine Dose ZULU Pfirsich-Eistee"),
-   ("plakat", "Plakat-Studio", "Außenwerbung, jedes Mal markengerecht.", "Zeile tippen, Foto wählen, und jedes Format kommt fertig heraus: Wartehalle, Großfläche, digitaler Screen.", None,
+   ("plakat", "Plakat-Studio", "Außenwerbung, jedes Mal markengerecht.", "Ihre Markenidentität ist fest eingebaut: Logo, Schriften, Farben und Layoutregeln. Zeile tippen, Foto wählen, und jedes Format kommt fertig heraus: Wartehalle, Großfläche, digitaler Screen.", None,
     "Eine Wartehalle und eine große digitale Werbefläche an einer nassen Straße zur blauen Stunde, beide zeigen einen Läufer und eine ZULU-Orange-Dose unter der Zeile Run on orange"),
    ("social", "Social-Autopilot", "Eine Kampagne, ein Monat Posts.", "Schnittfassungen, Untertitel in jeder Sprache und ein Wochenplan, fertig zur Freigabe durch einen Menschen.", None,
     "Fünf Handys in einer Reihe auf einem hellen Tisch, jedes mit einem anderen Hochformat-Post aus einer ZULU-Sommerkampagne, darüber eine ZULU-Dose und ein NORROW-Laufschuh"),
@@ -440,8 +440,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 </div></section>
 {zulu_suche(t, a, b)}<section class="tile dark team-bild begleit" id="begleitung">
   <picture>
-    <source media="(max-width:760px)" srcset="{b}handover-ipad-hoch_KJ_v006.webp" width="1100" height="1375">
-    <img src="{b}handover-ipad_KJ_v006.webp" width="2400" height="1350" alt="{esc(t["beg_alt"])}" loading="lazy" decoding="async">
+    <source media="(max-width:760px)" srcset="{b}handover-ipad-hoch_KJ_v007.webp" width="1100" height="1375">
+    <img src="{b}handover-ipad_KJ_v007.webp" width="2400" height="1350" alt="{esc(t["beg_alt"])}" loading="lazy" decoding="async">
   </picture>
   <span class="tb-schleier" aria-hidden="true"></span>
   <div class="wrap">

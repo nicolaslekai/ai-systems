@@ -50,9 +50,24 @@ IPAD2 = ("Image 1 is the photograph: keep the room, the light, all five people, 
   "tags and coral highlight frames on three matching cards. One change: the iPad screen shows exactly this app from "
   "Image 3, sharp, bright on its dark background, with fine readable detail. " + LOOK + " 16:9.")
 
+# Nicky 25.11. 19:15 zu v006: "image looks messed up, probably edited too many times. run from scratch" -> NEU, kein Foto-
+# Ref mehr (v006 war die vierte Bearbeitung in Folge). Nur Image 1 = Logo-Lockup, Image 2 = ZULU-App fuer den Bildschirm.
+# Das Handy-Bild wird ein 4:5-Ausschnitt desselben Renders, keine Bearbeitung.
+NEU = ("Image 1 is the CORALROOMS logo: the coral open-frame mark above the spaced wordmark. Image 2 is the app on the iPad.\n\n"
+  "One continuous photograph in a sunlit brick-walled agency loft, a steel window on the LEFT, a few big green plants. "
+  "Five people stand close together, framed from the waist up, 47 degree lens (50mm) at eye level. In the centre a "
+  "friendly man in his thirties with dark curly hair and a short beard wears a worn, softly crumpled charcoal cotton "
+  "t-shirt with the logo from Image 1 printed on the chest, the coral mark above CORALROOMS in white spaced capitals, "
+  "following the creases. He holds an iPad in both hands at chest height, the screen angled toward the camera, showing "
+  "exactly the app from Image 2: near-black, orange title bar, sharp and bright. The others lean in from both sides: a "
+  "woman with long braids in a brown leather jacket points at the screen, a man in a tan beanie and navy jumper grins, a "
+  "woman with tortoiseshell glasses and gold hoops laughs, a man in a denim jacket smiles. Relaxed natural hands. " + LOOK + " 16:9.")
+
 if __name__ == "__main__":
     art = sys.argv[1]
-    if art == "breit":
+    if art == "neu":
+        print(G.rendere("handover-neu", NEU, "coralrooms-marke,zulu-app-ui", n=2, w=3840, h=2160))
+    elif art == "breit":
         print(G.rendere("handover-breit", BREIT, "begleit-quelle,coralrooms-marke", n=2, w=3840, h=2160))
     elif art == "ipad2":
         print(G.rendere("handover-ipad", IPAD2, "handover-ipad,coralrooms-marke,zulu-app-ui", n=2, w=3840, h=2160))
