@@ -440,8 +440,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 </div></section>
 {zulu_suche(t, a, b)}<section class="tile dark team-bild begleit" id="begleitung">
   <picture>
-    <source media="(max-width:760px)" srcset="{b}handover-ipad-hoch_KJ_v007.webp" width="1100" height="1375">
-    <img src="{b}handover-ipad_KJ_v007.webp" width="2400" height="1350" alt="{esc(t["beg_alt"])}" loading="lazy" decoding="async">
+    <source media="(max-width:760px)" srcset="{b}handover-ipad-hoch_KJ_v008.webp" width="1100" height="1375">
+    <img src="{b}handover-ipad_KJ_v008.webp" width="2400" height="1350" alt="{esc(t["beg_alt"])}" loading="lazy" decoding="async">
   </picture>
   <span class="tb-schleier" aria-hidden="true"></span>
   <div class="wrap">

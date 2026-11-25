@@ -63,9 +63,25 @@ NEU = ("Image 1 is the CORALROOMS logo: the coral open-frame mark above the spac
   "woman with long braids in a brown leather jacket points at the screen, a man in a tan beanie and navy jumper grins, a "
   "woman with tortoiseshell glasses and gold hoops laughs, a man in a denim jacket smiles. Relaxed natural hands. " + LOOK + " 16:9.")
 
+# Nicky 25.11. 19:40 zu neu v001: "good, but too cheesy, make it look less staged" -> beilaeufiger Moment, niemand posiert,
+# ruhige Gesichter, nackte Backsteinwand (v001 hatte ein Spruchplakat).
+NEU2 = ("Image 1 is the CORALROOMS logo: the coral open-frame mark above the spaced wordmark. Image 2 is the app on the iPad.\n\n"
+  "One continuous candid photograph, a real moment caught mid-conversation in a sunlit brick-walled agency loft: steel "
+  "window on the LEFT, a few plants, the end of a long worn oak table with laptops, notebooks and coffee cups. 47 degree "
+  "lens (50mm) at eye level from a few metres back, as if the photographer is part of the team. A man in his thirties "
+  "with dark curly hair and a short beard, in a worn, crumpled charcoal t-shirt with the logo from Image 1 on the chest "
+  "(coral mark above CORALROOMS in white spaced capitals, following the creases), sits on the table edge holding an "
+  "iPad loosely in one hand and explaining with the other. The screen, tilted toward the camera, shows the app from "
+  "Image 2. Around him: a woman with long braids in a brown leather jacket leans in to read the screen; a man in a tan "
+  "beanie stands with folded arms, listening; a woman with tortoiseshell glasses types a note on her phone; a man in a "
+  "denim jacket watches the speaker with a slight smile. Calm, attentive faces, everyday posture, every eyeline inside "
+  "the room. The brick wall behind is bare apart from the plants. " + LOOK + " 16:9.")
+
 if __name__ == "__main__":
     art = sys.argv[1]
-    if art == "neu":
+    if art == "neu2":
+        print(G.rendere("handover-neu2", NEU2, "coralrooms-marke,zulu-app-ui", n=2, w=3840, h=2160))
+    elif art == "neu":
         print(G.rendere("handover-neu", NEU, "coralrooms-marke,zulu-app-ui", n=2, w=3840, h=2160))
     elif art == "breit":
         print(G.rendere("handover-breit", BREIT, "begleit-quelle,coralrooms-marke", n=2, w=3840, h=2160))
