@@ -32,16 +32,16 @@ T = {
   lang="en", other="de", other_label="DE", other_long="Deutsch", other_title="Deutsche Fassung",
   title="Coralrooms — custom apps and AI automation · film, post and AI",
   desc="We build custom apps and AI automation that simplify how a company works, from a searchable footage library to on-brand images. A human approves what goes out. Larger step: your own AI operating system. Munich · London.",
-  nav=[("#themen", "What we build"), ("#arbeitsweise", "How we work"), ("#team", "About")],
+  nav=[("#apps", "What we build"), ("#arbeitsweise", "How we work"), ("#team", "About")],
   cta="Start a project", also="Also",
-  hero_alt="A graphics card on a worn walnut table by a steel-frame window in a brick loft; on its silver plate the open-frame logo mark and LOCAL GPU · 48 GB in coral, beside it a light meter, a film canister and a stoneware cup",
+  hero_alt="Six people laugh together in a creative meeting in a bright brick-walled agency loft: a woman points at pinned poster prints, a man in a red beanie leans back laughing, a young man holds up a storyboard, the long oak table covered with printed layouts, sticky notes, coffee cups and a bowl of oranges",
   eyebrow="Custom apps · Munich · London",
   h1="Custom apps <em>to simplify your company's processes.</em>",
   lead="We build apps for the way your company works and automate whatever repeats every week. A human approves anything that goes out. You work directly with the people who build it.",
   ghost="What we build",
   film_label="Watch the film · 2:22", film_name="Explainer film: your own AI operating system",
   film_src="nlos_film_en_v031.mp4", film_poster="nlos_film_poster_en_coral_KJ_v001.jpg", film_close="Close film",
-  themen_h2="What we build <em>and how it gets to you.</em>",
+  themen_h2="How an app <em>gets to you.</em>",
   themen_lead="Whatever we build takes the same route: from the first conversation to something that runs in your business.",
   bauten=[
    ("bau-apps.webp", "Illustrative image: a film-production app built from frosted-glass panes: a shot list with thumbnails, one row highlighted, the same list on a phone-sized pane, an audio waveform behind",
@@ -122,16 +122,16 @@ T = {
   lang="de", other="en", other_label="EN", other_long="English", other_title="English version",
   title="Coralrooms — Apps nach Maß und KI-Automatisierung · Film, Post und KI",
   desc="Wir bauen Apps nach Maß und KI-Automatisierung, die die Abläufe eines Betriebs vereinfachen, vom durchsuchbaren Footage-Archiv bis zu Bildern im Corporate Design. Was nach außen geht, gibt ein Mensch frei. Der größere Schritt: ein eigenes KI-Betriebssystem. München · London.",
-  nav=[("#themen", "Was wir bauen"), ("#arbeitsweise", "Wie wir arbeiten"), ("#team", "Über uns")],
+  nav=[("#apps", "Was wir bauen"), ("#arbeitsweise", "Wie wir arbeiten"), ("#team", "Über uns")],
   cta="Projekt anfragen", also="Außerdem",
-  hero_alt="Eine Grafikkarte auf einem alten Nussholztisch am Stahlfenster in einem Backstein-Loft; auf der silbernen Platte das offene Rahmen-Logo und LOCAL GPU · 48 GB in Koralle, daneben ein Belichtungsmesser, eine Filmdose und eine Steinguttasse",
+  hero_alt="Sechs Menschen lachen zusammen in einem Kreativmeeting in einem hellen Agentur-Loft mit Backsteinwänden: eine Frau zeigt auf angepinnte Plakatentwürfe, ein Mann mit roter Mütze lehnt sich lachend zurück, ein junger Mann hält ein Storyboard hoch, auf dem langen Eichentisch Layouts, Klebezettel, Kaffeebecher und eine Schale Orangen",
   eyebrow="Apps nach Maß · München · London",
   h1="Maßgeschneiderte Apps, <em>die die Abläufe in Ihrem Betrieb vereinfachen.</em>",
   lead="Wir bauen Apps für die Abläufe in Ihrem Betrieb und automatisieren, was sich jede Woche wiederholt. Was nach außen geht, gibt ein Mensch frei. Sie arbeiten direkt mit denen, die es bauen.",
   ghost="Was wir bauen",
   film_label="Film ansehen · 2:15", film_name="Erklärfilm: Ihr eigenes KI-Betriebssystem",
   film_src="nlos_film_de_v030.mp4", film_poster="nlos_film_poster_de_coral_KJ_v001.jpg", film_close="Film schließen",
-  themen_h2="Was wir bauen <em>und wie es zu Ihnen kommt.</em>",
+  themen_h2="Wie eine App <em>zu Ihnen kommt.</em>",
   themen_lead="Was wir bauen, geht immer denselben Weg: vom ersten Gespräch bis zu etwas, das bei Ihnen läuft.",
   bauten=[
    ("bau-apps.webp", "Symbolbild: eine Produktions-App aus Milchglasscheiben: eine Shotliste mit Vorschaubildern, eine Zeile hervorgehoben, dieselbe Liste auf einer Handy-Scheibe, dahinter eine Tonspur",
@@ -399,14 +399,14 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 </div></header>
 
 <section class="tile dark hero bild-hinter hero-bild mit-hoch">
-  <picture><source media="(max-width: 900px)" srcset="{b}hero-film-handy.webp?v=4" width="900" height="900"><img class="hg" src="{b}hero-film-breit.webp?v=4" width="1600" height="900" alt="{esc(t["hero_alt"])}" fetchpriority="high" decoding="async"></picture>
+  <picture><source media="(max-width: 900px)" srcset="{b}hero-agentur-handy_KJ_v001.webp" width="1200" height="1200"><img class="hg" src="{b}hero-agentur-breit_KJ_v001.webp" width="2400" height="1340" alt="{esc(t["hero_alt"])}" fetchpriority="high" decoding="async"></picture>
   <span class="schleier" aria-hidden="true"></span>
   <div class="wrap"><div class="hero-gitter">
   <div class="text">
     <div class="eyebrow">{t["eyebrow"]}</div>
     <h1>{t["h1"]}</h1>
     <p class="lead">{t["lead"]}</p>
-    <div class="cta"><a class="btn primary" href="#kontakt">{t["cta"]}</a><a class="btn ghost" href="#themen">{t["ghost"]}</a></div>
+    <div class="cta"><a class="btn primary" href="#kontakt">{t["cta"]}</a><a class="btn ghost" href="#apps">{t["ghost"]}</a></div>
   </div>
   <figure class="film film-klein">
     <button type="button" class="film-wrap film-oeffnen" data-film-dialog aria-haspopup="dialog">
@@ -420,12 +420,9 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   </dialog>
   </div></div>
 </section>
-<section class="tile light bauweg" id="themen"><div class="wrap">
+{apps_band(t, b)}<section class="tile light bauweg" id="themen"><div class="wrap">
   <h2>{t["themen_h2"]}</h2>
   <p class="lead">{t["themen_lead"]}</p>
-  <div class="bauten" style="--n:3">{bauten}
-  </div>
-  <div class="weiche" style="--n:3" aria-hidden="true"><span style="--i:0"></span><span style="--i:1"></span><span style="--i:2"></span></div>
   <div class="weg-kopf" id="arbeitsweise">
     <h3>{t["weg_h3"]}</h3>
     <p>{t["weg_p"]}</p>
@@ -433,7 +430,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   <ol class="weg">{weg}
   </ol>
 </div></section>
-{apps_band(t, b)}{zulu_suche(t, a, b)}<section class="tile dark team-bild begleit" id="begleitung">
+{zulu_suche(t, a, b)}<section class="tile dark team-bild begleit" id="begleitung">
   <picture>
     <source media="(max-width:760px)" srcset="{b}begleitung-runde-hoch.webp" width="1100" height="1375">
     <img src="{b}begleitung-runde.webp" width="2400" height="1340" alt="{esc(t["beg_alt"])}" loading="lazy" decoding="async">
@@ -447,21 +444,6 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   <div class="cards">{beg}
   </div>
 </div></section>
-<section class="tile light nl-system" id="system">
-  <div class="wrap">
-    <h2>{t["sys_h2"]}</h2>
-    <p class="lead">{t["sys_lead"]}</p>
-  </div>
-  <figure class="s3d">
-    <div class="s3d-buehne" data-system3d data-src="{a}system3d/system3d.js?v={s3d_stand("system3d.js")}" data-marken="{marken}">
-      <picture>
-        <source media="(max-width:760px)" srcset="{a}system3d/systembild-hoch_KJ_v011.webp" width="1170" height="690">
-        <img src="{a}system3d/systembild_KJ_v011.webp" width="2400" height="1060" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
-      </picture>
-    </div>
-  </figure>
-  <script src="{a}system3d/laden.js?v={s3d_stand("laden.js")}" defer></script>
-</section>
 <section class="tile light bildband next gross">
   <div class="bb-bild">
     <img src="{b}stein-block.webp" width="1800" height="1005" alt="{esc(t["stein_alt"])}"
@@ -547,7 +529,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     document.addEventListener('click', function (ev) {{ if (mn.open && (!mn.contains(ev.target) || ev.target.closest('a'))) mn.open = false; }});
   }}
 </script>
-<script src="{a}hero-film.js?v=7" defer></script>
+<!-- Hero-Film (Luefter) entfernt 25.11.2026: Nicky "remove the graphic card at the top" -->
 </body></html>
 '''
 
