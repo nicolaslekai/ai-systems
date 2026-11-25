@@ -245,8 +245,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
 <link rel="stylesheet" href="{a}style.css?v=nl4">
 <link rel="stylesheet" href="{a}nl.css?v=nl4">{f'''
-<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s14">
-<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s14';}})();</script>''' if thema else ""}
+<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s15">
+<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s15';}})();</script>''' if thema else ""}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -318,9 +318,15 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     <h2>{t["sys_h2"]}</h2>
     <p class="lead">{t["sys_lead"]}</p>
   </div>
-  <figure class="nl-system-bild">
-    <img src="{b}system-film-weit.webp" width="2400" height="1870" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
+  <figure class="s3d">
+    <div class="s3d-buehne" data-system3d data-src="{a}system3d/system3d.js?v={s3d_stand("system3d.js")}" data-marken="{marken}">
+      <picture>
+        <source media="(max-width:760px)" srcset="{a}system3d/systembild-hoch_KJ_v011.webp" width="1170" height="690">
+        <img src="{a}system3d/systembild_KJ_v011.webp" width="2400" height="1060" loading="lazy" decoding="async" alt="{esc(t["sys_alt"])}">
+      </picture>
+    </div>
   </figure>
+  <script src="{a}system3d/laden.js?v={s3d_stand("laden.js")}" defer></script>
 </section>
 <section class="tile light bildband next gross">
   <div class="bb-bild">
@@ -419,7 +425,7 @@ if __name__ == "__main__":
             shutil.copytree(PREV / "assets" / d, ROOT / "assets" / d, dirs_exist_ok=True)
         # 3D-Systembild: nur was die Seite laedt (gepackte Szene, Lader, Standbilder), nicht Quelle und Packskript
         (ROOT / "assets/system3d").mkdir(parents=True, exist_ok=True)
-        for f in ["system3d.js", "laden.js", "systembild_KJ_v010.webp", "systembild-hoch_KJ_v010.webp"]:
+        for f in ["system3d.js", "laden.js", "systembild_KJ_v011.webp", "systembild-hoch_KJ_v011.webp"]:
             shutil.copy(PREV / "assets/system3d" / f, ROOT / "assets/system3d" / f)
         shutil.copytree(PREV / "assets/system3d/tex", ROOT / "assets/system3d/tex", dirs_exist_ok=True)   # Bilder fuer Bildschirme und Fotos
         for f in ["style.css", "nl.css", "logo-mark-coral.webp", "koralle-grau.css", "hero-luefter.js", "hero-film.js"]:

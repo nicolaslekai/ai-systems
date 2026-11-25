@@ -44,21 +44,15 @@
    build this as a 3D model … like in the Otter und Stein website"). Szene: assets/system3d/ (tools/system3d_film.py).
    Das Band hat den Grund der Szene (#c3c1c8 = GROUND in system3d.src.js; Lila-Grau des Standbilds, eine Stufe dunkler), deshalb keine Randblende wie bei O&S.
    Die Kamera der Szene passt sich an die Buehne an; Standbilder per object-fit:contain, also ebenfalls ganz. */
-/* 24.11.2026 spaet, Nicky zur 3D-Szene: "i dont like it, lets go back to the image instead" -> wieder das Standbild,
-   ueber die ganze Breite, ohne Bildunterschrift (Szene bleibt in assets/system3d/, wird nicht mehr geladen). */
-.nl-system{padding-bottom:0}
-.nl-system .nl-system-bild{max-width:none;width:100vw;margin:clamp(28px,4vw,48px) 0 0 calc(50% - 50vw)}
-.nl-system .nl-system-bild img{width:100%;height:auto;display:block}
-/* Wie otterstein.ai (Nicky 24.11. 23:33): das Bild blendet oben und unten weich in das Band aus und rutscht am
-   Desktop ein Stueck unter den Textblock. Bild nach oben erweitert (ganzer Monitor, ganze Kamera). */
-.nl-system>.wrap{position:relative;z-index:1}
-.nl-system .nl-system-bild img{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 18%);
-  mask-image:linear-gradient(to bottom,transparent 0,#000 18%)}
-@media(min-width:900px){
-  .nl-system .nl-system-bild{margin-top:clamp(-80px,-4.5vw,-36px)}
-  .nl-system .nl-system-bild img{aspect-ratio:3/2;object-fit:cover;object-position:50% 100%;
-    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 12%);mask-image:linear-gradient(to bottom,transparent 0,#000 12%)}
-}
+/* 25.11.2026, Nicky: "lets use the 3d, it looks nice" -> wieder die 3D-Szene (Stand 4aafe8b, Standbild v011). */
+.tile.light.nl-system{background:#c3c1c8;padding-bottom:0}
+.tile.light.nl-system::after{display:none}   /* der Lichtschein der hellen Baender machte eine Kante ueber der Szene */
+.nl-system .s3d{margin:clamp(12px,2vw,28px) 0 0}
+.nl-system .s3d-buehne{height:clamp(400px,44vw,700px)}
+.nl-system .s3d-buehne img,.nl-system .s3d-buehne canvas{-webkit-mask-image:none;mask-image:none}
+.nl-system .s3d-buehne img{object-fit:contain}
+.nl-system .s3d-marke{color:#4a4d52}
+@media(max-width:760px){.nl-system .s3d-buehne{height:59vw}}
 
 /* Team-Band schlanker (Nicky 24.11.2026: "make this section slimmer"): niedrigeres Bild, Text frueher */
 #team{--bh:min(36vw,calc(80svh - 57px))}
