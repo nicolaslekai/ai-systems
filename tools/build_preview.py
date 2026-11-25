@@ -57,7 +57,7 @@ T = {
    eyebrow="Example · Zulu drinks", h2="20 terabytes of footage. <em>One search box.</em>",
    lead="Zulu makes iced tea, cola and orange soda, and has been filming for years: 1,284 shoots on 20 TB of drives. We built them an AI that watches every clip and notes what is in it: products, people, places, light, mood. Now anyone in the team types what they need and gets the shot with its timecode.",
    punkte=["All 20 TB indexed once, new shoots are added automatically", "Search in plain words, in English or German", "Runs on your own server, the footage stays in house"],
-   app="Zulu · Footage library", stand="20.4 TB · 1,284 shoots · 418,560 clips indexed", treffer="clips", fertig="found in",
+   app="Footage library", stand="20.4 TB · 1,284 shoots · 418,560 clips indexed", treffer="clips", fertig="found in",
    hinweis="Zulu is an invented brand. The search works like the systems we build.",
    alt="Still from the Zulu footage library",
    clips=[("strand", "Summer 24 · Beach", "03:14:22", ["peach iced tea", "laughing", "golden hour", "beach"]),
@@ -68,7 +68,7 @@ T = {
           ("dach", "Night 24 · Rooftop", "04:20:33", ["all four cans", "ice", "night", "party"]),
           ("kuehlschrank", "Morning 24 · Kitchen", "00:47:15", ["peach iced tea", "fridge", "morning sun", "kitchen"]),
           ("spaeti", "City 24 · Corner shop", "02:05:59", ["orange", "cola", "Berlin", "evening"])],
-   fragen=["people laughing with a peach iced tea, golden hour", "cans on ice, close-up", "someone drinking cola outside in Berlin", "orange soda at dusk"]),
+   fragen=["people having fun", "ice cold drink close-up", "sunset", "skateboarding"]),
   weg_h3="The route is always the same.", weg_p="A prototype in days, not months.",
   weg=[
    ("i-gespraech", "ablauf-erstgespraech.webp", "Two flat whites and an open notebook with pencil storyboard thumbnails on a worn walnut table in a loft",
@@ -146,7 +146,7 @@ T = {
    eyebrow="Beispiel · Zulu Getränke", h2="20 Terabyte Footage. <em>Ein Suchfeld.</em>",
    lead="Zulu macht Eistee, Cola und Orangenlimo und dreht seit Jahren: 1.284 Drehs auf 20 TB Festplatten. Wir haben ihnen eine KI gebaut, die jeden Clip ansieht und notiert, was darin ist: Produkte, Menschen, Orte, Licht, Stimmung. Jetzt tippt jeder im Team, was er braucht, und bekommt die Einstellung mit Timecode.",
    punkte=["Alle 20 TB einmal erfasst, neue Drehs kommen von selbst dazu", "Suche in normalen Worten, auf Deutsch oder Englisch", "Läuft auf Ihrem Server, das Material bleibt im Haus"],
-   app="Zulu · Footage-Archiv", stand="20,4 TB · 1.284 Drehs · 418.560 Clips erfasst", treffer="Clips", fertig="gefunden in",
+   app="Footage-Archiv", stand="20,4 TB · 1.284 Drehs · 418.560 Clips erfasst", treffer="Clips", fertig="gefunden in",
    hinweis="Zulu ist eine erfundene Marke. Die Suche funktioniert wie die Systeme, die wir bauen.",
    alt="Standbild aus dem Zulu-Footage-Archiv",
    clips=[("strand", "Sommer 24 · Strand", "03:14:22", ["Pfirsich-Eistee", "Lachen", "goldenes Licht", "Strand"]),
@@ -157,7 +157,7 @@ T = {
           ("dach", "Nacht 24 · Dachterrasse", "04:20:33", ["alle vier Dosen", "Eis", "Nacht", "Party"]),
           ("kuehlschrank", "Morgen 24 · Küche", "00:47:15", ["Pfirsich-Eistee", "Kühlschrank", "Morgensonne", "Küche"]),
           ("spaeti", "Stadt 24 · Späti", "02:05:59", ["Orange", "Cola", "Berlin", "Abend"])],
-   fragen=["Leute lachen mit Pfirsich-Eistee, goldenes Licht", "Dosen auf Eis, Nahaufnahme", "jemand trinkt Cola draußen in Berlin", "Orangenlimo in der Dämmerung"]),
+   fragen=["Leute haben Spaß", "eiskaltes Getränk, Nahaufnahme", "Sonnenuntergang", "Skateboard"]),
   weg_h3="Der Weg ist immer derselbe.", weg_p="Prototyp in Tagen, nicht Monaten.",
   weg=[
    ("i-gespraech", "ablauf-erstgespraech.webp", "Zwei Flat Whites und ein offenes Notizbuch mit Storyboard-Skizzen auf einem alten Nussholztisch im Loft",
@@ -220,12 +220,20 @@ def s3d_stand(name):
     import hashlib
     return hashlib.sha256((PREV / "assets/system3d" / name).read_bytes()).hexdigest()[:10]
 
+# Nicky 25.11.2026: "make sure that whatever we're searching for isn't too specific … people having fun or ice cold drink
+# close-up … has to be simple searches" -> kurze Suchen, wie man sie wirklich tippt
 ZS_TREFFER = [
-    {"strand": (97, [0, 1, 2]), "kuehlschrank": (84, [0, 2])},
-    {"giessen": (95, [2, 3]), "packshot": (93, [0, 1]), "dach": (88, [0, 1])},
-    {"skatepark": (96, [0, 2]), "spaeti": (91, [1, 2])},
-    {"festival": (95, [0, 2]), "spaeti": (89, [0, 3])},
+    {"strand": (96, [1]), "festival": (93, [1]), "dach": (90, [3])},
+    {"giessen": (95, [2, 3]), "packshot": (92, [1]), "kuehlschrank": (84, [1])},
+    {"strand": (95, [2]), "festival": (91, [2]), "spaeti": (86, [3])},
+    {"skatepark": (97, [1])},
 ]
+# Zulu-Wortmarke wie auf den Dosen: Sonne + ZULU in runden, fetten Grossbuchstaben (Nicky: "brand the window … with the zulu logo")
+ZULU_LOGO = ('<svg class="zs-logo" viewBox="0 0 104 28" role="img" aria-label="ZULU"><g fill="none" stroke="currentColor" '
+  'stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M25 5h12L25 23h12"/><path d="M44 5v11a6.5 6.5 0 0 0 13 0V5"/>'
+  '<path d="M65 5v18h10"/><path d="M83 5v11a6.5 6.5 0 0 0 13 0V5"/></g><circle cx="9" cy="14" r="4.2" fill="currentColor"/>'
+  '<g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3.5v2.3M9 22.2v2.3M-1.5 14h2.3M16.2 14h2.3'
+  'M1.6 6.6l1.6 1.6M14.8 19.8l1.6 1.6M1.6 21.4l1.6-1.6M14.8 8.2l1.6-1.6"/></g></svg>')
 
 
 # Apps-Band (Nicky 25.11.2026 nach dem Wella-Film: "top five … sixth … an audit … Every company's software needs are
@@ -308,7 +316,7 @@ def zulu_suche(t, a, b):
     <ul class="zs-punkte">{punkte}</ul>
   </div>
   <figure class="zs-app" data-fragen="{esc(fragen)}" data-treffer="{esc(z["treffer"])}" data-fertig="{esc(z["fertig"])}">
-    <div class="zs-leiste"><span class="zs-punkte3" aria-hidden="true"><i></i><i></i><i></i></span><span class="zs-titel">{z["app"]}</span><span class="zs-stand">{z["stand"]}</span></div>
+    <div class="zs-leiste"><span class="zs-punkte3" aria-hidden="true"><i></i><i></i><i></i></span>{ZULU_LOGO}<span class="zs-titel">{z["app"]}</span><span class="zs-stand">{z["stand"]}</span></div>
     <div class="zs-such"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><span class="zs-eingabe" aria-live="polite">{esc(z["fragen"][0])}</span><span class="zs-cursor" aria-hidden="true"></span><span class="zs-zahl"></span></div>
     <ul class="zs-raster">{clips}
     </ul>
@@ -379,8 +387,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
 <link rel="stylesheet" href="{a}style.css?v=nl4">
 <link rel="stylesheet" href="{a}nl.css?v=nl4">{f'''
-<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s17">
-<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s17';}})();</script>''' if thema else ""}
+<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s18">
+<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s18';}})();</script>''' if thema else ""}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>

@@ -167,3 +167,11 @@
 .app-sechs .mehr{color:#ff7f61}
 @media(max-width:980px){.app-raster{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.app-raster{grid-template-columns:1fr}}
+
+/* Zulu-Fenster in der Markenfarbe der Orange-Dose, mit Wortmarke (Nicky 25.11.2026: "brand the window … call it zulu") */
+.zs-app .zs-leiste{background:#f07a22;border-bottom:0;color:#fff}
+.zs-app .zs-punkte3 i{background:rgba(255,255,255,.45)}
+.zs-logo{height:26px;width:auto;color:#fff;display:block;overflow:visible}
+.zs-app .zs-titel{color:#fff;font-weight:600;opacity:.92}
+.zs-app .zs-stand{color:rgba(255,255,255,.85)}
+.zs-app .zs-leiste{padding-top:14px;padding-bottom:14px}
