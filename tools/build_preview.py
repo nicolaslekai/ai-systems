@@ -513,7 +513,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     <div><h3>{t["k_h3"]}</h3><ul>{li}</ul></div>
   </div>
 </div></section>
-{regie}<footer class="tile dark"><div class="wrap">
+<footer class="tile dark"><div class="wrap"><!-- Regie-Band entfernt 25.11.2026 (Nicky: "remove this") -->
   <a class="brand fuss-marke" href="./" aria-label="Coralrooms">{brand(a)}</a>
   <div class="foot">
     <span>© 2026 Coralrooms · {t["k_ort"]}</span>
