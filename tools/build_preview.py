@@ -40,7 +40,7 @@ T = {
   lead="We build apps for the way your company works and automate whatever repeats every week. A human approves anything that goes out. You work directly with the people who build it.",
   ghost="What we build",
   film_label="Watch the film · 1:14", film_name="Film: five apps we build for your social media team",
-  film_src="coralrooms-apps-film_KJ_v005.mp4", film_poster="coralrooms-apps-film-poster_KJ_v004.jpg", film_close="Close film",
+  film_src="coralrooms-apps-film_KJ_v005.mp4", film_poster="coralrooms-apps-film-poster_KJ_v005.jpg", film_close="Close film",
   themen_h2="How an app <em>gets to you.</em>",
   themen_lead="Whatever we build takes the same route: from the first conversation to something that runs in your business.",
   bauten=[
@@ -130,7 +130,7 @@ T = {
   lead="Wir bauen Apps für die Abläufe in Ihrem Betrieb und automatisieren, was sich jede Woche wiederholt. Was nach außen geht, gibt ein Mensch frei. Sie arbeiten direkt mit denen, die es bauen.",
   ghost="Was wir bauen",
   film_label="Film ansehen · 1:14", film_name="Film: fünf Apps, die wir für Ihr Social-Media-Team bauen",
-  film_src="coralrooms-apps-film_KJ_v005.mp4", film_poster="coralrooms-apps-film-poster_KJ_v004.jpg", film_close="Film schließen",
+  film_src="coralrooms-apps-film_KJ_v005.mp4", film_poster="coralrooms-apps-film-poster_KJ_v005.jpg", film_close="Film schließen",
   themen_h2="Wie eine App <em>zu Ihnen kommt.</em>",
   themen_lead="Was wir bauen, geht immer denselben Weg: vom ersten Gespräch bis zu etwas, das bei Ihnen läuft.",
   bauten=[
