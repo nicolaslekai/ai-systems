@@ -41,10 +41,21 @@ IPAD = ("Image 1 is the photograph: keep the room, the light, all five people, t
   "grid of six bright photos: the four ZULU cans on ice, a peach ZULU can on a sunny beach, friends at a festival "
   "holding orange ZULU cans, a ZULU can pouring into a glass of ice. The cans on screen match Image 3. " + LOOK + " 16:9.")
 
+# Nicky 25.11. 17:17 zu v004: "a bit more detailed and more black like the library zulu thing" -> iPad zeigt die dunkle
+# ZULU-Footage-Bibliothek der Website (Image 3 = Bildschirmfoto der Website-Demo), Shirt bleibt zerknittert (Image 1 = v004)
+IPAD2 = ("Image 1 is the photograph: keep the room, the light, all five people, their faces, poses, clothes and the crumpled "
+  "CORALROOMS t-shirt exactly. Image 2 is the logo on the t-shirt, matching line for line. Image 3 is the app on the iPad "
+  "screen: a dark near-black interface with an orange title bar carrying the ZULU logo and the words Footage library, a "
+  "search field reading people having fun, and below it a detailed grid of eight photo cards with timecodes, small grey "
+  "tags and coral highlight frames on three matching cards. One change: the iPad screen shows exactly this app from "
+  "Image 3, sharp, bright on its dark background, with fine readable detail. " + LOOK + " 16:9.")
+
 if __name__ == "__main__":
     art = sys.argv[1]
     if art == "breit":
         print(G.rendere("handover-breit", BREIT, "begleit-quelle,coralrooms-marke", n=2, w=3840, h=2160))
+    elif art == "ipad2":
+        print(G.rendere("handover-ipad", IPAD2, "handover-ipad,coralrooms-marke,zulu-app-ui", n=2, w=3840, h=2160))
     elif art == "ipad":
         print(G.rendere("handover-ipad", IPAD, "handover-breit,coralrooms-marke,zulu-dosen", n=2, w=3840, h=2160))
     else:
