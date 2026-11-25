@@ -340,8 +340,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
         {"@type": "Person", "@id": SITE + "#mirko", "name": "Mirko Hampel", "jobTitle": "Producer, post-production and VFX", "worksFor": {"@id": SITE + "#practice"}},
         {"@type": "ProfessionalService", "@id": SITE + "#practice", "name": "Coralrooms", "alternateName": "Coralrooms · custom apps and AI automation",
          "url": SITE, "email": "mailto:" + MAIL, "founder": [{"@id": SITE + "#nicolas"}, {"@id": SITE + "#mirko"}],
-         "areaServed": ["DE", "AT", "CH", "GB"], "description": t["desc"]},
-        {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": x}} for q, x in t["faq"]]}]}
+         "areaServed": ["DE", "AT", "CH", "GB"], "description": t["desc"]}]}   # FAQPage entfernt mit dem FAQ-Band (Nicky 25.11.)
     nav = "".join(f'<a href="{h}">{l}</a>' for h, l in t["nav"])
     bauten = "".join(f'''
     <a class="bau" href="#kontakt">
@@ -499,11 +498,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   <div class="cards team nl-zwei">{cards}
   </div>
 </div></section>
-<section class="tile light" id="fragen"><div class="wrap">
-  <h2>{t["faq_h2"]}</h2>
-  <div class="faq">{faq}
-  </div>
-</div></section>
+<!-- FAQ-Band entfernt 25.11.2026 (Nicky: "remove this please"); Texte bleiben in t["faq"] -->
 <section id="kontakt" class="tile dark kontakt next"><div class="wrap">
   <h2>{t["k_h2"]}</h2>
   <div class="box">
