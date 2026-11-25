@@ -25,12 +25,12 @@ SITE = "https://consulting.nicolaslekai.com/"
 # Nicolas' Marke: der isometrische offene Rahmen in Orange (assets/logo-mark-orange.png) + Wortmarke
 def brand(a):
     return (f'<span class="nl-brand"><img class="nl-mark" src="{a}logo-mark-coral.webp" width="512" height="384" alt="">'
-            '<span>MACHINEROOMS</span></span>')
+            '<span>CORALROOMS</span></span>')
 
 T = {
  "en": dict(
   lang="en", other="de", other_label="DE", other_long="Deutsch", other_title="Deutsche Fassung",
-  title="Machinerooms — custom apps and AI automation · film, post and AI",
+  title="Coralrooms — custom apps and AI automation · film, post and AI",
   desc="We build custom apps and AI automation that simplify how a company works, from a searchable footage library to on-brand images. A human approves what goes out. Larger step: your own AI operating system. Munich · London.",
   nav=[("#themen", "What we build"), ("#arbeitsweise", "How we work"), ("#team", "About")],
   cta="Start a project", also="Also",
@@ -120,7 +120,7 @@ T = {
  ),
  "de": dict(
   lang="de", other="en", other_label="EN", other_long="English", other_title="English version",
-  title="Machinerooms — Apps nach Maß und KI-Automatisierung · Film, Post und KI",
+  title="Coralrooms — Apps nach Maß und KI-Automatisierung · Film, Post und KI",
   desc="Wir bauen Apps nach Maß und KI-Automatisierung, die die Abläufe eines Betriebs vereinfachen, vom durchsuchbaren Footage-Archiv bis zu Bildern im Corporate Design. Was nach außen geht, gibt ein Mensch frei. Der größere Schritt: ein eigenes KI-Betriebssystem. München · London.",
   nav=[("#themen", "Was wir bauen"), ("#arbeitsweise", "Wie wir arbeiten"), ("#team", "Über uns")],
   cta="Projekt anfragen", also="Außerdem",
@@ -265,7 +265,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
          "jobTitle": "AI Systems Architect", "email": "mailto:" + MAIL, "sameAs": ["https://nicolaslekai.com/"],
          "worksFor": {"@id": SITE + "#practice"}},
         {"@type": "Person", "@id": SITE + "#mirko", "name": "Mirko Hampel", "jobTitle": "Producer, post-production and VFX", "worksFor": {"@id": SITE + "#practice"}},
-        {"@type": "ProfessionalService", "@id": SITE + "#practice", "name": "Machinerooms", "alternateName": "Machinerooms · custom apps and AI automation",
+        {"@type": "ProfessionalService", "@id": SITE + "#practice", "name": "Coralrooms", "alternateName": "Coralrooms · custom apps and AI automation",
          "url": SITE, "email": "mailto:" + MAIL, "founder": [{"@id": SITE + "#nicolas"}, {"@id": SITE + "#mirko"}],
          "areaServed": ["DE", "AT", "CH", "GB"], "description": t["desc"]},
         {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": x}} for q, x in t["faq"]]}]}
@@ -324,7 +324,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <body>
 {SPRITE}
 <header class="top"><div class="wrap">
-  <a class="brand" href="./" aria-label="Machinerooms">{brand(a)}</a>
+  <a class="brand" href="./" aria-label="Coralrooms">{brand(a)}</a>
   <nav class="main" aria-label="{t["mainnav"]}">{nav}<a class="sprache" href="{other_href}" hreflang="{t["other"]}" lang="{t["other"]}" title="{t["other_title"]}">{t["other_label"]}</a><a class="btn primary nav-cta" href="#kontakt">{t["cta"]}</a></nav>
   <details class="menue">
     <summary aria-label="{t["menu"]}"><span class="burger" aria-hidden="true"><i></i><i></i><i></i></span></summary>
@@ -462,9 +462,9 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   </div>
 </div></section>
 {regie}<footer class="tile dark"><div class="wrap">
-  <a class="brand fuss-marke" href="./" aria-label="Machinerooms">{brand(a)}</a>
+  <a class="brand fuss-marke" href="./" aria-label="Coralrooms">{brand(a)}</a>
   <div class="foot">
-    <span>© 2026 Machinerooms · {t["k_ort"]}</span>
+    <span>© 2026 Coralrooms · {t["k_ort"]}</span>
     <a href="./">{t["f_home"]}</a><a href="https://nicolaslekai.com/">{t["f_dir"]}</a><a href="mailto:{MAIL}">{MAIL}</a>
   </div>
 </div></footer>
