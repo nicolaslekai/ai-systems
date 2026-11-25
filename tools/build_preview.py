@@ -52,6 +52,23 @@ T = {
     "The larger step: your own AI operating system", "When the apps grow together: all models and tools under one roof, costs in view, a small assistant for every role, an approval before anything goes out."),
   ],
   bau_mehr="Talk to us →",
+  # Beispiel Footage-Suche (Nicky 25.11.2026): erfundene Getraenkemarke Zulu, 20 TB Drehmaterial, per Beschreibung durchsuchbar
+  zs=dict(
+   eyebrow="Example · Zulu drinks", h2="20 terabytes of footage. <em>One search box.</em>",
+   lead="Zulu makes iced tea, cola and orange soda, and has been filming for years: 1,284 shoots on 20 TB of drives. We built them an AI that watches every clip and notes what is in it: products, people, places, light, mood. Now anyone in the team types what they need and gets the shot with its timecode.",
+   punkte=["All 20 TB indexed once, new shoots are added automatically", "Search in plain words, in English or German", "Runs on your own server, the footage stays in house"],
+   app="Zulu · Footage library", stand="20.4 TB · 1,284 shoots · 418,560 clips indexed", treffer="clips", fertig="found in",
+   hinweis="Zulu is an invented brand. The search works like the systems we build.",
+   alt="Still from the Zulu footage library",
+   clips=[("strand", "Summer 24 · Beach", "03:14:22", ["peach iced tea", "laughing", "golden hour", "beach"]),
+          ("skatepark", "City 23 · Skatepark", "01:02:47", ["cola", "skateboard", "Berlin", "overcast"]),
+          ("giessen", "Product 24 · Pour", "00:00:41", ["lemon iced tea", "pour", "ice", "macro"]),
+          ("packshot", "Product 24 · Packshot", "00:12:08", ["all four cans", "ice", "splash", "studio"]),
+          ("festival", "Summer 23 · Festival", "02:41:10", ["orange", "crowd", "dusk", "confetti"]),
+          ("dach", "Night 24 · Rooftop", "04:20:33", ["all four cans", "ice", "night", "party"]),
+          ("kuehlschrank", "Morning 24 · Kitchen", "00:47:15", ["peach iced tea", "fridge", "morning sun", "kitchen"]),
+          ("spaeti", "City 24 · Corner shop", "02:05:59", ["orange", "cola", "Berlin", "evening"])],
+   fragen=["people laughing with a peach iced tea, golden hour", "cans on ice, close-up", "someone drinking cola outside in Berlin", "orange soda at dusk"]),
   weg_h3="The route is always the same.", weg_p="A prototype in days, not months.",
   weg=[
    ("i-gespraech", "ablauf-erstgespraech.webp", "Two flat whites and an open notebook with pencil storyboard thumbnails on a worn walnut table in a loft",
@@ -125,6 +142,22 @@ T = {
     "Der größere Schritt: Ihr eigenes KI-Betriebssystem", "Wenn die Apps zusammenwachsen: alle Modelle und Werkzeuge unter einer Haube, die Kosten im Blick, ein kleiner Assistent für jede Rolle, eine Freigabe, bevor etwas nach außen geht."),
   ],
   bau_mehr="Sprechen Sie uns an →",
+  zs=dict(
+   eyebrow="Beispiel · Zulu Getränke", h2="20 Terabyte Footage. <em>Ein Suchfeld.</em>",
+   lead="Zulu macht Eistee, Cola und Orangenlimo und dreht seit Jahren: 1.284 Drehs auf 20 TB Festplatten. Wir haben ihnen eine KI gebaut, die jeden Clip ansieht und notiert, was darin ist: Produkte, Menschen, Orte, Licht, Stimmung. Jetzt tippt jeder im Team, was er braucht, und bekommt die Einstellung mit Timecode.",
+   punkte=["Alle 20 TB einmal erfasst, neue Drehs kommen von selbst dazu", "Suche in normalen Worten, auf Deutsch oder Englisch", "Läuft auf Ihrem Server, das Material bleibt im Haus"],
+   app="Zulu · Footage-Archiv", stand="20,4 TB · 1.284 Drehs · 418.560 Clips erfasst", treffer="Clips", fertig="gefunden in",
+   hinweis="Zulu ist eine erfundene Marke. Die Suche funktioniert wie die Systeme, die wir bauen.",
+   alt="Standbild aus dem Zulu-Footage-Archiv",
+   clips=[("strand", "Sommer 24 · Strand", "03:14:22", ["Pfirsich-Eistee", "Lachen", "goldenes Licht", "Strand"]),
+          ("skatepark", "Stadt 23 · Skatepark", "01:02:47", ["Cola", "Skateboard", "Berlin", "bewölkt"]),
+          ("giessen", "Produkt 24 · Eingießen", "00:00:41", ["Zitronen-Eistee", "Eingießen", "Eis", "Makro"]),
+          ("packshot", "Produkt 24 · Packshot", "00:12:08", ["alle vier Dosen", "Eis", "Spritzer", "Studio"]),
+          ("festival", "Sommer 23 · Festival", "02:41:10", ["Orange", "Menge", "Dämmerung", "Konfetti"]),
+          ("dach", "Nacht 24 · Dachterrasse", "04:20:33", ["alle vier Dosen", "Eis", "Nacht", "Party"]),
+          ("kuehlschrank", "Morgen 24 · Küche", "00:47:15", ["Pfirsich-Eistee", "Kühlschrank", "Morgensonne", "Küche"]),
+          ("spaeti", "Stadt 24 · Späti", "02:05:59", ["Orange", "Cola", "Berlin", "Abend"])],
+   fragen=["Leute lachen mit Pfirsich-Eistee, goldenes Licht", "Dosen auf Eis, Nahaufnahme", "jemand trinkt Cola draußen in Berlin", "Orangenlimo in der Dämmerung"]),
   weg_h3="Der Weg ist immer derselbe.", weg_p="Prototyp in Tagen, nicht Monaten.",
   weg=[
    ("i-gespraech", "ablauf-erstgespraech.webp", "Zwei Flat Whites und ein offenes Notizbuch mit Storyboard-Skizzen auf einem alten Nussholztisch im Loft",
@@ -187,6 +220,43 @@ def s3d_stand(name):
     import hashlib
     return hashlib.sha256((PREV / "assets/system3d" / name).read_bytes()).hexdigest()[:10]
 
+ZS_TREFFER = [
+    {"strand": (97, [0, 1, 2]), "kuehlschrank": (84, [0, 2])},
+    {"giessen": (95, [2, 3]), "packshot": (93, [0, 1]), "dach": (88, [0, 1])},
+    {"skatepark": (96, [0, 2]), "spaeti": (91, [1, 2])},
+    {"festival": (95, [0, 2]), "spaeti": (89, [0, 3])},
+]
+
+
+def zulu_suche(t, a, b):
+    z = t["zs"]
+    fragen = json.dumps([{"q": q, "t": {k: [v[0], v[1]] for k, v in tr.items()}} for q, tr in zip(z["fragen"], ZS_TREFFER)], ensure_ascii=False)
+    clips = "".join(f'''
+        <li class="zs-clip" data-id="{cid}">
+          <span class="zs-bild"><img src="{b}zulu/zulu-{cid}_KJ_v001.webp" width="640" height="360" alt="{esc(z["alt"])}: {esc(", ".join(tags))}" loading="lazy" decoding="async"><span class="zs-tc">{tc}</span><span class="zs-score"></span></span>
+          <span class="zs-dreh">{dreh}</span>
+          <span class="zs-tags">{"".join(f'<span>{esc(x)}</span>' for x in tags)}</span>
+        </li>''' for cid, dreh, tc, tags in z["clips"])
+    punkte = "".join(f"<li>{x}</li>" for x in z["punkte"])
+    return f'''<section class="tile dark zs" id="beispiel"><div class="wrap">
+  <div class="zs-kopf">
+    <div class="eyebrow">{z["eyebrow"]}</div>
+    <h2>{z["h2"]}</h2>
+    <p class="lead">{z["lead"]}</p>
+    <ul class="zs-punkte">{punkte}</ul>
+  </div>
+  <figure class="zs-app" data-fragen="{esc(fragen)}" data-treffer="{esc(z["treffer"])}" data-fertig="{esc(z["fertig"])}">
+    <div class="zs-leiste"><span class="zs-punkte3" aria-hidden="true"><i></i><i></i><i></i></span><span class="zs-titel">{z["app"]}</span><span class="zs-stand">{z["stand"]}</span></div>
+    <div class="zs-such"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><span class="zs-eingabe" aria-live="polite">{esc(z["fragen"][0])}</span><span class="zs-cursor" aria-hidden="true"></span><span class="zs-zahl"></span></div>
+    <ul class="zs-raster">{clips}
+    </ul>
+    <figcaption>{z["hinweis"]}</figcaption>
+  </figure>
+</div></section>
+<script src="{a}zulu-suche.js?v=1" defer></script>
+'''
+
+
 def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     a, b, r = base + "assets/", base + "assets/bilder/", root + "assets/"
     url = SITE + ("de/" if t["lang"] == "de" else "")
@@ -247,8 +317,8 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
 <link rel="stylesheet" href="{a}style.css?v=nl4">
 <link rel="stylesheet" href="{a}nl.css?v=nl4">{f'''
-<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s15">
-<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s15';}})();</script>''' if thema else ""}
+<link rel="stylesheet" id="thema" href="{a}{thema}.css?v=s16">
+<script>(function(){{var m=location.search.match(/thema=(\\w+)/);if(m)document.getElementById('thema').href='{a}'+m[1]+'.css?v=s16';}})();</script>''' if thema else ""}
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -301,7 +371,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   <ol class="weg">{weg}
   </ol>
 </div></section>
-<section class="tile dark team-bild begleit" id="begleitung">
+{zulu_suche(t, a, b)}<section class="tile dark team-bild begleit" id="begleitung">
   <picture>
     <source media="(max-width:760px)" srcset="{b}begleitung-runde-hoch.webp" width="1100" height="1375">
     <img src="{b}begleitung-runde.webp" width="2400" height="1340" alt="{esc(t["beg_alt"])}" loading="lazy" decoding="async">
@@ -430,7 +500,7 @@ if __name__ == "__main__":
         for f in ["system3d.js", "laden.js", "systembild_KJ_v011.webp", "systembild-hoch_KJ_v011.webp"]:
             shutil.copy(PREV / "assets/system3d" / f, ROOT / "assets/system3d" / f)
         shutil.copytree(PREV / "assets/system3d/tex", ROOT / "assets/system3d/tex", dirs_exist_ok=True)   # Bilder fuer Bildschirme und Fotos
-        for f in ["style.css", "nl.css", "logo-mark-coral.webp", "koralle-grau.css", "hero-luefter.js", "hero-film.js"]:
+        for f in ["style.css", "nl.css", "logo-mark-coral.webp", "koralle-grau.css", "hero-luefter.js", "hero-film.js", "zulu-suche.js"]:
             shutil.copy(PREV / "assets" / f, ROOT / "assets" / f)
         (ROOT / "index.html").write_text(page(T["en"], "", "", "de/", "index,follow", thema="koralle-grau"))
         (ROOT / "de").mkdir(exist_ok=True)
