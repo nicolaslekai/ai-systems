@@ -5,7 +5,7 @@
    Zwei Filme, 5 s, Kamera steht, nur die Luefter drehen; erstes = letztes Bild = Originalstandbild, also eine nahtlose
    Schleife (tools/rendern_herofilm.py, steht-breit / steht-handy). tools/hero_frames.py legt die Einzelbilder nach
    assets/bilder/hero-film/<breit|handy>/. Scrollen nach unten dreht vorwaerts, nach oben zurueck, mit weichem Auslauf;
-   ohne Scrollen drehen sie langsam weiter. Das Bild selbst bewegt sich nicht (kein Zoom, kein Versatz, kein Abdunkeln).
+   ohne Scrollen stehen sie (Nicky 25.11.: "we only want the blades to move when i scroll"). Das Bild selbst bewegt sich nicht (kein Zoom, kein Versatz, kein Abdunkeln).
    "Bewegung reduzieren", Datensparmodus, kein Canvas oder kein JavaScript: das Standbild bleibt. */
 (function () {
   'use strict';
@@ -16,7 +16,7 @@
   if (navigator.connection && navigator.connection.saveData) return;
 
   const FILME = { breit: { n: 72, w: 1600, h: 900 }, handy: { n: 72, w: 900, h: 900 } };
-  const LEERLAUF = 7;        // Bilder pro Sekunde ohne Scrollen (Film laeuft mit 24: gut ein Viertel Tempo)
+  const LEERLAUF = 0;        // Nicky 25.11. 10:37: "we only want the blades to move when i scroll" -> kein Grunddrehen mehr
   const PRO_PX = 0.22;       // Bilder pro gescrolltem Pixel
   const handy = window.matchMedia('(max-width: 900px)');
   const basis = (img.getAttribute('src') || '').replace(/[^/]*$/, '') + 'hero-film/';

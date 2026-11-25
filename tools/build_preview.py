@@ -407,7 +407,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
     document.addEventListener('click', function (ev) {{ if (mn.open && (!mn.contains(ev.target) || ev.target.closest('a'))) mn.open = false; }});
   }}
 </script>
-<script src="{a}hero-film.js?v=3" defer></script>
+<script src="{a}hero-film.js?v=4" defer></script>
 </body></html>
 '''
 
