@@ -147,3 +147,23 @@
 @media(max-width:900px){.zs-raster{grid-template-columns:repeat(2,minmax(0,1fr))}.zs-punkte{grid-template-columns:1fr}.zs-stand{display:none}}
 @media(max-width:520px){.zs-eingabe{white-space:normal;line-height:1.35}.zs-raster{padding:14px;gap:14px 10px}.zs-such{margin:14px 14px 0;padding:12px 14px}.zs-zahl{display:none}
   .zs-tags span:nth-child(n+4){display:none}}
+
+/* Apps-Band (Nicky 25.11.2026): fuenf Apps + die sechste "Ihre" mit Audit, Beispielmarken ZULU und NORROW */
+.apps .lead{max-width:760px}
+.app-raster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px);margin-top:clamp(28px,3.4vw,48px)}
+.app-karte{display:flex;flex-direction:column;background:#f3f3f4;border-radius:var(--r,18px);overflow:hidden}
+.app-karte img{width:100%;height:auto;max-height:none;aspect-ratio:3/2;object-fit:cover;display:block;flex:none}
+.app-text{display:flex;flex-direction:column;gap:8px;padding:clamp(18px,2vw,26px)}
+.app-name{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6e7378}
+.app-name b{color:#ff7f61;margin-right:4px}
+.app-karte h3{font-size:clamp(20px,1.7vw,24px);line-height:1.16;letter-spacing:-.02em;margin:0}
+.app-karte p{font-size:16px;line-height:1.45;color:#3a3d42;margin:0}
+.app-karte .mehr{font-size:16px;font-weight:700;color:#e8603f;margin-top:4px;text-decoration:none}
+.app-karte .mehr:hover{text-decoration:underline}
+.app-sechs{background:#1c1c1e;color:#f0efec}
+.app-sechs .app-name{color:#c7cacf}
+.app-sechs h3 em{color:#ff7f61;font-style:normal}
+.app-sechs p{color:#c7cacf}
+.app-sechs .mehr{color:#ff7f61}
+@media(max-width:980px){.app-raster{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.app-raster{grid-template-columns:1fr}}

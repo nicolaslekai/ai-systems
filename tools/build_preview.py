@@ -228,6 +228,68 @@ ZS_TREFFER = [
 ]
 
 
+# Apps-Band (Nicky 25.11.2026 nach dem Wella-Film: "top five … sixth … an audit … Every company's software needs are
+# different. We build and customize this for you."; PDF exports/coralrooms-apps_KJ_v001.pdf freigegeben "that s all good").
+# Beispielmarken ZULU (Getraenke) und NORROW (Laufschuhe), erfunden. Bilder: tools/rendern_produkte.py -> assets/bilder/apps/
+APPS = {
+ "en": dict(eyebrow="Apps we build", h2="Five apps to start from. <em>The sixth is built for you.</em>",
+  lead="Most of our projects begin with one of these five. Shown here with two invented brands: ZULU drinks and NORROW running shoes.",
+  karten=[
+   ("archiv", "Footage Library", "Every shot you own, found in seconds.", "Jev tags every photo and every frame: product, people, place, light, mood. Then you search the way you talk: “fruity, outdoors, water”.", ("#beispiel", "See it working →"),
+    "A monitor in a dark post suite shows a media library searched for fruity, outdoors, water: summer photos by a lake and the sea with ZULU cans, a can of ZULU peach iced tea on the desk"),
+   ("plakat", "Poster Studio", "Out-of-home posters, on brand every time.", "Type the line, pick a photo, and every format comes out ready: bus shelter, billboard, digital screen.", None,
+    "A bus shelter and a large digital billboard on a wet street at blue hour, both showing a runner and a ZULU orange can under the line Run on orange"),
+   ("social", "Social Autopilot", "One campaign, a month of posts.", "Cut-downs, captions in every language and a weekly plan, ready for a person to approve.", None,
+    "Five phones in a row on a pale table, each showing a different vertical post from one ZULU summer campaign, a ZULU can and a NORROW running shoe above them"),
+   ("schnitt", "Edit Room", "The first cut is ready before the editor sits down.", "Type the brief, get the best takes cut with music, and hand the timeline to your editor.", None,
+    "An empty edit suite in a brick loft at dusk, the monitor showing a timeline and a runner leaping over a forest stream, a coral desk lamp glowing"),
+   ("packshot", "Packshot Studio", "The product anywhere, without a new shoot.", "Every image is checked against the real product, so the label is always right.", None,
+    "Six prints pinned to a white wall, each showing the same ZULU orange can in another setting: oranges, a mountain stream, marble, a pool, desert earth, next to a NORROW shoe"),
+  ],
+  sechs=("audit", "Yours", "Every company's software needs are different. <em>We build and customise this for you.</em>",
+   "We start with an audit: where do your team's hours go? Then a prototype on your own material, in weeks.", ("#kontakt", "Book an audit →"),
+   "Two people lean over a long paper process map with sticky notes on a wooden workshop table, a whiteboard with sketched boxes behind them")),
+ "de": dict(eyebrow="Apps, die wir bauen", h2="Fünf Apps zum Starten. <em>Die sechste bauen wir für Sie.</em>",
+  lead="Die meisten unserer Projekte beginnen mit einer dieser fünf. Gezeigt an zwei erfundenen Marken: ZULU Getränke und NORROW Laufschuhe.",
+  karten=[
+   ("archiv", "Footage-Archiv", "Jede Aufnahme, die Sie haben, in Sekunden gefunden.", "Jev verschlagwortet jedes Foto und jedes Filmbild: Produkt, Menschen, Ort, Licht, Stimmung. Dann suchen Sie, wie Sie sprechen: „fruchtig, draußen, Wasser“.", ("#beispiel", "So sieht es aus →"),
+    "Ein Monitor in einem dunklen Schnittraum zeigt ein Medienarchiv mit der Suche fruchtig, draußen, Wasser: Sommerfotos am See und am Meer mit ZULU-Dosen, auf dem Tisch eine Dose ZULU Pfirsich-Eistee"),
+   ("plakat", "Plakat-Studio", "Außenwerbung, jedes Mal markengerecht.", "Zeile tippen, Foto wählen, und jedes Format kommt fertig heraus: Wartehalle, Großfläche, digitaler Screen.", None,
+    "Eine Wartehalle und eine große digitale Werbefläche an einer nassen Straße zur blauen Stunde, beide zeigen einen Läufer und eine ZULU-Orange-Dose unter der Zeile Run on orange"),
+   ("social", "Social-Autopilot", "Eine Kampagne, ein Monat Posts.", "Schnittfassungen, Untertitel in jeder Sprache und ein Wochenplan, fertig zur Freigabe durch einen Menschen.", None,
+    "Fünf Handys in einer Reihe auf einem hellen Tisch, jedes mit einem anderen Hochformat-Post aus einer ZULU-Sommerkampagne, darüber eine ZULU-Dose und ein NORROW-Laufschuh"),
+   ("schnitt", "Schnittraum", "Der erste Schnitt steht, bevor der Cutter sich hinsetzt.", "Briefing tippen, die besten Takes mit Musik geschnitten bekommen, Timeline an den Cutter übergeben.", None,
+    "Ein leerer Schnittraum in einem Backstein-Loft in der Dämmerung, auf dem Monitor eine Timeline und ein Läufer, der über einen Waldbach springt, eine Schreibtischlampe in Koralle leuchtet"),
+   ("packshot", "Packshot-Studio", "Das Produkt überall, ohne neuen Dreh.", "Jedes Bild wird mit dem echten Produkt abgeglichen, damit das Etikett immer stimmt.", None,
+    "Sechs Abzüge an einer weißen Wand, jeder zeigt dieselbe ZULU-Orange-Dose in anderer Umgebung: Orangen, Gebirgsbach, Marmor, Pool, Wüstenboden, neben einem NORROW-Schuh"),
+  ],
+  sechs=("audit", "Ihre", "Jedes Unternehmen braucht andere Software. <em>Wir bauen und passen sie für Sie an.</em>",
+   "Wir beginnen mit einem Audit: Wo gehen die Stunden Ihres Teams hin? Dann ein Prototyp mit Ihrem eigenen Material, in Wochen.", ("#kontakt", "Audit anfragen →"),
+   "Zwei Menschen beugen sich an einem Werkstatttisch über eine lange Prozesskarte aus Papier mit Klebezetteln, dahinter ein Whiteboard mit skizzierten Kästen")),
+}
+
+
+def apps_band(t, b):
+    x = APPS[t["lang"]]
+    def karte(i, k, sechs=False):
+        bild, name, claim, satz, link, alt = k
+        a = f'<a class="mehr" href="{link[0]}">{link[1]}</a>' if link else ""
+        return f'''
+    <article class="app-karte{' app-sechs' if sechs else ''}">
+      <img src="{b}apps/app-{bild}_KJ_v002.webp" width="1200" height="800" alt="{esc(alt)}" loading="lazy" decoding="async">
+      <div class="app-text"><div class="app-name"><b>{i:02d}</b> {name}</div><h3>{claim}</h3><p>{satz}</p>{a}</div>
+    </article>'''
+    karten = "".join(karte(i + 1, k) for i, k in enumerate(x["karten"])) + karte(6, x["sechs"], True)
+    return f'''<section class="tile light apps" id="apps"><div class="wrap">
+  <div class="eyebrow">{x["eyebrow"]}</div>
+  <h2>{x["h2"]}</h2>
+  <p class="lead">{x["lead"]}</p>
+  <div class="app-raster">{karten}
+  </div>
+</div></section>
+'''
+
+
 def zulu_suche(t, a, b):
     z = t["zs"]
     fragen = json.dumps([{"q": q, "t": {k: [v[0], v[1]] for k, v in tr.items()}} for q, tr in zip(z["fragen"], ZS_TREFFER)], ensure_ascii=False)
@@ -371,7 +433,7 @@ def page(t, base, root, other_href, robots="noindex,nofollow", thema=None):
   <ol class="weg">{weg}
   </ol>
 </div></section>
-{zulu_suche(t, a, b)}<section class="tile dark team-bild begleit" id="begleitung">
+{apps_band(t, b)}{zulu_suche(t, a, b)}<section class="tile dark team-bild begleit" id="begleitung">
   <picture>
     <source media="(max-width:760px)" srcset="{b}begleitung-runde-hoch.webp" width="1100" height="1375">
     <img src="{b}begleitung-runde.webp" width="2400" height="1340" alt="{esc(t["beg_alt"])}" loading="lazy" decoding="async">
